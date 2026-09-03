@@ -1,0 +1,16 @@
+{
+  "name": "خطوة · المتوسط",
+  "short_name": "خطوة",
+  "description": "مقرر الأسبوع وتسجيل الإنجاز اليومي.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "dir": "rtl",
+  "lang": "ar",
+  "background_color": "#F4F3ED",
+  "theme_color": "#164F42",
+  "icons": [
+    { "src": "./assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
