@@ -1681,7 +1681,7 @@ function classView(){
    <span><b>${idle.length}</b> ${idle.length===1?'طالب ما سجّل':'طلاب ما سجّلوا'} من يومين أو أكثر.</span>
    <span class="spacer"></span><button class="btn sm outline" onclick="setFilter('idle')">اعرضهم</button></div>`:''}
  ${matrixCard(all,2)}
- <div class="sec rv" style="--i:3"><h2>الحسابات</h2></div>
+ <div class="sec rv" style="--i:3"><h2>الطلاب</h2></div>
  <div class="filters rv" style="--i:4">
   ${[['all','الكل',all.length],['done','أتمّوا',done.length],['late','متأخرون',late.length],['idle','منقطعون',idle.length]]
    .map(([k,l,n])=>`<button class="filter" aria-pressed="${FILTER===k}" onclick="setFilter('${k}')">${l} <span class="num">${n}</span></button>`).join('')}</div>
