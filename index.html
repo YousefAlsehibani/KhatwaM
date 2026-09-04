@@ -1,0 +1,2321 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>خطوة · المتوسط — مقرر الأسبوع</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://benqmepnybminxeyubqn.supabase.co" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&family=Zain:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F3ED; --bg-soft:#FAF9F5; --surface:#FFFEFC; --card:#FFFEFC;
+  --ink:#102F28; --ink2:#34544B; --muted:#71857E;
+  --line:#E3E4DA; --line-strong:#D5D8CB;
+  --teal:#164F42; --teal2:#27715E; --teal3:#6E9E8F; --teal-soft:#E8F1ED;
+  --gold:#AF8A43; --gold-soft:#F5EEDC;
+  --danger:#A95A52; --danger-soft:#F8ECEA;
+  --brand:#164F42; --brand2:#27715E; --brand-soft:#E8F1ED;
+  --amber:#AF8A43; --amber-soft:#F5EEDC; --rose:#A95A52; --green:#27715E;
+  --g1:#164F42; --g2:#27715E; --g3:#AF8A43;
+  --r:20px;
+  --s1:0 1px 2px rgba(22,79,66,.05);
+  --s2:0 3px 8px rgba(22,79,66,.06), 0 18px 40px -30px rgba(22,79,66,.45);
+  --s3:0 30px 64px -34px rgba(22,79,66,.5);
+  --e:cubic-bezier(.22,.9,.25,1); --sp:cubic-bezier(.2,1.1,.4,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;
+ font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:"Zain",sans-serif;font-weight:800;line-height:1.25;margin:0}
+h1{font-size:clamp(34px,7vw,52px)}
+h2{font-size:clamp(21px,3vw,27px)}
+h3{font-size:19px;font-weight:700}
+.num{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;direction:ltr;display:inline-block}
+.eyebrow{font-size:11.5px;color:var(--muted);margin:0 0 5px}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+:focus-visible{outline:2.5px solid var(--amber);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 18px}
+.spacer{flex:1}
+
+/* ===== حركة ===== */
+@keyframes rise{from{opacity:0;transform:translateY(18px) scale(.99)}to{opacity:1;transform:none}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@keyframes drop{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:none}}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes popin{from{opacity:0;transform:translateY(22px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes shake{10%,90%{transform:translateX(-3px)}30%,70%{transform:translateX(6px)}50%{transform:translateX(-6px)}}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(4%,-3%) scale(1.09)}}
+@keyframes sheen{from{background-position:220% 0}to{background-position:-120% 0}}
+@keyframes rip{to{transform:translate(-50%,-50%) scale(9);opacity:0}}
+@keyframes ringpulse{0%{transform:scale(.65);opacity:.5}100%{transform:scale(2);opacity:0}}
+@keyframes draw{to{stroke-dashoffset:0}}
+main.anim{animation:fadein .4s var(--e) both}
+.anim .rv{opacity:0}
+.anim .rv.in{animation:rise .6s var(--e) both;animation-delay:calc(var(--i,0)*55ms)}
+
+/* ===== شريط علوي ===== */
+.top{position:sticky;top:0;z-index:30;color:#F2F1EA;
+ background:linear-gradient(112deg,#111A2E 0%,#164F42 55%,#20336B 100%);animation:drop .5s var(--e) both}
+.top .wrap{display:flex;align-items:center;gap:13px;height:62px}
+.brand{display:flex;align-items:center;gap:9px;font-family:"Zain",sans-serif;font-weight:900;font-size:23px}
+.brand svg{width:26px;height:26px}
+.who{font-size:12.5px;color:#9CB2A9;text-align:left;line-height:1.35}
+.who b{display:block;color:#fff;font-weight:600;font-size:14px}
+.ghost{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);color:#CFD9EC;
+ padding:7px 14px;border-radius:999px;font-size:13px;transition:.25s var(--e)}
+.ghost:hover{background:rgba(255,255,255,.16);color:#fff}
+
+/* ===== تبويبات ===== */
+.tabs{position:relative;display:flex;gap:2px;border-bottom:1px solid var(--line);margin:24px 0;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{background:none;border:0;padding:11px 16px;color:var(--muted);font-size:15px;white-space:nowrap;transition:color .25s}
+.tabs button[aria-selected="true"]{color:var(--ink);font-weight:600}
+.tabs button:hover{color:var(--ink2)}
+.tind{position:absolute;bottom:-1px;height:2.5px;background:var(--brand);border-radius:2px;
+ transition:right .45s var(--sp),width .45s var(--sp)}
+
+/* ===== بطاقات ===== */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:21px;box-shadow:var(--s1);
+ transition:box-shadow .35s var(--e),transform .35s var(--e)}
+.card:hover{box-shadow:var(--s2)}
+.grid{display:grid;gap:14px}.g2{grid-template-columns:repeat(2,1fr)}
+.sec{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:28px 0 13px}
+.chip{font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 11px;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 11px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.pill.ok{background:#DFF3EE;color:var(--green)}
+.pill.mid{background:var(--amber-soft);color:#8A5A10}
+.pill.off{background:#FAE7EC;color:var(--rose)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
+
+/* ===== أزرار ===== */
+.btn{position:relative;overflow:hidden;background:var(--brand);color:#fff;border:0;border-radius:13px;
+ padding:14px 22px;font-size:15.5px;font-weight:600;width:100%;transition:.25s var(--e);
+ box-shadow:0 12px 26px -14px var(--brand);font-family:"Zain",sans-serif}
+.btn:hover{background:var(--brand2);transform:translateY(-2px)}
+.btn:active{transform:scale(.985)}
+.btn.sm{width:auto;padding:9px 17px;font-size:13.5px;border-radius:11px}
+.btn.outline{background:transparent;color:var(--brand);border:1.5px solid #B9C5F3;box-shadow:none}
+.btn.outline:hover{background:var(--brand-soft)}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.35);
+ transform:translate(-50%,-50%) scale(0);animation:rip .55s var(--e) forwards;pointer-events:none}
+.qbtn{border:1px solid var(--line);background:var(--surface);border-radius:9px;min-width:30px;height:28px;
+ color:var(--muted);font-size:13px;transition:.25s var(--e);padding:0 9px}
+.qbtn:hover{border-color:var(--brand);color:var(--brand);transform:translateY(-2px)}
+.qbtn.del:hover{border-color:var(--rose);color:var(--rose)}
+
+/* ===== دخول ===== */
+.login{position:relative;min-height:100vh;display:grid;place-items:center;padding:24px;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;pointer-events:none;animation:drift 17s ease-in-out infinite}
+.b1{width:440px;height:440px;background:#C3CFF7;top:-150px;right:-110px}
+.b2{width:360px;height:360px;background:#F6DFBC;bottom:-120px;left:-90px;animation-delay:-6s}
+.lcard{position:relative;width:100%;max-width:390px;text-align:center}
+.lcard>*{animation:rise .7s var(--e) both}
+.lcard>*:nth-child(1){animation-delay:.05s}.lcard>*:nth-child(2){animation-delay:.13s}
+.lcard>*:nth-child(3){animation-delay:.2s}.lcard>*:nth-child(4){animation-delay:.27s}
+.lcard>*:nth-child(5){animation-delay:.34s}.lcard>*:nth-child(6){animation-delay:.4s}
+.lcard>*:nth-child(7){animation-delay:.46s}
+.logo{width:72px;height:72px;margin:0 auto;display:block}
+.logo path,.logo circle{animation:popin .6s var(--sp) both}
+.logo path:nth-child(2){animation-delay:.16s}.logo circle{animation-delay:.3s}
+.login h1{margin:12px 0 0}
+.brandsub{font-family:"Zain",sans-serif;font-weight:600;font-size:15px;color:var(--brand);
+ letter-spacing:.32em;margin:0 0 12px;padding-right:.32em}
+.bwrap{display:flex;flex-direction:column;line-height:1}
+.bwrap em{font-style:normal;font-family:"IBM Plex Sans Arabic";font-size:10.5px;font-weight:400;
+ color:#9CB2A9;letter-spacing:.3em;margin-top:2px;padding-right:.3em}
+/* الفوائد */
+.bens{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px}
+.ben{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--line);
+ border-radius:var(--r);padding:19px 19px 15px;box-shadow:var(--s1);
+ transition:transform .42s var(--sp),box-shadow .42s var(--e),border-color .3s}
+.ben:hover{transform:translateY(-4px);box-shadow:var(--s2)}
+.ben::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--gc);
+ transform:scaleY(.35);transform-origin:center;transition:transform .45s var(--sp)}
+.ben:hover::before{transform:scaleY(1)}
+.quote{position:absolute;top:-16px;left:14px;font-family:"Zain",sans-serif;font-size:76px;font-weight:900;
+ color:var(--gc);opacity:.1;pointer-events:none;line-height:1}
+.rv.in .quote{animation:popin .6s var(--sp) both;animation-delay:.15s}
+.btxt{margin:0;font-size:14.5px;line-height:2;color:var(--ink)}
+.bfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;
+ padding-top:12px;border-top:1px solid var(--line)}
+.bmeta{display:flex;align-items:center;gap:9px;min-width:0}
+.bn{min-width:0}
+.bn b{display:block;font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bn span{font-size:11.5px;color:var(--muted)}
+.bact{display:flex;align-items:center;gap:7px;flex:none}
+.star{border:0;background:transparent;font-size:21px;line-height:1;color:#C3CBD9;padding:2px 4px;
+ transition:.3s var(--sp)}
+.star:hover{color:var(--amber);transform:scale(1.25) rotate(12deg)}
+.star.on{color:var(--amber);animation:starpop .5s var(--sp)}
+@keyframes starpop{0%{transform:scale(1)}40%{transform:scale(1.5) rotate(18deg)}100%{transform:scale(1)}}
+.ben.picked{border-color:#EBD5A8;background:linear-gradient(150deg,#FDF7EA,var(--surface) 62%)}
+.ben.picked::before{background:var(--amber);transform:scaleY(1)}
+.ribbon{position:absolute;top:12px;left:12px;background:var(--amber);color:#fff;font-size:10.5px;
+ font-weight:700;border-radius:999px;padding:3px 11px;animation:popin .5s var(--sp)}
+.ben.big{padding:26px 24px 18px}
+.ben.big .btxt{font-size:16.5px;line-height:2.1;font-family:"Zain",sans-serif;font-weight:400}
+.ben.big .quote{font-size:110px;top:-26px}
+.pickbar{display:flex;align-items:center;gap:14px;border-radius:16px;padding:14px 17px;margin-bottom:15px;
+ background:linear-gradient(120deg,#FBF0DC,var(--surface) 70%);border:1.5px solid #EFDCB6}
+.pickbar .si{width:42px;height:42px;border-radius:13px;background:#fff;display:grid;place-items:center;
+ font-size:19px;color:var(--amber);flex:none;box-shadow:var(--s1)}
+.pickbar b{font-family:"Zain",sans-serif;font-size:15px;font-weight:700;display:block}
+.pickbar p{margin:2px 0 0;font-size:12.5px;color:var(--muted);line-height:1.7}
+.bhint{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11.5px;
+ color:var(--muted);margin-top:7px}
+.logben{margin:9px 0 0;font-size:13px;line-height:1.9;color:var(--muted);
+ padding-right:12px;border-right:2px solid var(--line);display:flex;gap:8px;align-items:baseline}
+
+.login .sub{color:var(--muted);margin:0 0 24px;font-size:14.5px}
+.codes{display:flex;gap:10px;justify-content:center;direction:ltr}
+.dg{width:60px;height:70px;border:1.5px solid var(--line);border-radius:15px;background:var(--surface);
+ display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-size:30px;font-weight:600;
+ transition:.3s var(--sp);box-shadow:var(--s1)}
+.dg.f{border-color:var(--brand);color:var(--brand);transform:translateY(-3px);box-shadow:0 9px 20px -10px var(--brand)}
+.dg.a{border-color:var(--brand);box-shadow:0 0 0 4px var(--brand-soft)}
+.dg span{animation:popin .3s var(--sp)}
+.codes.bad{animation:shake .45s}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.pad button{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:14px;
+ padding:15px 0;font-family:"IBM Plex Mono",monospace;font-size:20px;color:var(--ink);transition:.22s var(--e);box-shadow:var(--s1)}
+.pad button:hover{background:var(--brand-soft);border-color:#B9C5F3;transform:translateY(-2px)}
+.pad button:active{transform:scale(.94)}
+.err{color:var(--rose);font-size:13.5px;min-height:22px;margin-top:11px}
+.hint{margin-top:20px;font-size:12.5px;color:var(--muted);line-height:2.1}
+.hint code{font-family:"IBM Plex Mono",monospace;background:var(--brand-soft);color:var(--brand);
+ padding:3px 8px;border-radius:7px;cursor:pointer;transition:.2s}
+.hint code:hover{background:var(--brand);color:#fff}
+.leaving{animation:fadeout .45s var(--e) forwards}
+@keyframes fadeout{to{opacity:0;transform:translateY(-14px) scale(.97)}}
+
+/* ===== لوحة أسبوعية ===== */
+.hero{position:relative;overflow:hidden;border-radius:22px;padding:24px 26px;color:#F2F1EA;
+ background:linear-gradient(118deg,#111A2E 0%,#1C2B4E 56%,#233A79 100%);box-shadow:0 26px 50px -32px rgba(17,26,46,.85)}
+.hero::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;top:-200px;left:-80px;
+ background:radial-gradient(circle,rgba(224,138,30,.35),transparent 62%);animation:drift 16s ease-in-out infinite;pointer-events:none}
+.hero::after{content:"";position:absolute;width:360px;height:360px;border-radius:50%;bottom:-190px;right:-70px;
+ background:radial-gradient(circle,rgba(71,99,240,.5),transparent 62%);animation:drift 21s ease-in-out -7s infinite;pointer-events:none}
+.hero>*{position:relative;z-index:1}
+.hlab{font-size:12.5px;color:#9CB2A9;margin:0 0 3px}
+.hero h2{color:#fff}
+.htop{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.hst{display:flex;gap:24px;flex-wrap:wrap}
+.hst .hv{font-family:"IBM Plex Mono",monospace;font-size:31px;font-weight:600;color:#fff;line-height:1.15}
+.hst .hv small{font-family:"IBM Plex Sans Arabic";font-size:12px;color:#9CB2A9;font-weight:400}
+.hst .hk{font-size:11.5px;color:#9CB2A9}
+.hv.am{color:#F3B košt}
+.hv.am{color:#D9B872}.hv.gr{color:#95C6B5}
+
+/* مسار الأسبوع */
+.track{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-top:18px}
+.day{position:relative;border-radius:12px;background:rgba(255,255,255,.09);padding:9px 4px 8px;text-align:center;
+ transition:transform .3s var(--sp);cursor:pointer}
+.day:hover{transform:translateY(-3px)}
+.day.today{box-shadow:0 0 0 2px #D9B872}
+.day .dn{font-size:10.5px;color:#9CB2A9}
+.day .dv{font-family:"IBM Plex Mono",monospace;font-size:13px;color:#fff;font-weight:600;margin-top:3px}
+.day .fill{height:4px;border-radius:99px;background:rgba(255,255,255,.16);margin-top:7px;overflow:hidden}
+.day .fill i{display:block;height:100%;width:0;background:#95C6B5;border-radius:99px;transition:width .9s var(--e)}
+.day.miss .dv{color:#7E948B}
+
+/* مقرر الأسبوع */
+.wc{position:relative;overflow:hidden;display:flex;gap:17px;background:var(--surface);border:1px solid var(--line);
+ border-radius:var(--r);padding:19px;box-shadow:var(--s1);transition:transform .42s var(--sp),box-shadow .42s var(--e)}
+.wc:hover{transform:translateY(-4px);box-shadow:var(--s2)}
+.wc::after{content:"";position:absolute;inset:0;background:radial-gradient(85% 70% at 100% 0,var(--c),transparent 62%);opacity:.06;pointer-events:none}
+.cov{width:88px;flex:none}
+.cov svg{width:88px;height:118px;display:block;filter:drop-shadow(0 12px 20px rgba(17,26,46,.2))}
+.cov .fb{transition:height 1.1s var(--e),y 1.1s var(--e)}
+.wcb{flex:1;min-width:0;display:flex;flex-direction:column}
+.kick{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--c);font-weight:700}
+.wcb h3{margin:5px 0 1px;font-size:20px}
+.wcb .by{color:var(--muted);font-size:12.5px;margin:0}
+.note{margin:8px 0 0;font-size:12px;line-height:1.75;color:var(--muted);cursor:pointer;
+ display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.note.open{-webkit-line-clamp:99;display:block}
+.golink{display:inline-flex;align-items:center;gap:9px;margin-top:11px;text-decoration:none;
+ background:linear-gradient(120deg,var(--brand-soft),#F4F6FE);border:1.5px solid #C9D4F8;color:var(--brand);
+ border-radius:12px;padding:9px 14px;font-size:13.5px;font-weight:600;font-family:"Zain",sans-serif;
+ transition:.3s var(--e);align-self:flex-start}
+.golink:hover{background:var(--brand);color:#fff;border-color:var(--brand);transform:translateY(-2px);
+ box-shadow:0 12px 24px -14px var(--brand)}
+.golink .pl{width:24px;height:24px;border-radius:8px;background:var(--brand);display:grid;place-items:center;
+ flex:none;transition:.3s var(--e)}
+.golink .pl svg{width:13px;height:13px;fill:#fff}
+.golink:hover .pl{background:rgba(255,255,255,.22);transform:scale(1.08)}
+.golink .arw{font-size:12px;transition:transform .3s var(--sp)}
+.golink:hover .arw{transform:translate(-3px,-3px)}
+.golink.sm{margin:12px 0 0;padding:8px 12px;font-size:13px;width:100%;justify-content:center}
+.nolink{margin:11px 0 0;font-size:12px;color:var(--rose)}
+.prog{margin-top:auto;padding-top:14px}
+.prow{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;color:var(--muted);margin-bottom:7px}
+.prow b{font-family:"IBM Plex Mono",monospace;font-size:20px;color:var(--c)}
+.bar{height:9px;background:#E7EBF2;border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:99px;background:var(--brand);transition:width 1s var(--e)}
+
+/* اقتراح اليوم */
+.sug{display:flex;align-items:center;gap:14px;border-radius:16px;padding:15px 17px;margin-top:14px;
+ background:linear-gradient(120deg,var(--brand-soft),var(--surface) 70%);border:1.5px solid #C9D4F8}
+.sug.late{background:linear-gradient(120deg,#FBEDD9,var(--surface) 70%);border-color:#EFD9B4}
+.sug.done{background:linear-gradient(120deg,#DFF3EE,var(--surface) 70%);border-color:#B6E2D6}
+.sug .si{width:44px;height:44px;border-radius:14px;background:#fff;display:grid;place-items:center;font-size:20px;flex:none;box-shadow:var(--s1)}
+.sug b{font-family:"Zain",sans-serif;font-size:15.5px;font-weight:700;display:block}
+.sug p{margin:2px 0 0;font-size:12.5px;color:var(--muted);line-height:1.7}
+
+/* حلقة */
+.ringbox{position:relative;width:150px;height:150px;flex:none}
+.ring{width:150px;height:150px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-linecap:round}
+.ring .tr{stroke:#E7EBF2}
+.ring .arc{transition:stroke-dashoffset 1.2s var(--e)}
+.rmid{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.rmid b{font-family:"IBM Plex Mono",monospace;font-size:31px;font-weight:600;line-height:1}
+.rmid span{font-size:11px;color:var(--muted)}
+.pulse{position:absolute;inset:0;border-radius:50%;border:2px solid var(--green);animation:ringpulse 2.6s var(--e) infinite;pointer-events:none}
+
+/* تسجيلات اليوم */
+.tlog{margin-top:16px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.tlh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;padding:11px 14px;
+ background:#F6F8FC;font-size:13px;font-weight:600;border-bottom:1px solid var(--line)}
+.tlh span{font-size:11px;font-weight:400;color:var(--muted)}
+.tent{display:flex;align-items:center;gap:9px;padding:10px 14px;border-bottom:1px solid #F0F3F8;font-size:13.5px}
+.tent:last-child{border-bottom:0}
+.tent .nm{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tent .vv{color:var(--muted);font-size:12.5px}
+
+/* مصفوفة */
+.mwrap{overflow-x:auto;padding-bottom:6px}
+.matrix{min-width:560px;display:grid;grid-template-columns:150px repeat(7,1fr);gap:5px;align-items:center}
+.mh{font-size:10.5px;color:var(--muted);text-align:center;padding-bottom:5px}
+.mh.now{color:var(--amber);font-weight:700}
+.mn{display:flex;align-items:center;gap:8px;font-size:13px;min-width:0}
+.mn .av{width:26px;height:26px;border-radius:9px;flex:none;display:grid;place-items:center;color:#fff;
+ font-family:"Zain",sans-serif;font-weight:800;font-size:12.5px;background:linear-gradient(145deg,var(--gc),#164F42)}
+.mn span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.mc{width:100%;aspect-ratio:1;max-height:30px;border-radius:7px;background:#E7EBF2;cursor:pointer;
+ transition:transform .22s var(--sp)}
+.mc:hover{transform:scale(1.35);z-index:3;position:relative;box-shadow:0 5px 14px -4px rgba(17,26,46,.45)}
+.mc.today{box-shadow:0 0 0 2px var(--amber)}
+.rv.in .mc{animation:fadein .45s both;animation-delay:calc(var(--r)*45ms + var(--k)*20ms + 150ms)}
+.cellinfo{margin-top:12px;font-size:12.5px;color:var(--muted);background:#F6F8FC;border:1px solid var(--line);
+ border-radius:11px;padding:10px 14px;min-height:40px;display:flex;align-items:center;transition:.3s var(--e)}
+.cellinfo.lit{animation:popin .3s var(--sp);color:var(--ink);border-color:#C9D4F8;background:var(--brand-soft)}
+
+/* بطاقات الطلاب */
+.scards{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:13px}
+.scard{position:relative;overflow:hidden;text-align:right;width:100%;background:var(--surface);border:1px solid var(--line);
+ border-radius:var(--r);padding:17px;box-shadow:var(--s1);transition:transform .4s var(--sp),box-shadow .4s var(--e)}
+.scard::after{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--gc);transform:scaleY(0);
+ transform-origin:bottom;transition:transform .45s var(--sp)}
+.scard:hover{transform:translateY(-5px);box-shadow:var(--s2)}
+.scard:hover::after{transform:scaleY(1)}
+.shead{display:flex;align-items:center;gap:11px}
+.avatar{width:44px;height:44px;border-radius:14px;flex:none;display:grid;place-items:center;color:#fff;
+ font-family:"Zain",sans-serif;font-weight:800;font-size:19px;background:linear-gradient(145deg,var(--gc),#164F42);
+ transition:.4s var(--sp)}
+.scard:hover .avatar{transform:rotate(-5deg) scale(1.06)}
+.nmx{flex:1;min-width:0}
+.nmx b{display:block;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nmx span{font-size:12px;color:var(--muted)}
+.rw{position:relative;width:46px;height:46px;flex:none}
+.rlet{width:46px;height:46px;transform:rotate(-90deg)}
+.rlet circle{fill:none;stroke-width:5;stroke-linecap:round}
+.rlet .t{stroke:#E7EBF2}
+.rlet .a{transition:stroke-dashoffset 1.1s var(--e)}
+.rw b{position:absolute;inset:0;display:grid;place-content:center;font-family:"IBM Plex Mono",monospace;
+ font-size:11.5px;font-weight:600;color:var(--gc)}
+.mini{width:100%;height:44px;display:block;margin-top:13px}
+.mini rect{transform-box:fill-box;transform-origin:bottom}
+.rv.in .mini rect{animation:grow .55s var(--sp) both;animation-delay:calc(var(--j)*55ms + 250ms)}
+.sfoot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:11px;padding-top:11px;
+ border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+/* مؤشرات */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-bottom:18px}
+.stat{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:15px;
+ padding:15px 17px;box-shadow:var(--s1);transition:.35s var(--e)}
+.stat:hover{transform:translateY(-2px);box-shadow:var(--s2)}
+.stat::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:var(--sc,var(--brand));
+ transform:scaleX(0);transform-origin:right}
+.stat.rv.in::after{animation:barin .9s var(--e) forwards;animation-delay:calc(var(--i)*90ms + 260ms)}
+@keyframes barin{to{transform:scaleX(1)}}
+.stat .lab{font-size:12px;color:var(--muted)}
+.stat .val{font-family:"IBM Plex Mono",monospace;font-size:30px;font-weight:600;line-height:1.3;color:var(--sc,var(--ink))}
+.stat .val small{font-family:"IBM Plex Sans Arabic";font-size:12.5px;color:var(--muted);font-weight:400}
+
+/* جدول المتصدرين */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:right;font-weight:600;font-size:12px;color:var(--muted);padding:0 10px 11px;border-bottom:1px solid var(--line)}
+td{padding:11px 10px;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+tbody tr{transition:background .25s}
+tbody tr:hover{background:#F7F9FC}
+.rank{font-family:"IBM Plex Mono",monospace;color:var(--muted);width:36px;font-size:15px}
+.rank.top{color:var(--amber);font-weight:700;font-size:17px}
+.me-row{background:linear-gradient(90deg,var(--brand-soft),transparent 70%)!important}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.filter{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;
+ padding:7px 16px;font-size:13px;transition:.28s var(--e);position:relative;overflow:hidden}
+.filter:hover{border-color:var(--brand);color:var(--brand)}
+.filter[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* نوافذ */
+.ov{position:fixed;inset:0;background:rgba(17,26,46,.45);backdrop-filter:blur(3px);display:flex;
+ align-items:flex-start;justify-content:center;padding:18px;z-index:50;overflow-y:auto;
+ overscroll-behavior:contain;-webkit-overflow-scrolling:touch;animation:fadein .28s}
+.modal{position:relative;background:var(--surface);border-radius:20px;width:100%;max-width:430px;padding:24px 24px 0;
+ margin:auto;box-shadow:var(--s3);animation:popin .48s var(--sp);max-height:calc(100dvh - 36px);
+ overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.modal::-webkit-scrollbar{width:6px}.modal::-webkit-scrollbar-thumb{background:#CBD3E0;border-radius:99px}
+.modal h3{margin:0 0 3px;font-size:23px;position:sticky;top:-24px;background:var(--surface);padding:4px 0 2px;z-index:2}
+.modal .sub{color:var(--muted);font-size:13px;margin:0 0 4px}
+label{display:block;font-size:13px;color:var(--muted);margin:15px 0 6px}
+input[type=text],input[type=number],select,textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);
+ border-radius:12px;font-family:inherit;font-size:15px;background:var(--surface);color:var(--ink);transition:.25s}
+textarea{resize:vertical;line-height:1.8}
+input:focus,select:focus,textarea:focus{border-color:var(--brand);outline:none;box-shadow:0 0 0 4px var(--brand-soft)}
+.row{display:flex;gap:10px;margin-top:22px;position:sticky;bottom:0;z-index:2;background:var(--surface);padding:14px 0 20px}
+.row::before{content:"";position:absolute;inset:auto 0 100% 0;height:22px;pointer-events:none;
+ background:linear-gradient(transparent,var(--surface))}
+.row .btn{flex:1}
+.segv{display:flex;flex-direction:column;gap:7px}
+.segv button{text-align:right;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;transition:.28s var(--e)}
+.segv button b{display:block;font-size:14px;font-weight:600;color:var(--ink)}
+.segv button span{font-size:11.5px;color:var(--muted)}
+.segv button:hover{border-color:#B9C5F3;transform:translateX(-3px)}
+.segv button[aria-pressed="true"]{border-color:var(--brand);background:var(--brand-soft)}
+.segv button[aria-pressed="true"] b{color:var(--brand)}
+.empty{text-align:center;color:var(--muted);padding:34px 12px;font-size:14px}
+.back{background:none;border:0;color:var(--muted);padding:0;font-size:13.5px;margin-bottom:12px;transition:.25s}
+.back:hover{color:var(--ink);transform:translateX(-3px)}
+.toast{position:fixed;bottom:24px;right:50%;transform:translateX(50%);background:var(--ink);color:#fff;
+ padding:12px 22px;border-radius:999px;font-size:14px;z-index:60;box-shadow:var(--s3);animation:tin .5s var(--sp)}
+@keyframes tin{from{opacity:0;transform:translate(50%,26px)}to{opacity:1;transform:translate(50%,0)}}
+.alert{display:flex;align-items:center;gap:11px;background:#FCF1F4;border:1px solid #F1D6DE;color:#7E2140;
+ border-radius:15px;padding:13px 16px;margin-bottom:15px;font-size:13.5px}
+.alert svg{width:19px;height:19px;fill:none;stroke:var(--rose);stroke-width:1.8;flex:none}
+.gcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px}
+@media(max-width:760px){.g2{grid-template-columns:1fr}.wc{flex-direction:column}.cov,.cov svg{width:74px}
+ .ringbox,.ring{width:120px;height:120px}.matrix{min-width:520px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}}
+
+/* ════════ هوية «خطوة» ════════ */
+body{background:var(--bg)}
+h1,h2,h3{font-family:"Zain",sans-serif}
+.card,.wc,.ben,.scard,.stat,.sug,.pickbar,.tlog,.modal,.dg,.pad button,.filter,.qbtn{background:var(--card)}
+.card,.wc,.ben,.scard{border-color:var(--line)}
+.wordmark{font-family:"Zain",sans-serif;font-size:44px;font-weight:800;line-height:1;color:var(--teal);margin:14px 0 0}
+.brandsub{margin:-2px 0 22px;color:var(--muted);font-family:"IBM Plex Sans Arabic",sans-serif;
+ font-size:12.5px;font-weight:400;letter-spacing:0}
+.brand-mark{width:52px;height:52px;border-radius:18px;display:grid;place-items:center;margin:0 auto;
+ background:var(--teal);color:#fff;font-family:"Reem Kufi",sans-serif;font-size:23px;font-weight:600;
+ box-shadow:0 12px 24px rgba(22,79,66,.18)}
+.brand-mark.sm{width:34px;height:34px;border-radius:12px;font-size:16px;margin:0;
+ background:rgba(255,255,255,.14);box-shadow:none}
+.bwrap em{color:#9CB2A9}
+/* الشريط والعناصر البطولية */
+.top{background:linear-gradient(138deg,#103C32 0%,#175548 62%,#216859 100%)}
+.hero{background:linear-gradient(138deg,#103C32 0%,#175548 62%,#216859 100%);
+ box-shadow:0 24px 48px -34px rgba(16,60,50,.75)}
+.hero::before,.hero::after{display:none}      /* لا حركة مستمرة */
+.blob,.pulse{display:none!important}
+.hst .hv.am{color:#D9B872}.hst .hv.gr{color:#95C6B5}
+/* أزرار */
+.btn{background:var(--teal);box-shadow:0 10px 22px -14px rgba(22,79,66,.7);border-radius:14px;
+ font-family:"Zain",sans-serif;font-weight:700;min-height:48px}
+.btn:hover{background:var(--teal2);transform:none;box-shadow:0 12px 26px -14px rgba(22,79,66,.75)}
+.btn:active{transform:scale(.99)}
+.btn.sm{min-height:40px}
+.btn.outline{color:var(--teal);border-color:var(--line-strong);background:transparent}
+.btn.outline:hover{background:var(--teal-soft);border-color:var(--teal3)}
+.filter[aria-pressed="true"]{background:var(--teal);border-color:var(--teal)}
+.filter:hover{border-color:var(--teal3);color:var(--teal)}
+.qbtn:hover{border-color:var(--teal3);color:var(--teal)}
+.qbtn.del:hover{border-color:var(--danger);color:var(--danger)}
+.tind{background:var(--teal)}
+.dg.f{border-color:var(--teal);color:var(--teal);box-shadow:0 8px 18px -12px rgba(22,79,66,.6)}
+.dg.a{border-color:var(--teal);box-shadow:0 0 0 4px var(--teal-soft)}
+.pad button:hover{background:var(--teal-soft);border-color:var(--teal3)}
+.hint code{background:var(--teal-soft);color:var(--teal)}
+.hint code:hover{background:var(--teal);color:#fff}
+/* بيانات */
+.bar i{background:var(--teal)}
+.bar{background:#EAEAE2}
+.stat::after{background:var(--sc,var(--teal))}
+.rank.top{color:var(--gold)}
+.me-row{background:linear-gradient(90deg,var(--teal-soft),transparent 70%)!important}
+.pill.ok{background:var(--teal-soft);color:var(--teal)}
+.pill.mid{background:var(--gold-soft);color:#8A6A28}
+.pill.off{background:var(--danger-soft);color:var(--danger)}
+.alert{background:var(--danger-soft);border-color:#EEDAD6;color:#7C3A33}
+.alert svg{stroke:var(--danger)}
+.sug{background:linear-gradient(120deg,var(--teal-soft),var(--card) 72%);border-color:#CFE0D8}
+.sug.late{background:linear-gradient(120deg,var(--gold-soft),var(--card) 72%);border-color:#E8DCBE}
+.sug.done{background:linear-gradient(120deg,#E4F0EA,var(--card) 72%);border-color:#C3DBD0}
+.golink{background:var(--teal-soft);border-color:#CFE0D8;color:var(--teal)}
+.golink:hover{background:var(--teal);color:#fff;border-color:var(--teal);box-shadow:0 10px 22px -14px rgba(22,79,66,.7)}
+.golink .pl{background:var(--teal)}
+.golink:hover .pl{background:rgba(255,255,255,.2)}
+.nolink{color:var(--danger)}
+/* الفوائد */
+.star:hover,.star.on{color:var(--gold)}
+.ben.picked{border-color:#E6D6AF;background:linear-gradient(150deg,var(--gold-soft),var(--card) 62%)}
+.ben.picked::before{background:var(--gold)}
+.ribbon{background:var(--gold)}
+.pickbar{background:linear-gradient(120deg,var(--gold-soft),var(--card) 72%);border-color:#E8DCBE}
+.pickbar .si{color:var(--gold)}
+.quote{opacity:.09}
+.cellinfo.lit{background:var(--teal-soft);border-color:#CFE0D8}
+.avatar,.mn .av{background:var(--gc,var(--teal))}
+/* حركة هادئة: عند الظهور والضغط فقط */
+.anim .rv.in{animation-duration:.42s}
+.day:hover,.ben:hover,.scard:hover,.wc:hover{transform:translateY(-2px)}
+.star:hover{transform:scale(1.12)}
+.golink:hover{transform:none}
+.golink:hover .arw{transform:translate(-2px,-2px)}
+@media(max-width:760px){
+ .btn{min-height:50px}
+ /* الجداول تتحول لبطاقات */
+ .board table,.board thead,.board tbody,.board tr,.board td{display:block;width:100%}
+ .board thead{display:none}
+ .board table{min-width:0!important}
+ .board tr{border:1px solid var(--line);border-radius:16px;padding:13px 15px;margin-bottom:11px;
+  background:var(--card);box-shadow:var(--s1);position:relative}
+ .board td{border:0;padding:5px 0;display:flex;align-items:center;justify-content:space-between;gap:10px}
+ .board td::before{content:attr(data-l);color:var(--muted);font-size:12px}
+ .board td.tdname{font-family:"Zain",sans-serif;font-weight:700;font-size:17px;padding-top:0}
+ .board td.rank{position:absolute;left:15px;top:13px;padding:0;width:auto}
+ .board td.rank::before{content:"#";margin-left:2px}
+}
+
+/* ════════ صقل بصري ════════ */
+:root{--sp1:8px;--sp2:14px;--sp3:22px;--sp4:32px}
+body{font-size:15.5px;line-height:1.8;letter-spacing:0}
+h1{letter-spacing:-.01em}
+h2{font-size:clamp(22px,3vw,28px);letter-spacing:-.005em}
+.eyebrow{font-size:11px;font-weight:500;text-transform:none;opacity:.9}
+
+/* عنوان القسم بخط ذهبي رفيع */
+.sec h2{position:relative;padding-right:15px}
+.sec h2::before{content:"";position:absolute;right:0;top:50%;transform:translateY(-50%);
+ width:4px;height:20px;border-radius:4px;background:var(--gold);opacity:.85}
+
+/* بطاقات أنعم وأعمق */
+.card,.wc,.ben,.scard,.shcard{border-radius:22px}
+.card{padding:23px}
+.card:hover,.ben:hover,.scard:hover,.wc:hover{box-shadow:0 4px 10px rgba(22,79,66,.05),0 22px 44px -32px rgba(22,79,66,.5)}
+.stat{border-radius:18px}
+.stat .val{font-size:32px;letter-spacing:-.02em}
+.stat .lab{font-size:11.5px}
+
+/* اللوحة البطولية: خط ذهبي فاصل وتنفّس أوسع */
+.hero{padding:28px 28px 24px;border-radius:26px}
+.hero h2{font-size:clamp(23px,3.4vw,31px);margin-top:2px}
+.hlab{letter-spacing:.02em}
+.hst{gap:28px;margin-top:4px}
+.hst .hv{font-size:33px;letter-spacing:-.02em}
+.hero .track{margin-top:20px;padding-top:18px;border-top:1px solid rgba(217,184,114,.22)}
+
+/* أيام الأسبوع */
+.day{border-radius:14px;padding:11px 4px 10px;background:rgba(255,255,255,.07);
+ border:1px solid rgba(255,255,255,.07)}
+.day:hover{background:rgba(255,255,255,.13)}
+.day.today{border-color:#D9B872;background:rgba(217,184,114,.14);box-shadow:none}
+.day.full .dv{color:#A9D6C4}
+.day .chk{font-size:15px}
+.day .dn{letter-spacing:.02em;font-size:10px}
+.day .dv{font-size:14px;margin-top:4px}
+.day .fill i{background:#A9D6C4}
+.day.today .fill i{background:#D9B872}
+
+/* تبويبات: أوضح وألمس */
+.tabs{gap:4px;margin:26px 0 24px}
+.tabs button{padding:12px 15px;border-radius:12px 12px 0 0}
+.tabs button[aria-selected="true"]{background:linear-gradient(var(--teal-soft),transparent)}
+.tind{height:3px;border-radius:3px}
+
+/* أزرار: ضغطة محسوسة */
+.btn{border-radius:15px;letter-spacing:0}
+.btn:active{transform:scale(.985)}
+.btn.sm{border-radius:12px}
+.filter{border-radius:999px;padding:8px 17px}
+.filter[aria-pressed="true"]{box-shadow:0 8px 18px -12px rgba(22,79,66,.8)}
+
+/* الحلقة */
+.ring .tr{stroke:#EAEAE2}
+.rmid b{letter-spacing:-.02em}
+
+/* مقرر الأسبوع: غلاف بحافة كتاب */
+.cov svg{filter:drop-shadow(0 14px 22px rgba(16,47,40,.22))}
+.wcb h3{font-size:21px;line-height:1.35}
+.prow b{font-size:22px;letter-spacing:-.02em}
+.bar{height:10px;border-radius:99px}
+
+/* اقتراح اليوم */
+.sug{border-radius:18px;padding:16px 18px;gap:15px}
+.sug .si{width:46px;height:46px;border-radius:15px;font-size:21px}
+.sug b{font-size:16px}
+
+/* المتصدرون: ميداليات */
+.rank.m1{color:#AF8A43}
+.rank.m2{color:#8C9A93}
+.rank.m3{color:#A9805A}
+.rank.top::after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
+ background:currentColor;margin-right:5px;vertical-align:middle;opacity:.55}
+tbody tr:hover{background:var(--teal-soft)}
+td,th{padding-block:13px}
+
+/* الفوائد */
+.ben{padding:22px 21px 17px}
+.btxt{font-size:15px;line-height:2.05}
+.ben.big .btxt{font-size:17.5px}
+.quote{font-size:84px;top:-18px;opacity:.1}
+
+/* حالات فارغة */
+.empty{padding:40px 18px}
+.eart{width:38px;height:38px;stroke:var(--teal3);fill:none;stroke-width:1.5;
+ stroke-linecap:round;stroke-linejoin:round;margin:0 auto 12px;display:block;opacity:.75}
+.empty b{display:block;font-family:"Zain",sans-serif;font-size:19px;font-weight:700;color:var(--ink)}
+.empty p{margin:5px 0 0;font-size:13.5px;color:var(--muted);max-width:330px;margin-inline:auto;line-height:1.85}
+
+/* الدخول */
+.dg{width:62px;height:74px;border-radius:17px;font-size:31px}
+.pad button{border-radius:16px;padding:16px 0}
+.wordmark{font-size:48px}
+.brand-mark{width:56px;height:56px;border-radius:19px;font-size:25px}
+
+/* نوافذ */
+.modal{border-radius:24px;padding:26px 26px 0}
+.modal h3{font-size:24px;top:-26px}
+label{font-size:12.5px;font-weight:500;margin:16px 0 7px}
+input[type=text],input[type=number],select,textarea{border-radius:13px;padding:13px 15px}
+
+/* مصفوفة */
+.mc{border-radius:8px}
+.mn .av{border-radius:10px}
+.cellinfo{border-radius:13px}
+
+/* تركيز واضح للوصولية */
+:focus-visible{outline:2.5px solid var(--gold);outline-offset:3px}
+
+@media(max-width:760px){
+ .hero{padding:22px 20px 20px;border-radius:22px}
+ .hst{gap:18px}
+ .hst .hv{font-size:27px}
+ .card{padding:19px}
+ .day{padding:9px 2px 8px;border-radius:12px}
+ .day .dn{font-size:9.5px}
+ .wordmark{font-size:42px}
+ .sec h2::before{height:17px}
+}
+
+.wstrip{display:flex;gap:10px;overflow-x:auto;margin-top:14px;padding-bottom:4px;scrollbar-width:none}
+.wstrip::-webkit-scrollbar{display:none}
+.wk{flex:none;width:78px;text-align:center;background:var(--bg-soft);border:1px solid var(--line);
+ border-radius:16px;padding:11px 6px 9px;position:relative;transition:.3s var(--e)}
+.wk:hover{border-color:var(--teal3);transform:translateY(-2px)}
+.wk.done{background:var(--teal-soft);border-color:#CFE0D8}
+.wk svg{width:44px;height:44px;display:block;margin:0 auto}
+.wk b{display:block;font-family:"IBM Plex Mono",monospace;font-size:13px;margin-top:-32px;margin-bottom:16px;color:var(--ink)}
+.wk span{display:block;font-size:10.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tent.off{opacity:.55}
+
+/* ════════ اللوحة البطولية ════════ */
+.hero-week{position:relative;overflow:hidden}
+.hglow{position:absolute;inset:auto -60px -140px auto;width:320px;height:320px;border-radius:50%;
+ background:radial-gradient(circle,rgba(217,184,114,.22),transparent 62%);pointer-events:none}
+.rv.in .hglow{animation:glowin 1s var(--e) both}
+@keyframes glowin{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:none}}
+.hpill{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.09);
+ border:1px solid rgba(217,184,114,.28);color:#D9B872;border-radius:999px;padding:4px 13px;font-size:11.5px}
+.hdot{width:6px;height:6px;border-radius:50%;background:#D9B872;display:inline-block}
+.rv.in .hdot{animation:dotin .5s var(--sp) .2s both}
+@keyframes dotin{from{transform:scale(0)}to{transform:scale(1)}}
+.hgreet h2{margin-top:9px}
+.rv.in .hgreet h2{animation:up .55s var(--e) .06s both}
+.rv.in .hgreet .hsub{animation:up .55s var(--e) .16s both}
+.rv.in .hst>div:nth-child(1){animation:up .5s var(--e) .18s both}
+.rv.in .hst>div:nth-child(2){animation:up .5s var(--e) .26s both}
+.rv.in .hst>div:nth-child(3){animation:up .5s var(--e) .34s both}
+.rv.in .hst>div:nth-child(4){animation:up .5s var(--e) .42s both}
+@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.hsub{margin:6px 0 0;font-size:13px;color:#9CB2A9;max-width:420px;line-height:1.8}
+
+/* خط المسار */
+.wline{position:relative;height:8px;border-radius:99px;background:rgba(255,255,255,.12);
+ margin-top:20px;overflow:visible}
+.wline i{display:block;height:100%;width:0;border-radius:99px;
+ background:linear-gradient(90deg,#3D8F79,#D9B872);transition:width 1.1s var(--e)}
+.wline .pace{position:absolute;top:-5px;width:2px;height:18px;background:rgba(255,255,255,.55);border-radius:2px}
+.wline .pace em{position:absolute;top:-19px;right:-16px;font-style:normal;font-size:9.5px;color:#9CB2A9;white-space:nowrap}
+
+/* أيام الأسبوع تتصاعد بالتتابع */
+.rv.in .day{animation:dayin .5s var(--sp) both;animation-delay:calc(var(--k,0)*55ms + .25s)}
+@keyframes dayin{from{opacity:0;transform:translateY(12px) scale(.94)}to{opacity:1;transform:none}}
+
+/* ════════ سجلي: يومًا بيوم ════════ */
+.dlist{display:flex;flex-direction:column;gap:9px}
+.wkhead{display:flex;align-items:center;gap:12px;margin:20px 0 4px}
+.wkt{font-family:"Zain",sans-serif;font-weight:700;font-size:16px;color:var(--ink);white-space:nowrap}
+.wkl{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.drow{display:flex;align-items:center;gap:13px;background:var(--card);border:1px solid var(--line);
+ border-radius:16px;padding:12px 15px;box-shadow:var(--s1);transition:.3s var(--e)}
+.drow:hover{border-color:var(--teal3);transform:translateX(-3px)}
+.dbadge{width:50px;flex:none;text-align:center;background:var(--bg-soft);border:1px solid var(--line);
+ border-radius:12px;padding:6px 2px;transition:.3s var(--e)}
+.dbadge b{display:block;font-family:"Zain",sans-serif;font-size:12px;font-weight:700;color:var(--ink2)}
+.dbadge i{font-style:normal;font-size:11px;color:var(--muted)}
+.dbadge.full{background:var(--teal-soft);border-color:#CFE0D8}
+.dbadge.full b{color:var(--teal)}
+.dbody{flex:1;min-width:0}
+.dvals{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.dv2 .num{color:var(--teal);font-weight:600;font-size:14px}
+.dv2.gold .num{color:var(--gold)}
+.dbar{display:block;height:5px;border-radius:99px;background:#EAEAE2;overflow:hidden;margin-top:8px}
+.dbar i{display:block;height:100%;width:0;border-radius:99px;background:var(--teal);transition:width .8s var(--e)}
+.dpct{flex:none;width:44px;text-align:left;font-size:12.5px;color:var(--muted)}
+@media(max-width:760px){.dpct{display:none}.drow{padding:11px 13px;gap:11px}}
+
+/* ════════ مقياس الأسبوع: حركة تشرح لا تزيّن ════════ */
+.wmeter{display:flex;align-items:center;gap:10px;margin-top:22px}
+.wm-lab{font-size:10px;color:#7E948B;white-space:nowrap}
+.wm-track{position:relative;flex:1;height:9px;border-radius:99px;background:rgba(255,255,255,.13)}
+.wm-track i{display:block;height:100%;width:0;border-radius:99px;
+ background:linear-gradient(90deg,#3D8F79,#95C6B5);transition:width 1.2s var(--e)}
+.wm-now{position:absolute;top:-6px;width:2px;height:21px;background:#D9B872;border-radius:2px}
+.wm-now em{position:absolute;top:-18px;right:-27px;font-style:normal;font-size:9.5px;color:#D9B872;white-space:nowrap}
+.rv.in .wm-now{animation:tick .5s var(--sp) .9s both}
+@keyframes tick{from{opacity:0;transform:scaleY(0)}to{opacity:1;transform:none}}
+
+/* ════════ بطاقة مقدار اليوم ════════ */
+.quota{background:var(--card);border:1.5px solid #CFE0D8;border-radius:20px;padding:18px 19px 15px;
+ margin-top:15px;box-shadow:var(--s1)}
+.quota.late{border-color:#E8DCBE;background:linear-gradient(150deg,var(--gold-soft),var(--card) 62%)}
+.quota.ok,.quota.done{border-color:#BFDCCF;background:linear-gradient(150deg,var(--teal-soft),var(--card) 62%)}
+.qhead{display:flex;align-items:flex-start;gap:14px}
+.qi{width:46px;height:46px;border-radius:15px;background:var(--bg-soft);border:1px solid var(--line);
+ display:grid;place-items:center;font-size:21px;flex:none}
+.quota.ok .qi,.quota.done .qi{background:#fff;border-color:#CFE0D8}
+.qhead b{font-family:"Zain",sans-serif;font-size:17px;font-weight:700;display:block;color:var(--ink)}
+.qhead p{margin:3px 0 0;font-size:12.5px;color:var(--muted);line-height:1.8}
+.qrows{margin-top:15px;padding-top:14px;border-top:1px solid var(--line)}
+.qrow{display:flex;align-items:center;gap:12px;padding:7px 0}
+.qlab{width:44px;flex:none;font-size:12.5px;color:var(--muted)}
+.qbar{flex:1;height:9px;border-radius:99px;background:#EAEAE2;overflow:hidden}
+.qbar i{display:block;height:100%;width:0;border-radius:99px;background:var(--teal);transition:width 1s var(--e)}
+.qrow.g .qbar i{background:var(--gold)}
+.qrow.ok .qbar i{background:var(--teal2)}
+.qnum{flex:none;width:96px;text-align:left;font-size:12.5px;color:var(--muted)}
+.qnum b{font-family:"IBM Plex Mono",monospace;font-size:15px;color:var(--ink)}
+.qrow.ok .qnum b{font-family:"IBM Plex Sans Arabic";color:var(--teal);font-size:13px}
+.qfoot{margin-top:11px;padding-top:11px;border-top:1px dashed var(--line);font-size:12px;color:var(--muted)}
+.qfoot .num{color:var(--ink);font-weight:600}
+.ctag{background:var(--gold-soft);color:#8A6A28;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:600}
+@media(max-width:760px){.qnum{width:78px;font-size:11.5px}.qlab{width:38px}}
+
+/* ════════ نظرة عامة ════════ */
+.todo{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:17px 19px;
+ margin-top:15px;box-shadow:var(--s1)}
+.tdh{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.tdh b{font-family:"Zain",sans-serif;font-size:17px;font-weight:700}
+.tdi{width:26px;height:26px;border-radius:9px;background:var(--danger-soft);color:var(--danger);
+ display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
+.tditem{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #F1F2EC}
+.tditem:last-child{border-bottom:0}
+.tdd{width:8px;height:8px;border-radius:50%;flex:none}
+.tditem.red .tdd{background:var(--danger)}
+.tditem.amber .tdd{background:var(--gold)}
+.tdt{flex:1;min-width:0}
+.tdt b{display:block;font-size:14.5px;font-weight:600}
+.tdt span{font-size:12.5px;color:var(--muted);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.allgood{display:flex;align-items:center;gap:14px;background:linear-gradient(120deg,var(--teal-soft),var(--card) 70%);
+ border:1.5px solid #CFE0D8;border-radius:20px;padding:16px 19px;margin-top:15px}
+.allgood>span{width:42px;height:42px;border-radius:14px;background:#fff;display:grid;place-items:center;
+ color:var(--teal);font-size:20px;flex:none}
+.allgood b{font-family:"Zain",sans-serif;font-size:16px;font-weight:700;display:block}
+.allgood p{margin:2px 0 0;font-size:12.5px;color:var(--muted)}
+
+.gcard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;
+ box-shadow:var(--s1);position:relative;overflow:hidden;transition:.35s var(--e)}
+.gcard::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--gc)}
+.gcard:hover{box-shadow:var(--s2);transform:translateY(-2px)}
+.gch{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.gch h3{font-size:20px;margin-top:2px}
+.gbig{font-family:"IBM Plex Mono",monospace;font-size:27px;font-weight:600;line-height:1;text-align:left}
+.gbig small{display:block;font-family:"IBM Plex Sans Arabic";font-size:11px;font-weight:400;margin-top:3px}
+.gmeta{display:flex;gap:16px;margin-top:11px;font-size:12.5px;color:var(--muted)}
+.gmeta b{color:var(--ink)}
+.gmeta .warn{color:var(--danger)}
+.gmeta .warn b{color:var(--danger)}
+.gplan{display:flex;flex-direction:column;gap:6px;margin-top:13px;padding-top:12px;border-top:1px dashed var(--line)}
+.pchip{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pchip .num{color:var(--ink)}
+.pchip.red{color:var(--danger);font-weight:600}
+.gopen{width:100%;margin-top:13px;border:1px solid var(--line);background:var(--bg-soft);border-radius:12px;
+ padding:10px;font-size:13px;color:var(--teal);transition:.28s var(--e);font-family:"Zain",sans-serif;font-weight:700}
+.gopen:hover{background:var(--teal-soft);border-color:var(--teal3);transform:translateY(-2px)}
+
+.trow{display:flex;align-items:center;gap:11px;padding:10px 4px;border-bottom:1px solid #F1F2EC;
+ cursor:pointer;transition:.25s var(--e);border-radius:10px}
+.trow:last-child{border-bottom:0}
+.trow:hover{background:var(--bg-soft);padding-inline:9px}
+.tnum{width:22px;flex:none;font-family:"IBM Plex Mono",monospace;color:var(--muted);font-size:14px}
+.tnum.top{color:var(--gold);font-weight:700}
+.tname{flex:1;min-width:0}
+.tname b{display:block;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tname span{font-size:11.5px;color:var(--muted)}
+.tbar{width:64px;flex:none;height:6px;border-radius:99px;background:#EAEAE2;overflow:hidden}
+.tbar i{display:block;height:100%;width:0;border-radius:99px;transition:width .9s var(--e)}
+.tpct{width:38px;text-align:left;font-size:12px;color:var(--muted);flex:none}
+@media(max-width:760px){.tbar{display:none}}
+
+/* ════════ منحنى النبض ════════ */
+.sparkwrap{margin-top:20px}
+.spark{width:100%;height:104px;display:block;overflow:visible}
+.spark .sline{fill:none;stroke:#95C6B5;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.rv.in .spark .sline{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.5s var(--e) .3s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.spark .sarea{opacity:0}
+.rv.in .spark .sarea{animation:fadein .8s var(--e) .9s forwards}
+.spark .sdot{fill:#fff;opacity:0}
+.rv.in .spark .sdot{animation:popin .45s var(--sp) 1.35s forwards}
+.sfoot{display:flex;justify-content:space-between;font-size:10px;color:#7E948B;margin-top:2px}
+
+/* ════════ أشرطة التنبيه ════════ */
+.bar-alert{display:flex;align-items:center;gap:12px;border-radius:16px;padding:13px 16px;margin-top:12px;font-size:13.5px}
+.bar-alert svg{width:19px;height:19px;fill:none;stroke-width:1.8;flex:none}
+.bar-alert span:not(.ai){flex:1;min-width:0}
+.bar-alert .ai{width:26px;height:26px;border-radius:9px;display:grid;place-items:center;font-size:14px;flex:none}
+.bar-alert.red{background:var(--danger-soft);border:1px solid #EEDAD6;color:#7C3A33}
+.bar-alert.red svg{stroke:var(--danger)}
+.bar-alert.gold{background:var(--gold-soft);border:1px solid #E8DCBE;color:#7A5A11}
+.bar-alert.gold .ai{background:#fff;color:var(--gold)}
+.bar-alert.ok{background:var(--teal-soft);border:1px solid #CFE0D8;color:var(--teal)}
+.bar-alert.ok .ai{background:#fff;color:var(--teal)}
+.bar-alert .btn{flex:none}
+
+/* ════════ مقارنة الصفوف ════════ */
+.cmp{display:grid;grid-template-columns:1fr 2.2fr auto;grid-template-areas:"h b v" "m m m";
+ align-items:center;gap:10px 14px;padding:14px 0;border-bottom:1px solid #F1F2EC}
+.cmp:last-of-type{border-bottom:0}
+.cmp-h{grid-area:h;min-width:0}
+.cmp-h b{display:block;font-size:15px;font-weight:600}
+.cmp-h span{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.cmp-b{grid-area:b;height:26px;border-radius:9px;background:#EFF1EC;overflow:hidden}
+.cmp-b i{display:block;height:100%;width:0;border-radius:9px;transition:width 1.1s var(--e)}
+.cmp-v{grid-area:v;font-size:17px;font-weight:600;width:48px;text-align:left;color:var(--ink)}
+.cmp-m{grid-area:m;display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.cmp-m .num{color:var(--ink)}
+.lnk2{margin-right:auto;background:none;border:0;color:var(--teal);font-size:12.5px;padding:2px 4px;
+ border-radius:7px;transition:.25s}
+.lnk2:hover{background:var(--teal-soft)}
+.cmp-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:14px;padding-top:13px;
+ border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.cmp-foot b{color:var(--ink)}
+.lg{width:10px;height:10px;border-radius:3px;background:var(--teal);display:inline-block;margin-left:5px}
+
+/* ════════ زر العودة للأعلى ════════ */
+.fab{position:fixed;bottom:20px;right:50%;transform:translate(50%,20px);opacity:0;pointer-events:none;
+ width:46px;height:46px;border-radius:50%;background:var(--card);border:1px solid var(--line);
+ color:var(--teal);font-size:19px;box-shadow:var(--s2);transition:.3s var(--e);z-index:40}
+.fab.on{opacity:1;transform:translate(50%,0);pointer-events:auto}
+.fab:hover{background:var(--teal-soft);border-color:var(--teal3)}
+@media(max-width:760px){.cmp{grid-template-columns:1fr auto;grid-template-areas:"h v" "b b" "m m"}
+ .cmp-b{height:22px}}
+
+/* ════════ البطاقة الموحّدة ════════ */
+.quota{padding:20px 20px 18px}
+.qhead{align-items:center}
+.qring{position:relative;width:74px;height:74px;flex:none}
+.qring svg{width:74px;height:74px;display:block}
+.qring circle{transition:stroke-dashoffset 1.1s var(--e)}
+.qring b{position:absolute;inset:0;display:grid;place-content:center;padding-bottom:11px;
+ font-family:"IBM Plex Mono",monospace;font-size:15px;font-weight:600;color:var(--ink)}
+.qring em{position:absolute;inset:auto 0 15px 0;text-align:center;font-style:normal;font-size:9px;color:var(--muted)}
+.quota .btn{min-height:50px}
+.qhintx{margin:13px 0 0;font-size:12px;color:var(--muted);text-align:center;
+ border-top:1px dashed var(--line);padding-top:13px}
+.quota .tlog{margin-top:15px}
+@media(max-width:760px){
+ .qhead{flex-wrap:wrap}
+ .qring{width:60px;height:60px;order:-1;margin-inline-start:auto}
+ .qring svg{width:60px;height:60px}
+ .qring b{font-size:13px;padding-bottom:9px}
+ .qring em{font-size:8px;bottom:11px}
+}
+
+/* ════════ توزيع الخطوط وفق دليل هوية «خطوة» ════════ */
+/* Zain: العناوين وعناوين الأقسام فقط */
+h1,h2,h3{font-family:"Zain",sans-serif;font-weight:800}
+h3{font-weight:700}
+
+/* IBM Plex Sans Arabic: كل النصوص والأزرار والحقول والقوائم */
+.btn,.golink,.gopen,.filter,.startbtn,.qbtn,.movebtn,.lnk2,.ghost,.tabs button,
+input,select,textarea,label,.chip,.pill{font-family:"IBM Plex Sans Arabic",sans-serif}
+.btn{font-weight:600;letter-spacing:0}
+.golink,.gopen{font-weight:600}
+
+/* التسميات العريضة الصغيرة: Plex بوزن ٦٠٠ لا Zain */
+.qhead b,.sug b,.pickbar b,.empty b,.wkt,.dbadge b,.tdh b,.allgood b,.goalwin b,
+.cmp-h b,.tdt b,.nmx b,.nm b,.tname b,.bn b,.lninfo b{
+ font-family:"IBM Plex Sans Arabic",sans-serif;font-weight:600}
+.empty b{font-weight:700;font-size:17px}
+.wkt{font-weight:600}
+.board td.tdname{font-family:"IBM Plex Sans Arabic",sans-serif;font-weight:600;font-size:16px}
+
+/* Reem Kufi: الشعار وحرف الحساب فقط */
+.wordmark,.brand{font-family:"Reem Kufi",sans-serif;font-weight:600}
+.wordmark{font-size:42px;letter-spacing:0}
+.brand{font-weight:600;font-size:22px}
+.brandsub{font-family:"IBM Plex Sans Arabic",sans-serif;font-weight:400;font-size:12.5px;
+ color:var(--muted);letter-spacing:.06em}
+.avatar,.mn .av,.gstud .gav,.fchip .fav{font-family:"Reem Kufi",sans-serif;font-weight:600}
+.brand-mark{font-family:"Reem Kufi",sans-serif;font-weight:600}
+
+/* IBM Plex Mono: الأرقام فقط */
+.num,.hst .hv,.stat .val,.rmid b,.qring b,.rank,.dg,.pad button,.hint code,
+.gbig,.cmp-v,.prow b,.qnum b,.wk b,.dbadge i{font-family:"IBM Plex Mono",monospace}
+.hst .hv small,.stat .val small,.gbig small{font-family:"IBM Plex Sans Arabic",sans-serif}
+
+/* اقتباس الفائدة: نص عادي مقروء */
+.ben.big .btxt{font-family:"IBM Plex Sans Arabic",sans-serif;font-weight:400;line-height:2.1}
+.quote{font-family:"Zain",sans-serif;font-weight:800}
+
+.prof{background:linear-gradient(120deg,var(--teal-soft),var(--card) 68%);border-color:#CFE0D8}
+.codebox2{font-family:"IBM Plex Mono",monospace;font-size:13.5px;letter-spacing:.18em;color:var(--teal);
+ background:var(--teal-soft);border-radius:8px;padding:3px 10px;display:inline-block;direction:ltr}
+.supcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:13px}
+.supcard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:17px;
+ box-shadow:var(--s1);position:relative;overflow:hidden;transition:.35s var(--e)}
+.supcard::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--gc)}
+.supcard:hover{box-shadow:var(--s2);transform:translateY(-2px)}
+.sup-h{display:flex;align-items:center;gap:11px}
+.sup-b{display:flex;align-items:center;gap:18px;margin-top:14px;padding-top:13px;border-top:1px solid var(--line);flex-wrap:wrap}
+.sup-b>div{display:flex;flex-direction:column;gap:3px}
+.k2{font-size:11px;color:var(--muted)}
+.sup-b b{font-size:17px}
+
+/* ════════ المتصدرون ════════ */
+.bwrap2{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.seg2{display:flex;background:#E9EBE4;border-radius:999px;padding:4px;gap:3px}
+.seg2 button{border:0;background:transparent;border-radius:999px;padding:8px 16px;font-size:13px;
+ color:var(--muted);transition:.28s var(--e);white-space:nowrap;
+ font-family:"IBM Plex Sans Arabic",sans-serif}
+.seg2 button.on{background:var(--card);color:var(--ink);font-weight:600;box-shadow:var(--s1)}
+.seg2 button:hover:not(.on){color:var(--ink2)}
+.board2{padding-bottom:16px}
+.b2h{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.b2s{display:flex;gap:14px;font-size:12px;color:var(--muted);text-align:left}
+.b2s b{color:var(--ink);font-size:15px;display:block}
+.myrank{display:flex;align-items:center;gap:9px;background:var(--teal-soft);border:1px solid #CFE0D8;
+ border-radius:14px;padding:11px 15px;margin-top:14px;font-size:12.5px;color:var(--teal)}
+.myrank b{font-size:19px;color:var(--teal)}
+.sep2{width:1px;height:20px;background:#BFD7CC;margin:0 4px}
+.blist{margin-top:14px;display:flex;flex-direction:column;gap:6px}
+.brow{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:15px;
+ border:1px solid transparent;transition:.25s var(--e);cursor:default}
+.brow[onclick]{cursor:pointer}
+.brow:nth-child(odd){background:var(--bg-soft)}
+.brow:hover{background:var(--teal-soft);border-color:#DCE7E1}
+.brow.me{background:linear-gradient(90deg,var(--teal-soft),var(--bg-soft) 75%);border-color:#CFE0D8}
+.brow.top{background:var(--card);border-color:var(--line);box-shadow:var(--s1)}
+.brow.t1{border-color:#E6D6AF;background:linear-gradient(90deg,var(--gold-soft),var(--card) 70%)}
+.bpos{width:30px;flex:none;display:grid;place-items:center}
+.pnum{font-size:14px;color:var(--muted)}
+.medal{width:26px;height:26px;border-radius:9px;display:grid;place-items:center;color:#fff;
+ font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600}
+.medal.m1{background:var(--gold)}
+.medal.m2{background:#94A29A}
+.medal.m3{background:#A9805A}
+.binfo{flex:1;min-width:0}
+.binfo b{display:block;font-family:"IBM Plex Sans Arabic",sans-serif;font-weight:600;font-size:14.5px;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.binfo>span{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--muted);margin-top:2px}
+.binfo .num{color:var(--ink2)}
+.tick{color:var(--teal);font-size:13px}
+.bmeter{width:88px;flex:none;height:7px;border-radius:99px;background:#EAEAE2;overflow:hidden}
+.bmeter i{display:block;height:100%;width:0;border-radius:99px;transition:width .9s var(--e)}
+.bpct{width:44px;flex:none;text-align:left;font-size:13.5px;font-weight:600}
+.b2f{margin-top:14px;padding-top:13px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted)}
+.b2f b{color:var(--ink)}
+@media(max-width:760px){
+ .bmeter{display:none}
+ .brow{padding:10px;gap:9px}
+ .bpct{width:40px;font-size:13px}
+ .binfo b{font-size:14px}
+ .seg2 button{padding:8px 13px;font-size:12.5px}
+}
+
+/* ════════ وضوح النص ════════ */
+:root{--muted:#5F736C}                     /* أغمق قليلًا لتباين أوضح */
+body{color:var(--ink)}
+.eyebrow{color:#68796F}
+
+/* المتصدرون: خط أوضح وأثقل */
+.binfo b{font-weight:700;font-size:15.5px;color:var(--ink);letter-spacing:0}
+.binfo>span{font-size:12.5px;color:#5F736C;font-weight:500}
+.binfo .num{color:var(--ink);font-weight:600}
+.bpct{font-size:15px;font-weight:700;width:50px}
+.pnum{font-size:15px;font-weight:600;color:var(--ink2)}
+.medal{font-weight:700;font-size:14px}
+.b2s b{font-size:16px;font-weight:700}
+.b2s{color:#5F736C;font-weight:500}
+.myrank{font-size:13.5px;font-weight:600}
+.myrank b{font-size:21px;font-weight:700}
+.b2f{color:#5F736C;font-size:12px;font-weight:500}
+.brow{padding:12px}
+.brow:nth-child(odd){background:#F1F2EC}
+.brow.t1{border-color:#DFCB9C}
+.tick{font-weight:700}
+
+/* تحسين عام للنصوص الثانوية الصغيرة */
+.chip{color:#5F736C;font-weight:500}
+.nmx span,.tname span,.bn span,.lninfo span,.cmp-h span{color:#5F736C;font-weight:500}
+.stat .lab,.hk{font-weight:500}
+.dvals{color:#5F736C;font-weight:500}
+.qhead p,.sug p,.allgood p,.empty p{color:#5F736C}
+@media(max-width:760px){
+ .binfo b{font-size:15px}
+ .binfo>span{font-size:12px}
+ .bpct{font-size:14.5px;width:46px}
+}
+
+/* ════════ إصلاح سطر مقارنة الصفوف ════════ */
+.cmp-h{display:flex;flex-direction:column;align-items:flex-start;gap:3px;overflow:hidden}
+.cmp-h b{font-size:16px;font-weight:700;color:var(--ink);white-space:nowrap}
+.cmp-sub{display:block;max-width:100%;font-size:12.5px;color:#5F736C;font-weight:500;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmp-cnt{display:inline-flex;align-items:baseline;gap:4px;white-space:nowrap;
+ background:var(--bg-soft);border:1px solid var(--line);border-radius:999px;padding:2px 10px;
+ font-size:11.5px;color:#5F736C;font-weight:500;margin-top:2px}
+.cmp-cnt .num{color:var(--ink);font-weight:600;font-size:12.5px}
+.cmp{align-items:start;padding:16px 0}
+.cmp-v{align-self:center}
+@media(max-width:760px){
+ .cmp{grid-template-columns:1fr auto;grid-template-areas:"h v" "b b" "m m";gap:8px 12px}
+ .cmp-v{align-self:start;font-size:20px}
+ .cmp-h b{font-size:15px}
+}
+
+/* ════════ مخطط الفصل ════════ */
+.serlist{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.ser{display:flex;align-items:center;gap:11px;background:var(--bg-soft);border:1px solid var(--line);
+ border-radius:14px;padding:11px 13px}
+.sicon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;font-size:17px;flex:none}
+.sinfo2{flex:1;min-width:0}
+.sinfo2 b{display:block;font-family:"IBM Plex Sans Arabic",sans-serif;font-weight:700;font-size:14.5px;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sinfo2>span{font-size:12px;color:#5F736C;font-weight:500}
+.sinfo2 .num{color:var(--ink);font-weight:600}
+.wkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:8px;margin-top:16px;
+ padding-top:15px;border-top:1px solid var(--line)}
+.wcell{position:relative;text-align:right;background:var(--card);border:1px solid var(--line);
+ border-radius:13px;padding:10px 11px;transition:.25s var(--e);min-height:72px;
+ display:flex;flex-direction:column;gap:3px}
+.wcell:hover{border-color:var(--teal3);transform:translateY(-2px);box-shadow:var(--s1)}
+.wcell.cur{border-color:var(--gold);background:var(--gold-soft)}
+.wcell.past{opacity:.62}
+.wcell.empty2{border-style:dashed;background:transparent}
+.wn{font-size:11px;color:#5F736C;font-weight:600}
+.wn .num{font-size:12.5px;color:var(--ink)}
+.wt{font-size:12px;font-weight:600;color:var(--ink);line-height:1.5;
+ display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.wt.em{color:var(--muted);font-weight:400}
+.wv{font-size:11px;color:#5F736C;margin-top:auto}
+.wv .num{color:var(--ink);font-weight:600}
+.wnow{position:absolute;top:-7px;left:8px;background:var(--gold);color:#fff;font-size:9px;
+ font-weight:700;border-radius:999px;padding:1px 7px}
+.serprev{margin-top:14px;background:var(--teal-soft);border:1px solid #CFE0D8;border-radius:13px;
+ padding:12px 14px;font-size:13px;color:var(--teal)}
+.serprev b{font-size:16px}
+.serprev span{display:block;margin-top:4px;font-size:11.5px;color:#5F736C}
+.range{margin:7px 0 0;font-size:12.5px;color:#5F736C;font-weight:500;
+ background:var(--bg-soft);border:1px solid var(--line);border-radius:10px;padding:6px 11px;display:inline-block}
+.range b{color:var(--ink);font-size:14px}
+</style>
+</head>
+<body><div id="app"><div id="shell"></div><div id="mroot"></div><div id="troot"></div></div>
+<script>
+/* ════════ الاتصال بـ Supabase ════════ */
+const CFG={url:'https://benqmepnybminxeyubqn.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJlbnFtZXBueWJtaW54ZXl1YnFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0MzY2MTgsImV4cCI6MjEwNDAxMjYxOH0.QEr3NgrRJwKVbO8heYznSPmK5BpVmi2GgAyGoHleAzE'};
+let TOKEN=localStorage.getItem('kh_tok')||'', BUSY=0;
+function persist(){}                       /* البيانات في الخادم لا في الجهاز */
+async function rpc(fn,args,retry){
+ retry=retry||0;
+ try{
+  const r=await fetch(CFG.url+'/rest/v1/rpc/'+fn,{method:'POST',
+   headers:{apikey:CFG.key,Authorization:'Bearer '+CFG.key,'Content-Type':'application/json'},
+   body:JSON.stringify(args||{})});
+  const txt=await r.text(); let d=null;
+  try{d=txt?JSON.parse(txt):null}catch(_){}
+  if(!r.ok){
+   const msg=(d&&(d.message||d.hint||d.details))||('تعذّر الاتصال ('+r.status+')');
+   if(/الجلسة منتهية/.test(msg)){forceLogout();throw new Error('انتهت جلستك — سجّل الدخول من جديد.')}
+   throw new Error(msg)}
+  return d;
+ }catch(e){
+  if(e.name==='TypeError'&&retry<2){await new Promise(r=>setTimeout(r,500*(retry+1)));
+   return rpc(fn,args,retry+1)}
+  if(e.name==='TypeError')throw new Error('تعذّر الوصول للخادم — تحقق من اتصالك.');
+  throw e}}
+function setBusy(b){BUSY=b;document.body.style.cursor=b?'progress':'';
+ document.querySelectorAll('.modal .btn,.pad button,.btn').forEach(x=>{try{x.disabled=!!b}catch(_){}})}
+function forceLogout(){TOKEN='';localStorage.removeItem('kh_tok');
+ S={role:null,me:null,view:'week',student:null,modal:null,buf:''};lastKey='';drawLogin()}
+function overlayMsg(t){shell().innerHTML='<div class="loading"><div style="text-align:center">'+
+ '<div class="spin" style="margin:0 auto 14px"></div><p style="color:var(--muted);font-size:13.5px">'+t+'</p></div></div>'}
+
+/* ════════ الزمن/* ════════ الزمن: اليوم يبدأ ٣ فجرًا بتوقيت الرياض ════════ */
+const TZ=3,DAY_START=3;
+const riyadh=()=>new Date(Date.now()+TZ*3600000);
+const localToday=()=>{const d=riyadh();d.setUTCHours(d.getUTCHours()-DAY_START);return d.toISOString().slice(0,10)};
+const todayISO=()=>SRVDAY||localToday();
+const dayISO=n=>addD(todayISO(),-n);
+const addD=(iso,n)=>{const d=new Date(iso+'T00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
+const dow=iso=>new Date(iso+'T00:00Z').getUTCDay();
+const weekStart=iso=>addD(iso,-dow(iso));            /* الأسبوع يبدأ الأحد */
+const eachDay=(a,b)=>{const o=[];if(!a||!b||b<a)return o;let d=a;while(d<=b){o.push(d);d=addD(d,1)}return o};
+const DAYS=['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const DSH=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
+const dayName=iso=>DAYS[dow(iso)];
+function untilClose(){const n=riyadh(),h=n.getUTCHours(),m=n.getUTCMinutes();
+ return{h:(DAY_START-h-1+24)%24,m:59-m}}
+const closeText=()=>{const t=untilClose();return t.h?`${t.h} ساعة و${t.m} دقيقة`:`${t.m} دقيقة`};
+
+/* ════════ البيانات (تُملأ من الخادم) ════════ */
+let GRADES=[],SUPERVISORS=[],STUDENTS=[],MYENT=[],PICKED=[],BENALL=[],PLAN={},
+    TERM={start:null,weeks:12},SRVDAY='',SRVWS='',ADMIN={code:'',name:''};
+const gradeById=i=>GRADES.find(g=>g.id===i)||{id:i,name:'',c:'var(--teal)'};
+const studentByCode=c=>STUDENTS.find(s=>s.code===c);
+const activeStudents=()=>STUDENTS.filter(s=>s.active!==false);
+const supByCode=c=>SUPERVISORS.find(s=>s.code===c);
+const planOf=(g,ws)=>PLAN[g+'|'+ws]||{read:null,listen:null};
+const termWeeks=()=>{const st=TERM.start||weekStart(todayISO());
+ return [...Array(TERM.weeks)].map((_,i)=>addD(st,i*7))};
+const weekNo=ws=>{const st=TERM.start||weekStart(todayISO());
+ return Math.round((new Date(ws+'T00:00Z')-new Date(st+'T00:00Z'))/604800000)+1};
+
+/* ════════ فهارس تُبنى من حزمة واحدة ════════ */
+const EMPTY={r:0,l:0,list:[]};
+let DAY={},WK={},WKH={},BENC={},BENG={},BEN=[],PICKS=[],ENTRIES=[];
+const meCode=()=>(S&&S.me&&S.me.code)||'';
+function absorb(d){
+ GRADES=d.grades||[]; SUPERVISORS=d.supervisors||[]; STUDENTS=d.students||[];
+ SRVDAY=d.today; SRVWS=d.week_start;
+ TERM={start:(d.term&&d.term.start)||weekStart(d.today),weeks:(d.term&&d.term.weeks)||12};
+ PLAN={}; (d.plans||[]).forEach(p=>PLAN[p.grade+'|'+p.week]={read:p.read,listen:p.listen});
+ DAY={}; (d.day_totals||[]).forEach(x=>DAY[x.code+'|'+x.d]={r:x.r,l:x.l,list:[]});
+ WKH={}; WK={};
+ (d.week_totals||[]).forEach(x=>{WKH[x.code+'|'+x.week]={r:x.r,l:x.l};
+  if(x.week===d.week_start)WK[x.code]={r:x.r,l:x.l}});
+ MYENT=d.my_entries||[]; ENTRIES=MYENT;
+ BENALL=d.benefits||[]; PICKED=d.picks||[]; PICKS=PICKED.map(e=>e.id);
+ BEN=BENALL.slice(); BENC={}; BENG={};
+ for(const e of BEN){(BENC[e.code]||(BENC[e.code]=[])).push(e);
+  const st=studentByCode(e.code); if(st)(BENG[st.grade]||(BENG[st.grade]=[])).push(e)}
+ const mc=(d.me&&d.me.code)||'';
+ MYENT.forEach(e=>{const k=mc+'|'+e.date;
+  if(!DAY[k])DAY[k]={r:0,l:0,list:[]};
+  if(!DAY[k].list)DAY[k].list=[];
+  DAY[k].list.push(e)});
+ if(d.me&&d.me.role==='admin')ADMIN={code:d.me.code,name:d.me.name};
+}
+function reindex(){}                        /* الفهارس تُبنى في absorb */
+function buildWKH(){}
+const dayOf=(c,d)=>DAY[c+'|'+d]||EMPTY;
+const weekOf=c=>WK[c]||{r:0,l:0};
+const wkAt=(c,ws)=>WKH[c+'|'+ws]||{r:0,l:0};
+const entriesOf=(c,d)=>{if(d)return (dayOf(c,d).list)||[];
+ return c===meCode()?MYENT:(BENC[c]||[])};
+const benOf=code=>BENC[code]||[];
+const benGrade=g=>BENG[g]||[];
+const pickedEntries=()=>PICKED;
+const isPicked=id=>PICKS.indexOf(id)>-1;
+function memo(k,fn){return fn()}
+
+/* ════════ حسابات الأسبوع ════════ */
+const WS=()=>SRVWS||weekStart(todayISO());
+function buildWKH(){WKH={};
+ for(const e of ENTRIES){const k=e.code+'|'+weekStart(e.date),w=WKH[k]||(WKH[k]={r:0,l:0});
+  if(e.kind==='read')w.r+=e.v;else w.l+=e.v}}
+function targetAt(s,ws){const p=planOf(s.grade,ws);
+ return{r:p.read?p.read.target:0,l:p.listen?p.listen.target:0}}
+function pctAt(s,ws){const t=targetAt(s,ws),d=wkAt(s.code,ws),tot=t.r+t.l;
+ if(!tot)return null;                        /* لا خطة لهذا الأسبوع */
+ return Math.min(100,Math.round(((Math.min(d.r,t.r)+Math.min(d.l,t.l))/tot)*100))}
+function pastWeeks(n){const out=[];let w=WS();
+ for(let i=0;i<(n||8);i++){out.push(w);w=addD(w,-7)}return out}
+function termOf(s){const ws=pastWeeks(12).map(w=>pctAt(s,w)).filter(x=>x!==null);
+ if(!ws.length)return{avg:0,weeks:0,full:0};
+ return{avg:Math.round(ws.reduce((a,b)=>a+b,0)/ws.length),weeks:ws.length,
+        full:ws.filter(x=>x>=100).length}}
+function targetOf(s){const p=planOf(s.grade,WS());
+ return{r:p.read?p.read.target:0,l:p.listen?p.listen.target:0}}
+function doneOf(code){const w=weekOf(code);return{r:w.r,l:w.l}}
+const pct=(a,b)=>b>0?Math.min(100,Math.round(a/b*100)):(a>0?100:0);
+function weekPct(s){const t=targetOf(s),d=doneOf(s.code);
+ const tot=t.r+t.l;if(!tot)return 0;
+ return Math.min(100,Math.round(((Math.min(d.r,t.r)+Math.min(d.l,t.l))/tot)*100))}
+function dayIndex(){return eachDay(WS(),todayISO()).length}      /* اليوم كم في الأسبوع (1..7) */
+function daysLeft(){return 7-dayIndex()+1}
+/* مقدار اليوم:
+   الأساس = مقدار الأسبوع ÷ ٧ (ثابت ومفهوم)
+   فإن تأخّر، يُوزَّع المتبقي على الأيام الباقية (تعويض ذاتي)
+   بسقف ضعف الأساس حتى لا يستحيل اللحاق                        */
+function dayQuota(s){
+ const t=targetOf(s),d=doneOf(s.code),td=dayOf(s.code,todayISO()),dl=daysLeft();
+ const mk=(tot,done,doneToday)=>{
+  if(!tot)return{q:0,left:0,done:doneToday,base:0,catch:0};
+  const base=Math.ceil(tot/7);
+  const before=done-doneToday;                     /* إنجاز الأيام السابقة */
+  const rest=Math.max(0,tot-before);               /* ما تبقّى من مقرر الأسبوع */
+  const need=Math.ceil(rest/dl);                   /* حصة اليوم لو وُزّع بالتساوي */
+  const q=Math.max(0,Math.min(need,base*2));       /* سقف: ضعف الأساس */
+  return{q,left:Math.max(0,q-doneToday),done:doneToday,base,catch:Math.max(0,q-base)}};
+ const r=mk(t.r,d.r,td.r), l=mk(t.l,d.l,td.l);
+ return{r,l,dl,doneAll:r.left===0&&l.left===0,
+   weekDone:d.r>=t.r&&d.l>=t.l}}
+function suggest(s){const q=dayQuota(s);return{r:q.r.left,l:q.l.left,dl:q.dl}}
+function paceState(s){const p=weekPct(s),exp=Math.round(dayIndex()/7*100);
+ if(p>=100)return{k:'done',t:'أتممت مقرر الأسبوع'};
+ if(p>=exp)return{k:'ok',t:'في المسار'};
+ if(p>=exp-20)return{k:'mid',t:'قريب من المسار'};
+ return{k:'off',t:'متأخر عن المسار'}}
+const codeOfGrade=g=>STUDENTS.filter(s=>s.grade===g&&s.active!==false);
+function myStudents(){if(S.role==='admin')return activeStudents();
+ const sv=supByCode(S.me.code);return sv?codeOfGrade(sv.grade):STUDENTS}
+function lastActive(code){for(let k=0;k<14;k++)if(dayOf(code,dayISO(k)).list.length)return k;return 99}
+
+/* ════════ حالة ════════ */
+let S={role:null,me:null,view:'week',student:null,modal:null,buf:''};
+const $=i=>document.getElementById(i);
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shell=()=>$('shell');
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function toast(m){const r=$('troot');r.innerHTML=`<div class="toast">${esc(m)}</div>`;
+ clearTimeout(toast._t);toast._t=setTimeout(()=>r.innerHTML='',2400)}
+
+/* ════════ الدخول ════════ */
+function loginHTML(){const b=S.buf;
+ return `<div class="login"><div class="lcard" id="lc">
+  <div class="brand-mark">خ</div>
+  <h1 class="wordmark">خطوة</h1>
+  <p class="brandsub">المتوسط · الإنجاز الأسبوعي</p>
+  <p class="sub">مقرر الأسبوع بين يديك — سجّل إنجازك واكتب فائدتك.</p>
+  <div class="codes" id="cw">${[0,1,2,3].map(i=>
+    `<div class="dg ${b[i]?'f':''} ${b.length===i?'a':''}">${b[i]?`<span>${b[i]}</span>`:''}</div>`).join('')}</div>
+  <div class="err"></div>
+  <div class="pad">${[1,2,3,4,5,6,7,8,9].map(n=>`<button onclick="tap(event,'${n}')">${n}</button>`).join('')}
+   <button onclick="tap(event,'back')" aria-label="حذف">⌫</button>
+   <button onclick="tap(event,'0')">0</button>
+   <button onclick="tap(event,'clear')" aria-label="مسح">C</button></div>
+  <button class="btn" onclick="login()">دخول</button>
+  <p class="hint">أدخل الرمز الذي سلّمك إياه مشرفك.</p>
+ </div></div>`}
+function paintDigits(){const w=$('cw');if(!w)return;
+ [...w.children].forEach((d,i)=>{const v=S.buf[i]||'';
+  d.className='dg'+(v?' f':'')+(S.buf.length===i?' a':'');
+  if(v!==(d.dataset.v||'')){d.innerHTML=v?'<span>'+v+'</span>':'';d.dataset.v=v}})}
+function loginErr(m){const w=$('cw'),e=document.querySelector('.err');
+ if(e)e.textContent=m;S.buf='';if(w){w.classList.add('bad');
+  setTimeout(()=>{w.classList.remove('bad');paintDigits()},480)}
+ clearTimeout(loginErr._t);loginErr._t=setTimeout(()=>{if(e)e.textContent=''},3200)}
+function fill(c){S.buf=c;paintDigits();setTimeout(login,240)}
+function tap(e,k){
+ if(e){const b=e.currentTarget,r=b.getBoundingClientRect(),d=document.createElement('span');
+  d.className='ripple';d.style.background='rgba(47,75,216,.22)';
+  d.style.left=(e.clientX-r.left)+'px';d.style.top=(e.clientY-r.top)+'px';
+  d.style.width=d.style.height='20px';b.appendChild(d);setTimeout(()=>d.remove(),560)}
+ if(k==='back')S.buf=S.buf.slice(0,-1);else if(k==='clear')S.buf='';
+ else if(S.buf.length<4)S.buf+=k;
+ paintDigits();if(S.buf.length===4)setTimeout(login,220)}
+function drawLogin(){shell().innerHTML=loginHTML()}
+async function login(){
+ const v=S.buf; if(v.length<4)return;
+ setBusy(1);
+ try{ const d=await rpc('login',{p_code:v});
+  TOKEN=d.token; localStorage.setItem('kh_tok',TOKEN);
+  const c=$('lc'); if(c&&!reduced)c.classList.add('leaving');
+  await new Promise(r=>setTimeout(r,reduced?0:320));
+  await boot();
+ }catch(e){ setBusy(0); loginErr(e.message||'تعذّر الدخول'); return }
+ setBusy(0)}
+async function boot(){
+ const d=await rpc('bootstrap',{p_token:TOKEN});
+ absorb(d);
+ const me=d.me, view=me.role==='student'?'week':me.role==='supervisor'?'class':'home';
+ S={...S,role:me.role,me:{code:me.code,name:me.name,grade:me.grade},view,buf:'',student:null,modal:null};
+ lastKey=''; renderShell()}
+async function refresh(){const d=await rpc('bootstrap',{p_token:TOKEN});absorb(d);lastKey='';renderShell()}
+async function logout(){try{await rpc('logout',{p_token:TOKEN})}catch(_){}
+ forceLogout()}
+function topbar(){const rn={student:'طالب',supervisor:'مشرف',admin:'مشرف تنفيذي'}[S.role];
+ const g=S.role==='student'?gradeById(S.me.grade).name:S.role==='supervisor'?gradeById(supByCode(S.me.code).grade).name:'';
+ return `<header class="top"><div class="wrap">
+  <div class="brand"><span class="brand-mark sm">خ</span>
+   <span class="bwrap">خطوة<em>المتوسط</em></span></div>
+  <div class="spacer"></div>
+  <div class="who"><b>${esc(S.me.name)}</b>${rn}${g?' · '+g:''}</div>
+  <button class="ghost" onclick="logout()">خروج</button></div></header>`}
+function tabs(l){return `<div class="tabs" id="tabs">${l.map(t=>
+ `<button role="tab" aria-selected="${S.view===t.id}" onclick="go('${t.id}')">${t.label}</button>`).join('')}
+ <span class="tind" id="tind"></span></div>`}
+function go(v){S.view=v;S.student=null;PAGE=STEP;BPAGE=STEP;MROWS=30;BROWS=40;renderShell()}
+function viewStudent(c){S.student=c;renderShell()}
+
+/* ════════ عناصر مشتركة ════════ */
+function statStrip(items){return `<div class="stats">${items.map((x,i)=>
+ `<div class="stat rv" style="--i:${i};--sc:${x.c||'var(--brand)'}">
+   <div class="lab">${x.lab}</div>
+   <div class="val"><span class="num" data-to="${x.val}" ${x.sfx?`data-suffix="${x.sfx}"`:''}>0</span>${x.sub?` <small>${x.sub}</small>`:''}</div>
+  </div>`).join('')}</div>`}
+function cover(kind,color,p){const H=104,fh=Math.max(3,H*p/100);
+ return kind==='read'
+ ? `<svg viewBox="0 0 88 118" aria-hidden="true">
+     <rect x="9" y="6" width="70" height="${H}" rx="7" fill="${color}" opacity=".15"></rect>
+     <rect class="fb" x="9" y="${6+H-fh}" width="70" height="${fh}" rx="7" fill="${color}"></rect>
+     <rect x="9" y="6" width="70" height="${H}" rx="7" fill="none" stroke="${color}" stroke-opacity=".45"></rect>
+     <rect x="15" y="6" width="2.5" height="${H}" fill="#fff" opacity=".5"></rect>
+     ${[28,40,52].map((y,k)=>`<rect x="25" y="${y}" width="${k===2?26:44}" height="3" rx="1.5" fill="#fff" opacity=".7"></rect>`).join('')}
+    </svg>`
+ : `<svg viewBox="0 0 88 118" aria-hidden="true">
+     <rect x="9" y="6" width="70" height="${H}" rx="16" fill="${color}" opacity=".15"></rect>
+     <rect class="fb" x="9" y="${6+H-fh}" width="70" height="${fh}" rx="16" fill="${color}"></rect>
+     <rect x="9" y="6" width="70" height="${H}" rx="16" fill="none" stroke="${color}" stroke-opacity=".45"></rect>
+     <g transform="translate(44,48)"><path d="M-15 6v-3a15 15 0 0130 0v3M-15 6h6v11h-6zM9 6h6v11H9z"
+       fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" opacity=".92"/></g>
+     <g transform="translate(44,86)">${[-18,-11,-4,3,10,17].map((x,k)=>{const h=[7,15,22,11,18,8][k];
+       return `<rect x="${x}" y="${-h/2}" width="4" height="${h}" rx="2" fill="#fff" opacity=".75"></rect>`}).join('')}</g>
+    </svg>`}
+
+/* ════════ الطالب ════════ */
+function weekTrack(s,dark){
+ const ws=WS(),t=targetOf(s),per=(t.r+t.l)/7||1;
+ return `<div class="track">${eachDay(ws,addD(ws,6)).map(d=>{
+  const x=dayOf(s.code,d),tot=x.r+x.l,fut=d>todayISO();
+  const per=(t.r+t.l)/7||1, full=tot>=per;
+  return `<div class="day ${d===todayISO()?'today':''} ${full?'full':''} ${!tot&&!fut?'miss':''}" style="--k:${dow(d)}"
+    role="button" tabindex="0" data-inf="${dayName(d)} ${d} — ${x.r} صفحة · ${x.l} دقيقة"
+    onclick="cellInfo(this,'winfo')" onkeydown="if(event.key==='Enter')cellInfo(this,'winfo')">
+   <div class="dn">${DSH[dow(d)]}</div>
+   <div class="dv">${fut?'·':full?'<span class="chk">✓</span>':(tot||'٠')}</div>
+   <div class="fill"><i data-w="${fut?0:Math.min(100,Math.round(tot/per*100))}"></i></div></div>`}).join('')}</div>`}
+function weekView(){
+ const me=S.me,g=gradeById(me.grade),p=planOf(me.grade,WS());
+ const t=targetOf(me),d=doneOf(me.code),wp=weekPct(me),sg=suggest(me),ps=paceState(me);
+ const R=64,C=2*Math.PI*R,today=dayOf(me.code,todayISO());
+ return `${'' }
+ <div class="hero rv hero-week"><div class="htop">
+   <div class="hgreet">
+    <span class="hpill"><span class="hdot"></span>${dayName(todayISO())} · اليوم <span class="num">${dayIndex()}</span> من ٧</span>
+    <h2>أسبوعك يا ${esc(me.name.split(' ')[0])}</h2>
+    <p class="hsub">${ps.k==='done'?'أتممت مقررك — بقيت الزيادة لك.'
+      :ps.k==='off'?'أمامك فرصة للّحاق بالمسار قبل نهاية الأسبوع.'
+      :'أنت في المسار — واصل بثبات.'}</p></div>
+   <div class="hst">
+    <div><div class="hk">أنجزت من الأسبوع</div><div class="hv am"><span class="num" data-to="${wp}" data-suffix="%">0%</span></div></div>
+    <div><div class="hk">باقي من الأيام</div><div class="hv"><span class="num" data-to="${sg.dl}">0</span> <small>يوم</small></div></div>
+    <div><div class="hk">اليوم</div><div class="hv gr"><span class="num" data-to="${today.r}">0</span><small>ص</small>
+      <span class="num" data-to="${today.l}" style="margin-right:8px">0</span><small>د</small></div></div>
+   </div></div>
+  <div class="wmeter" aria-label="تقدّمك في الأسبوع">
+   <span class="wm-lab">بداية الأسبوع</span>
+   <span class="wm-track"><i data-w="${wp}"></i>
+    <b class="wm-now" style="right:${Math.round(dayIndex()/7*100)}%"><em>أنت هنا اليوم</em></b></span>
+   <span class="wm-lab">ختم المقرر</span>
+  </div>
+  ${weekTrack(me)}
+  <div class="cellinfo" id="winfo" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:#9CB2A9">
+   اضغط أي يوم لتفاصيله.</div></div>
+
+ ${(()=>{const q=dayQuota(me),R=30,C=2*Math.PI*R;
+  const row=(x,lab,unit,cls)=>x.q?`<div class="qrow ${x.left?'':'ok'} ${cls}">
+    <span class="qlab">${lab}</span>
+    <span class="qbar"><i data-w="${Math.min(100,Math.round(x.done/x.q*100))}"></i></span>
+    <span class="qnum">${x.left?`باقي <b class="num">${x.left}</b> ${unit}`:'<b>✓ تمّ</b>'}</span></div>`:'';
+  const catchUp=q.r.catch+q.l.catch;
+  const head=q.weekDone?['✅','أتممت مقرر الأسبوع','أي زيادة بعد هذا ربح خالص — تقدر تراجع أو تكمل.']
+   :q.doneAll?['✓','أنجزت مقدار اليوم','بإمكانك الزيادة الآن، وكل زيادة تقرّبك من ختم الأسبوع.']
+   :catchUp?['⏳','مقدار اليوم مع تعويض',`تأخّرت قليلًا، فزِد على مقدارك اليوم ${catchUp} ${q.r.catch&&q.l.catch?'وحدة':q.r.catch?'صفحة':'دقيقة'} لتعود للمسار.`]
+   :['🎯','مقدار اليوم',`لو أنجزته كل يوم ختمت مقررك في موعده. يُقفل يومك ٣:٠٠ فجرًا — باقي ${closeText()}.`];
+  const list=dayOf(me.code,todayISO()).list||[];
+  const p=planOf(me.grade,WS());
+  return `<div class="quota rv ${q.weekDone?'done':q.doneAll?'ok':catchUp?'late':''}" style="--i:1">
+   <div class="qhead">
+    <span class="qi">${head[0]}</span>
+    <div style="flex:1;min-width:0"><b>${head[1]}</b><p>${head[2]}</p></div>
+    <span class="qring">
+     <svg viewBox="0 0 74 74"><circle cx="37" cy="37" r="${R}" fill="none" stroke="#EAEAE2" stroke-width="7"></circle>
+      <circle cx="37" cy="37" r="${R}" fill="none" stroke="${wp>=100?'var(--teal)':'var(--gold)'}" stroke-width="7"
+       stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}" data-off="${C*(1-wp/100)}"
+       transform="rotate(-90 37 37)"></circle></svg>
+     <b class="num" data-to="${wp}" data-suffix="%">0%</b><em>الأسبوع</em></span>
+   </div>
+   ${q.weekDone?'':`<div class="qrows">
+     ${row(q.r,'قراءة','صفحة','')}${row(q.l,'سماع','دقيقة','g')}
+     <div class="qfoot">مقدار اليوم:
+      ${[q.r.q?`<span class="num">${q.r.q}</span> صفحة`:'',q.l.q?`<span class="num">${q.l.q}</span> دقيقة`:''].filter(Boolean).join(' و')}
+      ${catchUp?' · <span class="ctag">منها تعويض</span>':''}
+      · باقٍ من الأسبوع <span class="num">${q.dl}</span> ${q.dl===1?'يوم':'أيام'}</div></div>`}
+   <button class="btn ${q.doneAll?'outline':''}" style="margin-top:16px" onclick="openLog()">
+    ${q.doneAll?'＋ سجّل زيادة':'سجّل إنجاز اليوم'}</button>
+   ${list.length?`<div class="tlog"><div class="tlh">تسجيلات اليوم
+     <span>تقدر تصحّحها أو تحذفها حتى ٣:٠٠ فجرًا</span></div>
+    ${list.map(e=>`<div class="tent">
+      <span class="dot" style="background:${e.kind==='read'?'var(--teal)':'var(--gold)'}"></span>
+      <span class="nm">${e.kind==='read'?'قراءة':'سماع'} — ${esc((e.kind==='read'?p.read:p.listen)?.title||'')}</span>
+      <span class="vv num">${e.v} ${e.kind==='read'?'ص':'د'}</span>
+      <button class="qbtn" onclick="openEdit('${e.id}')" title="تصحيح">✎</button>
+      <button class="qbtn del" onclick="delEntry('${e.id}')" title="حذف">✕</button></div>`).join('')}
+    </div>`:`<p class="qhintx">أول تسجيل اليوم يظهر هنا، وتقدر تصحّحه أو تحذفه قبل ٣:٠٠ فجرًا.</p>`}
+  </div>`})()}
+
+ <div class="sec rv" style="--i:2"><h2>مقرر هذا الأسبوع</h2>
+  <span class="chip">${g.name} · <span class="num">${WS()}</span></span></div>
+ <div class="grid ${p.read&&p.listen?'g2':''}">
+  ${p.read?courseCard(p.read,'read',d.r,t.r,g.c,3):''}
+  ${p.listen?courseCard(p.listen,'listen',d.l,t.l,g.c,4):''}
+  ${!p.read&&!p.listen?'<div class="card empty rv">ما تحدد مقرر لهذا الأسبوع بعد — راجع مشرفك.</div>':''}
+ </div>
+
+  ${weeksStrip(me)}`}
+function safeLink(u){return /^https?:\/\//i.test(String(u||''))?u:''}
+function weeksStrip(me){
+ const ws=pastWeeks(8).filter(w=>pctAt(me,w)!==null);
+ if(ws.length<2)return '';
+ const t=termOf(me);
+ return `<div class="card rv weeks" style="--i:1;margin-top:14px">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+   <div><p class="eyebrow">آخر ${ws.length} أسابيع</p><h2>أسابيعك</h2></div>
+   <span class="chip">أتممت <span class="num">${t.full}</span> من <span class="num">${t.weeks}</span> ·
+    متوسطك <span class="num">${t.avg}%</span></span></div>
+  <div class="wstrip">${ws.map((w,i)=>{const p=pctAt(me,w),C=2*Math.PI*17;
+   const lab=i===0?'هذا الأسبوع':i===1?'الماضي':'قبل '+i;
+   return `<div class="wk ${p>=100?'done':''}" title="${w}">
+    <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="17" fill="none" stroke="#EAEAE2" stroke-width="4"></circle>
+     <circle cx="22" cy="22" r="17" fill="none" stroke="${p>=100?'var(--teal)':'var(--gold)'}" stroke-width="4"
+      stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}" data-off="${C*(1-p/100)}"
+      transform="rotate(-90 22 22)"></circle></svg>
+    <b class="num">${p>=100?'✓':p+'%'}</b><span>${lab}</span></div>`}).join('')}</div></div>`}
+function courseCard(c,kind,done,target,color,i){
+ const p=pct(done,target),unit=kind==='read'?'صفحة':'دقيقة',lk=kind==='listen'?safeLink(c.link):'';
+ return `<article class="wc rv" style="--c:${color};--i:${i}">
+  <div class="cov">${cover(kind,color,p)}</div>
+  <div class="wcb">
+   <span class="kick"><span class="dot" style="background:${color}"></span>${kind==='read'?'مقرر قرائي':'مقرر سماعي'}</span>
+   <h3>${esc(c.title)}</h3><p class="by">${esc(c.by)}${c.part?` · الجزء <span class="num">${c.part}</span> من <span class="num">${c.parts}</span>`:''}</p>
+   ${c.from?`<p class="range">${kind==='read'?'صفحات هذا الأسبوع':'دقائق هذا الأسبوع'}:
+     <b class="num">${c.from}</b> — <b class="num">${c.to}</b> من <span class="num">${c.total}</span></p>`:''}
+   ${c.note?`<p class="note" onclick="this.classList.toggle('open')">${esc(c.note)}</p>`:''}
+   ${kind==='listen'?(lk?`<a class="golink" href="${esc(lk)}" target="_blank" rel="noopener noreferrer">
+     <span class="pl"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+     انتقل للمقطع <span class="arw">↗</span></a>`
+    :'<p class="nolink">لم يُضف رابط المقطع بعد — راجع مشرفك.</p>'):''}
+   <div class="prog">
+    <div class="prow"><span><b>${done}</b> من ${target} ${unit}</span>
+     <span class="num" style="font-weight:600;color:${color}">${p}%</span></div>
+    <div class="bar"><i data-w="${p}" style="background:${color}"></i></div>
+    <p style="font-size:11.5px;color:var(--muted);margin:8px 0 0">
+     ${done>=target?'أتممته — بارك الله فيك.':`باقي <span class="num">${target-done}</span> ${unit} على إتمام مقرر الأسبوع.`}</p>
+   </div></div></article>`}
+function myLogView(){
+ const me=S.me,rows=entriesOf(me.code).slice().sort((a,b)=>b.date.localeCompare(a.date));
+ if(!rows.length)return emptyArt('book','سجلك فارغ',
+   'سجّل إنجاز اليوم من صفحة «أسبوعي» ليبدأ سجلك.');
+ const by={};rows.forEach(r=>(by[r.date]=by[r.date]||[]).push(r));
+ const tot=rows.reduce((t,r)=>({r:t.r+(r.kind==='read'?r.v:0),l:t.l+(r.kind==='listen'?r.v:0)}),{r:0,l:0});
+ const days=Object.keys(by);
+ const best=days.reduce((m,d)=>{const v=by[d].reduce((a,x)=>a+x.v,0);return v>m.v?{d,v}:m},{d:'',v:0});
+ let out='',lastW='';
+ days.forEach((d,i)=>{
+  const ws=weekStart(d);
+  if(ws!==lastW){lastW=ws;const p=pctAt(me,ws);
+   out+=`<div class="wkhead rv" style="--i:${i}">
+     <span class="wkt">${ws===WS()?'هذا الأسبوع':'أسبوع '+ws}</span>
+     <span class="wkl"></span>
+     ${p===null?'<span class="chip">بلا مقرر</span>'
+      :`<span class="pill ${p>=100?'ok':'mid'}">${p>=100?'✓ أتممته':p+'%'}</span>`}</div>`}
+  const l=by[d],dr=l.filter(x=>x.kind==='read').reduce((t,x)=>t+x.v,0);
+  const dl=l.filter(x=>x.kind==='listen').reduce((t,x)=>t+x.v,0);
+  const t=targetAt(me,ws),per=(t.r+t.l)/7||1,rt=Math.min(100,Math.round((dr+dl)/per*100));
+  out+=`<div class="drow rv" style="--i:${i}">
+    <span class="dbadge ${rt>=100?'full':''}"><b>${dayName(d).replace('ال','')}</b><i class="num">${d.slice(8)}</i></span>
+    <span class="dbody">
+     <span class="dvals">
+      ${dr?`<span class="dv2"><span class="num">${dr}</span> صفحة</span>`:''}
+      ${dl?`<span class="dv2 gold"><span class="num">${dl}</span> دقيقة</span>`:''}
+      ${d===best.d?'<span class="pill mid">أعلى يوم</span>':''}
+     </span>
+     <span class="dbar"><i data-w="${rt}"></i></span></span>
+    <span class="dpct num">${rt}%</span></div>`});
+ return `${statStrip([
+  {lab:'مجموع الصفحات',val:tot.r,sub:'صفحة'},
+  {lab:'مجموع الدقائق',val:tot.l,sub:'دقيقة',c:'var(--gold)'},
+  {lab:'أيام سجّلت فيها',val:days.length,sub:'يوم',c:'var(--teal2)'},
+  {lab:'أعلى يوم',val:best.v,sub:'وحدة'}])}
+ <div class="sec rv" style="--i:3"><h2>إنجازك يومًا بيوم</h2>
+  <span class="chip">من الأحدث</span></div>
+ <div class="dlist">${out}</div>`}
+
+/* ════════ الفوائد ════════ */
+function benCard(e,i,opts){
+ const s=studentByCode(e.code);if(!s)return '';
+ const g=gradeById(s.grade),o=opts||{},pk=isPicked(e.id);
+ return `<article class="ben rv ${pk?'picked':''}" style="--i:${i};--gc:${g.c}">
+  ${pk?'<span class="ribbon">★ منتخبة</span>':''}
+  <span class="quote">”</span>
+  <p class="btxt">${esc(e.note)}</p>
+  <div class="bfoot">
+   <div class="bmeta">
+    ${o.who?`<span class="avatar" style="--gc:${g.c};width:30px;height:30px;border-radius:10px;font-size:14px">${esc(s.name.trim()[0])}</span>
+     <span class="bn"><b>${esc(s.name)}</b><span>${g.name}</span></span>`
+     :`<span class="bn"><b>${esc(e.course||'')}</b><span>${e.kind==='read'?'قراءة':'سماع'} · <span class="num">${e.date}</span></span></span>`}
+   </div>
+   <div class="bact">
+    ${o.who?`<span class="chip">${esc(e.course||'')}</span>`:''}
+    ${o.pick?`<button class="star ${pk?'on':''}" onclick="togglePick('${e.id}')"
+      title="${pk?'إزالة من المنتخبات':'ترشيح للمنتخبات'}">${pk?'★':'☆'}</button>`:''}
+   </div></div></article>`}
+function emptyArt(kind,title,sub){
+ const art={pen:'<path d="M4 20h16M6 16l9-9 3 3-9 9H6z"/>',
+  book:'<path d="M4 5h7v15H4zM20 5h-7v15h7z"/>',
+  star:'<path d="M12 4l2.4 5 5.6.8-4 3.9.9 5.5L12 16.5 7.1 19.2 8 13.7 4 9.8 9.6 9z"/>'}[kind];
+ return `<div class="card empty rv"><svg class="eart" viewBox="0 0 24 24">${art}</svg>
+  <b>${title}</b><p>${sub}</p></div>`}
+function myBenView(){
+ const list=benOf(S.me.code);
+ if(!list.length)return emptyArt('pen','ما كتبت فائدة بعد',
+   'مع كل تسجيل إنجاز تكتب فائدة، وتُحفظ هنا تلقائيًا.');
+ const mine=list.filter(e=>isPicked(e.id)).length;
+ return `${statStrip([
+   {lab:'فوائدك',val:list.length,sub:'فائدة'},
+   {lab:'من مقررات',val:new Set(list.map(e=>e.course)).size,sub:'مقرر',c:'var(--amber)'},
+   {lab:'اختيرت للمنتخبات',val:mine,sub:'فائدة',c:'var(--green)'}])}
+ <div class="sec rv" style="--i:3"><h2>فوائدي</h2><span class="chip">من الأحدث</span></div>
+ <div class="bens">${list.slice(0,BPAGE).map((e,i)=>benCard(e,4+i,{})).join('')}</div>
+ ${list.length>BPAGE?moreBtn('b',list.length-BPAGE):''}`}
+let BENF='all';
+function setBenf(f){BENF=f;BPAGE=STEP;lastKey='';renderShell()}
+function benView(){
+ const isAdmin=S.role==='admin';
+ const _s2=supByCode(S.me.code);
+ const src=isAdmin||!_s2?BEN:benGrade(_s2.grade);
+ let list=src, today=0;
+ for(let i=0;i<src.length;i++){if(src[i].date===todayISO())today++;else break}
+ if(BENF==='today')list=src.slice(0,today);
+ else if(BENF==='picked')list=pickedEntries();
+ const total=src.length;
+ return `${statStrip([
+   {lab:'فوائد اليوم',val:today,sub:'فائدة'},
+   {lab:'إجمالي الفوائد',val:total,sub:'فائدة',c:'var(--amber)'},
+   {lab:'المنتخبات',val:PICKS.length,sub:'من ٣',c:'var(--green)'}])}
+ ${isAdmin?`<div class="pickbar rv" style="--i:3">
+   <span class="si">★</span>
+   <div style="flex:1"><b>ترشيح المنتخبات (${PICKS.length} من ٣)</b>
+    <p>اضغط النجمة على أي فائدة لترشيحها — تظهر لكل الطلاب في تبويب «المنتخبات».</p></div></div>`:''}
+ <div class="filters rv" style="--i:4">
+  <button class="filter" aria-pressed="${BENF==='all'}" onclick="setBenf('all')">الكل</button>
+  <button class="filter" aria-pressed="${BENF==='today'}" onclick="setBenf('today')">اليوم <span class="num">${today}</span></button>
+  <button class="filter" aria-pressed="${BENF==='picked'}" onclick="setBenf('picked')">المنتخبة <span class="num">${PICKS.length}</span></button>
+ </div>
+ ${list.length?`<div class="bens">${list.slice(0,BPAGE).map((e,i)=>benCard(e,5+i,{who:1,pick:isAdmin})).join('')}</div>
+   ${list.length>BPAGE?moreBtn('b',list.length-BPAGE):''}`
+  :'<div class="card empty rv">ما فيه فوائد في هذا العرض.</div>'}`}
+function picksView(){
+ const ps=pickedEntries();
+ return `<div class="hero rv"><div class="htop">
+   <div><p class="hlab">اختيار المشرف التنفيذي من كل الصفوف</p><h2>منتخبات الأسبوع</h2></div>
+   <div class="hst"><div><div class="hk">فوائد مختارة</div>
+    <div class="hv am"><span class="num" data-to="${ps.length}">0</span> <small>من ٣</small></div></div></div></div></div>
+ ${ps.length?`<div class="bens" style="margin-top:16px">${ps.map((e,i)=>{
+   const s=studentByCode(e.code),g=gradeById(s.grade);
+   return `<article class="ben big rv" style="--i:${i};--gc:${g.c}">
+    <span class="ribbon">★ منتخبة</span><span class="quote">”</span>
+    <p class="btxt">${esc(e.note)}</p>
+    <div class="bfoot"><div class="bmeta">
+      <span class="avatar" style="--gc:${g.c};width:34px;height:34px;border-radius:11px;font-size:15px">${esc(s.name.trim()[0])}</span>
+      <span class="bn"><b>${esc(s.name)}</b><span>${g.name} · ${esc(e.course||'')}</span></span></div>
+     <span class="chip">${e.kind==='read'?'قراءة':'سماع'}</span></div></article>`}).join('')}</div>`
+  :emptyArt('star','ما اختير شيء بعد','يختار المشرف التنفيذي ثلاث فوائد من كل الصفوف لتظهر هنا.')}`}
+async function togglePick(id){const was=isPicked(id);setBusy(1);
+ try{await rpc('toggle_pick',{p_token:TOKEN,p_entry:id});await refresh();
+  toast(was?'أُزيلت من المنتخبات.':'رُشّحت الفائدة — ظهرت للجميع.');
+ }catch(e){toast(e.message)}finally{setBusy(0)}}
+function setBoard(b){BOARD=b;lastKey='';renderShell()}
+function setBmode(m){BMODE=m;lastKey='';renderShell()}
+let BOARD='mine',BMODE='week';
+function boardView(){
+ const meCode=S.role==='student'?S.me.code:null;
+ const sv=S.role==='supervisor'?supByCode(S.me.code):null;
+ const scope=BOARD==='all'?activeStudents()
+  :S.role==='student'?codeOfGrade(S.me.grade)
+  :sv?codeOfGrade(sv.grade):activeStudents();
+ const term=BMODE==='term';
+ const rows=scope.map(s=>{const d=doneOf(s.code),t=targetOf(s),tm=termOf(s);
+  return{s,p:term?tm.avg:weekPct(s),r:d.r,l:d.l,weeks:tm.weeks,full:tm.full,
+    done:term?tm.full>0:(t.r+t.l>0&&d.r>=t.r&&d.l>=t.l)}})
+  .sort((a,b)=>b.p-a.p||(term?b.full-a.full:(b.r+b.l)-(a.r+a.l)));
+ const RK={};rows.forEach((x,i)=>{RK[x.s.code]=(i&&rows[i-1].p===x.p)?RK[rows[i-1].s.code]:i+1});
+ const rank=c=>RK[c]||0;
+ const avg=rows.length?Math.round(rows.reduce((t,x)=>t+x.p,0)/rows.length):0;
+ const mine=meCode?rows.find(x=>x.s.code===meCode):null;
+ const scopeLbl=BOARD==='all'?'كل الصفوف'
+  :S.role==='student'?gradeById(S.me.grade).name:sv?gradeById(sv.grade).name:'كل الصفوف';
+ return `<div class="bwrap2 rv">
+   <div class="seg2">
+    <button class="${BMODE==='week'?'on':''}" onclick="setBmode('week')">هذا الأسبوع</button>
+    <button class="${BMODE==='term'?'on':''}" onclick="setBmode('term')">الفصل</button></div>
+   <div class="seg2">
+    <button class="${BOARD==='mine'?'on':''}" onclick="setBoard('mine')">صفّي</button>
+    <button class="${BOARD==='all'?'on':''}" onclick="setBoard('all')">كل الصفوف</button></div>
+  </div>
+
+ <div class="card rv board2" style="--i:1">
+  <div class="b2h">
+   <div><p class="eyebrow">${term?'متوسط إنجاز الأسابيع الماضية':'نسبة إنجاز مقرر هذا الأسبوع'}</p>
+    <h2>المتصدرون</h2></div>
+   <div class="b2s"><span><b class="num">${rows.length}</b> مشارك</span>
+    <span>المتوسط <b class="num">${avg}%</b></span></div></div>
+
+  ${mine?`<div class="myrank">
+    <span>ترتيبك</span><b class="num">${rank(meCode)}</b>
+    <span>من ${rows.length}</span><span class="sep2"></span>
+    <span>إنجازك</span><b class="num">${mine.p}%</b></div>`:''}
+
+  <div class="blist">${rows.slice(0,BROWS).map((x,i)=>{const g=gradeById(x.s.grade),rk=rank(x.s.code);
+   return `<div class="brow ${x.s.code===meCode?'me':''} ${rk<=3?'top t'+rk:''}"
+     ${S.role!=='student'?`onclick="viewStudent('${x.s.code}')"`:''}>
+    <span class="bpos">${rk<=3?`<span class="medal m${rk}">${rk}</span>`:`<span class="pnum num">${rk}</span>`}</span>
+    <span class="avatar" style="--gc:${g.c};width:36px;height:36px;border-radius:12px;font-size:16px">${esc(x.s.name.trim()[0])}</span>
+    <span class="binfo">
+     <b>${esc(x.s.name)}${x.done?' <span class="tick">✓</span>':''}</b>
+     <span><span class="dot" style="background:${g.c}"></span>${g.name.replace(' متوسط','')}
+      · ${term?`<span class="num">${x.weeks}</span> أسابيع · أتمّ <span class="num">${x.full}</span>`
+             :`<span class="num">${x.r}</span>ص · <span class="num">${x.l}</span>د`}</span></span>
+    <span class="bmeter"><i data-w="${x.p}" style="background:${g.c}"></i></span>
+    <span class="bpct num" style="color:${x.p>=100?'var(--teal)':'var(--ink)'}">${x.p}%</span>
+   </div>`}).join('')||'<div class="empty"><b>لا يوجد مشاركون</b><p>ما فيه طلاب في هذا النطاق.</p></div>'}</div>
+  ${rows.length>BROWS?moreBtn('r',rows.length-BROWS):''}
+  <div class="b2f">النطاق: <b>${scopeLbl}</b> · ${term?'الترتيب بمتوسط الأسابيع':'الترتيب بنسبة إنجاز الأسبوع'}</div>
+ </div>`}
+
+/* ════════ المشرف ════════ */
+function heatColor(p){return p>=100?'#164F42':p>=66?'#3D7F6E':p>=33?'#7CAA9C':p>0?'#C2D8CF':'#EAEAE2'}
+function matrixCard(list,i){
+ const ws=WS(),ds=eachDay(ws,addD(ws,6));
+ return `<div class="card rv" style="--i:${i}">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+   <div><p class="eyebrow">كل مربع = يوم من الأسبوع · اضغطه للتفاصيل</p><h2>مصفوفة المتابعة</h2></div>
+   <span class="chip">أسبوع <span class="num">${ws}</span></span></div>
+  <div class="mwrap"><div class="matrix" style="margin-top:14px">
+   <div></div>${ds.map(d=>`<div class="mh ${d===todayISO()?'now':''}">${DSH[dow(d)]}</div>`).join('')}
+   ${list.slice(0,MROWS).map((s,r)=>{const g=gradeById(s.grade),t=targetOf(s),per=(t.r+t.l)/7||1;
+    return `<div style="display:contents"><div class="mn" style="--gc:${g.c}">
+      <span class="av">${esc(s.name.trim()[0])}</span><span>${esc(s.name)}</span></div>
+     ${ds.map((d,k)=>{const x=dayOf(s.code,d),tot=x.r+x.l,rt=Math.round(tot/per*100);
+       const inf=`${esc(s.name)} — ${dayName(d)} ${d}: ${x.r} صفحة · ${x.l} دقيقة`;
+       return `<div class="mc ${d===todayISO()?'today':''}" style="--r:${r};--k:${k};background:${d>todayISO()?'#F1F4F9':heatColor(rt)}"
+        role="button" tabindex="0" title="${inf}" data-inf="${inf}"
+        onclick="cellInfo(this,'minfo')" onkeydown="if(event.key==='Enter')cellInfo(this,'minfo')"></div>`}).join('')}
+    </div>`}).join('')}
+  </div></div>
+  ${list.length>MROWS?moreBtn('m',list.length-MROWS):''}
+  <div class="cellinfo" id="minfo">اضغط أي مربع لعرض تفاصيل يومه.</div></div>`}
+function miniBars(s){const ws=WS(),ds=eachDay(ws,addD(ws,6)),W=240,H=44,bw=W/7-6;
+ const t=targetOf(s),per=(t.r+t.l)/7||1;
+ return `<svg class="mini" viewBox="0 0 ${W} ${H}" aria-hidden="true">${ds.map((d,k)=>{
+  const x=dayOf(s.code,d),tot=x.r+x.l,rt=Math.min(1,tot/per);
+  const h=Math.max(5,H*.16+H*.72*rt),px=W-(k+1)*(bw+6)+3;
+  return `<rect style="--j:${k}" x="${px}" y="${H-h}" width="${bw}" height="${h}" rx="3.5"
+   fill="${d>todayISO()?'#F1F4F9':tot?heatColor(Math.round(tot/per*100)):'#E7EBF2'}"></rect>`}).join('')}</svg>`}
+function scard(s,i){
+ const g=gradeById(s.grade),wp=weekPct(s),ps=paceState(s),d=doneOf(s.code),t=targetOf(s);
+ const C=2*Math.PI*20,la=lastActive(s.code);
+ return `<button class="scard rv" style="--i:${i};--gc:${g.c}" onclick="viewStudent('${s.code}')">
+  <div class="shead"><span class="avatar">${esc(s.name.trim()[0])}</span>
+   <span class="nmx"><b>${esc(s.name)}</b><span>${g.name} · <span class="num">${s.code}</span></span></span>
+   <span class="rw"><svg class="rlet" viewBox="0 0 46 46">
+    <circle class="t" cx="23" cy="23" r="20"></circle>
+    <circle class="a" cx="23" cy="23" r="20" stroke="${g.c}" stroke-dasharray="${C}"
+     stroke-dashoffset="${C}" data-off="${C*(1-wp/100)}"></circle></svg><b>${wp}%</b></span></div>
+  ${miniBars(s)}
+  <div class="sfoot"><span class="pill ${ps.k==='done'?'ok':ps.k==='off'?'off':'mid'}">${ps.t}</span>
+   <span class="num">${d.r}/${t.r}ص · ${d.l}/${t.l}د</span></div>
+  <div class="sfoot" style="border:0;padding-top:6px;margin-top:0">
+   <span>${la===0?'سجّل اليوم':la===1?'آخر تسجيل أمس':la>=14?'ما سجّل بعد':'آخر تسجيل قبل '+la+' أيام'}</span></div>
+ </button>`}
+let FILTER='all',PAGE=24,MROWS=30,BPAGE=24,BROWS=40;const STEP=24;
+function setFilter(f){FILTER=f;PAGE=STEP;lastKey='';renderShell()}
+function more(w){if(w==='s')PAGE+=STEP;else if(w==='b')BPAGE+=STEP;
+ else if(w==='r')BROWS+=40;else MROWS=1e9;lastKey='';renderShell()}
+function moreBtn(w,rest){return `<div style="text-align:center;margin-top:14px">
+ <button class="btn outline sm" onclick="more('${w}')">عرض ${Math.min(rest,w==='r'?40:STEP)} أكثر · باقٍ ${rest}</button></div>`}
+function classView(){
+ const all=myStudents(),ws=WS();
+ const done=all.filter(s=>weekPct(s)>=100),late=all.filter(s=>paceState(s).k==='off');
+ const idle=all.filter(s=>lastActive(s.code)>=2);
+ const avg=all.length?Math.round(all.reduce((t,s)=>t+weekPct(s),0)/all.length):0;
+ const sets={all,done,late,idle};
+ const list=(sets[FILTER]||all).slice().sort((a,b)=>weekPct(b)-weekPct(a));
+ const _sv=supByCode(S.me.code);
+ const gname=S.role==='admin'||!_sv?'كل الصفوف':gradeById(_sv.grade).name;
+ return `<div class="hero rv"><div class="htop">
+   <div><p class="hlab">${dayName(todayISO())} · اليوم <span class="num">${dayIndex()}</span> من الأسبوع</p>
+    <h2>${gname}</h2></div>
+   <div class="hst">
+    <div><div class="hk">متوسط الإنجاز</div><div class="hv am"><span class="num" data-to="${avg}" data-suffix="%">0%</span></div></div>
+    <div><div class="hk">أتمّوا المقرر</div><div class="hv gr"><span class="num" data-to="${done.length}">0</span> <small>من ${all.length}</small></div></div>
+    <div><div class="hk">متأخرون</div><div class="hv"><span class="num" data-to="${late.length}">0</span> <small>طالب</small></div></div>
+    <div><div class="hk">باقي من الأسبوع</div><div class="hv"><span class="num" data-to="${daysLeft()}">0</span> <small>يوم</small></div></div>
+    ${(()=>{const lw=addD(ws,-7),v=all.map(x=>pctAt(x,lw)).filter(x=>x!==null);
+      if(!v.length)return '';const a=Math.round(v.reduce((p,c)=>p+c,0)/v.length);
+      const diff=avg-a;
+      return `<div><div class="hk">الأسبوع الماضي</div><div class="hv"><span class="num">${a}</span><small>%</small>
+        <small style="color:${diff>=0?'#95C6B5':'#D9A8A0'}"> ${diff>=0?'▲':'▼'} ${Math.abs(diff)}</small></div></div>`})()}
+   </div></div></div>
+ ${idle.length?`<div class="alert rv" style="--i:1">
+   <svg viewBox="0 0 24 24"><path d="M12 8v5M12 17h.01M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+   <span><b>${idle.length}</b> ${idle.length===1?'طالب ما سجّل':'طلاب ما سجّلوا'} من يومين أو أكثر.</span>
+   <span class="spacer"></span><button class="btn sm outline" onclick="setFilter('idle')">اعرضهم</button></div>`:''}
+ ${matrixCard(all,2)}
+ <div class="sec rv" style="--i:3"><h2>الطلاب</h2></div>
+ <div class="filters rv" style="--i:4">
+  ${[['all','الكل',all.length],['done','أتمّوا',done.length],['late','متأخرون',late.length],['idle','منقطعون',idle.length]]
+   .map(([k,l,n])=>`<button class="filter" aria-pressed="${FILTER===k}" onclick="setFilter('${k}')">${l} <span class="num">${n}</span></button>`).join('')}</div>
+ ${list.length?`<div class="scards">${list.slice(0,PAGE).map((s,i)=>scard(s,5+i)).join('')}</div>
+   ${list.length>PAGE?moreBtn('s',list.length-PAGE):''}`
+  :'<div class="card empty rv">ما فيه طلاب في هذي القائمة.</div>'}`}
+function detailView(){
+ const s=studentByCode(S.student),g=gradeById(s.grade),p=planOf(s.grade,WS());
+ const d=doneOf(s.code),t=targetOf(s),wp=weekPct(s),ps=paceState(s);
+ const rows=entriesOf(s.code).slice().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,14);
+ return `<button class="back" onclick="S.student=null;renderShell()">→ رجوع</button>
+ <div class="hero rv"><div class="htop">
+  <div style="display:flex;align-items:center;gap:13px">
+   <span class="avatar" style="--gc:${g.c};width:54px;height:54px;border-radius:17px;font-size:24px">${esc(s.name.trim()[0])}</span>
+   <div><p class="hlab">${g.name} · الرمز <span class="num">${s.code}</span></p><h2>${esc(s.name)}</h2></div></div>
+  <div class="hst">
+   <div><div class="hk">إنجاز الأسبوع</div><div class="hv am"><span class="num" data-to="${wp}" data-suffix="%">0%</span></div></div>
+   <div><div class="hk">قراءة</div><div class="hv gr"><span class="num" data-to="${d.r}">0</span> <small>من ${t.r}</small></div></div>
+   <div><div class="hk">سماع</div><div class="hv"><span class="num" data-to="${d.l}">0</span> <small>من ${t.l}</small></div></div>
+  </div></div>
+  ${weekTrack(s)}
+  <div class="cellinfo" id="winfo" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:#9CB2A9">
+   اضغط أي يوم لتفاصيله.</div></div>
+ <div class="card rv" style="--i:1;margin-top:14px">
+  <p class="eyebrow">حالته</p><h2>${ps.t}</h2>
+  <div class="grid g2" style="margin-top:14px">
+   ${p.read?`<div><div style="display:flex;justify-content:space-between;font-size:13px">
+     <span>${esc(p.read.title)}</span><span class="num">${d.r}/${t.r} ص</span></div>
+     <div class="bar" style="margin-top:6px"><i data-w="${pct(d.r,t.r)}" style="background:${g.c}"></i></div></div>`:''}
+   ${p.listen?`<div><div style="display:flex;justify-content:space-between;font-size:13px">
+     <span>${esc(p.listen.title)}</span><span class="num">${d.l}/${t.l} د</span></div>
+     <div class="bar" style="margin-top:6px"><i data-w="${pct(d.l,t.l)}" style="background:var(--amber)"></i></div></div>`:''}
+  </div></div>
+ <div class="card rv" style="--i:2;margin-top:14px"><p class="eyebrow">ما استفاده هذا الأسبوع</p><h2>فوائده</h2>
+  <div class="bens" style="margin-top:12px">${benOf(s.code).slice(0,6).map((e,i)=>benCard(e,i,{})).join('')
+   ||'<div class="empty">ما كتب فائدة بعد.</div>'}</div></div>
+ <div class="card rv" style="--i:3;margin-top:14px"><p class="eyebrow">آخر التسجيلات</p><h2>سجله</h2>
+  ${rows.length?rows.map(r=>`<div class="tent" style="padding:11px 2px">
+    <span class="dot" style="background:${r.kind==='read'?g.c:'var(--amber)'}"></span>
+    <span class="nm">${r.kind==='read'?'قراءة':'سماع'} · <span class="num">${r.date}</span></span>
+    <span class="chip">${r.v} ${r.kind==='read'?'صفحة':'دقيقة'}</span></div>`).join('')
+   :'<div class="empty">لا يوجد تسجيلات.</div>'}</div>`}
+
+/* ════════ المشرف التنفيذي: النظرة العامة ════════ */
+function pulseSeries(n){
+ const all=activeStudents(),out=[];
+ for(let k=n-1;k>=0;k--){const d=dayISO(k);let sum=0,c=0;
+  for(const s of all){const t=targetAt(s,weekStart(d)),per=(t.r+t.l)/7;
+   if(!per)continue;const x=dayOf(s.code,d);
+   sum+=Math.min(100,(x.r+x.l)/per*100);c++}
+  out.push({d,v:c?Math.round(sum/c):0})}
+ return out}
+function sparkline(n){
+ const pts=pulseSeries(n||14),W=1000,H=104;
+ const xs=(i)=>W-(W/(pts.length-1))*(pts.length-1-i);
+ const ys=(v)=>H-14-(H-34)*(v/100);
+ const P=pts.map((p,i)=>({x:xs(i),y:ys(p.v)}));
+ const path=P.map((p,i)=>{if(!i)return `M${p.x.toFixed(1)},${p.y.toFixed(1)}`;
+  const q=P[i-1],cx=(q.x+p.x)/2;
+  return `C${cx.toFixed(1)},${q.y.toFixed(1)} ${cx.toFixed(1)},${p.y.toFixed(1)} ${p.x.toFixed(1)},${p.y.toFixed(1)}`}).join(' ');
+ const last=P[P.length-1];
+ return `<div class="sparkwrap">
+  <svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="نبض آخر ${pts.length} يومًا">
+   <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+     <stop offset="0" stop-color="#95C6B5" stop-opacity=".38"/><stop offset="1" stop-color="#95C6B5" stop-opacity="0"/></linearGradient></defs>
+   <path class="sarea" d="${path} L${W},${H} L0,${H} Z" fill="url(#sg)"></path>
+   <path class="sline" pathLength="1" d="${path}"></path>
+   <circle class="sdot" cx="${last.x-4}" cy="${last.y}" r="5"></circle></svg>
+  <div class="sfoot"><span>قبل ${pts.length} يومًا</span><span>اليوم</span></div></div>`}
+
+function overview(){
+ const ws=WS(),all=activeStudents(),lw=addD(ws,-7);
+ const avg=all.length?Math.round(all.reduce((t,s)=>t+weekPct(s),0)/all.length):0;
+ const lastV=all.map(s=>pctAt(s,lw)).filter(x=>x!==null);
+ const lastAvg=lastV.length?Math.round(lastV.reduce((a,b)=>a+b,0)/lastV.length):null;
+ const diff=lastAvg===null?null:avg-lastAvg;
+ const done=all.filter(s=>weekPct(s)>=100);
+ const act=all.filter(s=>{const d=dayOf(s.code,todayISO());return d.r+d.l>0});
+ const idle=all.filter(s=>lastActive(s.code)>=2);
+ const noPlan=GRADES.filter(g=>{const p=planOf(g.id,ws);return !p.read&&!p.listen});
+ const noLink=GRADES.filter(g=>{const p=planOf(g.id,ws);return p.listen&&!/^https?:\/\//i.test(p.listen.link||'')});
+ const benToday=BEN.filter(e=>e.date===todayISO()).length;
+ const wk=all.reduce((t,s)=>{const w=weekOf(s.code);return{r:t.r+w.r,l:t.l+w.l}},{r:0,l:0});
+ const hour=new Date().getHours(),greet=hour<12?'صباح الخير':'مساء الخير';
+ const top=all.map(s=>({s,p:weekPct(s),d:doneOf(s.code)}))
+   .sort((a,b)=>b.p-a.p||(b.d.r+b.d.l)-(a.d.r+a.d.l)).slice(0,5);
+ return `<div class="hero rv"><div class="htop">
+   <div><p class="hlab">${greet} · ${dayName(todayISO())} <span class="num">${todayISO()}</span></p>
+    <h2>نبض البرنامج</h2></div>
+   <div class="hst">
+    <div><div class="hk">متوسط الإنجاز</div><div class="hv am"><span class="num" data-to="${avg}" data-suffix="%">0%</span>
+     ${diff===null?'':`<small style="color:${diff>=0?'#95C6B5':'#D9A8A0'}"> ${diff>=0?'▲':'▼'}${Math.abs(diff)}</small>`}</div></div>
+    <div><div class="hk">أتمّوا المقرر</div><div class="hv gr"><span class="num" data-to="${done.length}">0</span> <small>من ${all.length}</small></div></div>
+    <div><div class="hk">نشطون اليوم</div><div class="hv"><span class="num" data-to="${act.length}">0</span> <small>طالب</small></div></div>
+    <div><div class="hk">إنجاز الأسبوع</div><div class="hv"><span class="num" data-to="${wk.r}">0</span>
+      <small>ص · <span class="num">${wk.l}</span> د</small></div></div>
+   </div></div>
+  ${sparkline(14)}</div>
+
+ ${noPlan.map(g=>`<div class="bar-alert red rv">
+   <svg viewBox="0 0 24 24"><path d="M12 8v5M12 17h.01M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+   <span><b>${g.name}</b> بلا مقرر هذا الأسبوع — طلابه لا يستطيعون التسجيل.</span>
+   <button class="btn sm outline" onclick="openPlan('${g.id}')">حدّد المقرر</button></div>`).join('')}
+ ${noLink.map(g=>`<div class="bar-alert red rv">
+   <svg viewBox="0 0 24 24"><path d="M12 8v5M12 17h.01M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+   <span>المقرر السماعي في <b>${g.name}</b> بلا رابط — الطلاب لا يفتحون المقطع.</span>
+   <button class="btn sm outline" onclick="openPlan('${g.id}')">أضف الرابط</button></div>`).join('')}
+ ${idle.length?`<div class="bar-alert red rv">
+   <svg viewBox="0 0 24 24"><path d="M12 8v5M12 17h.01M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+   <span><b>${idle.length}</b> ${idle.length===1?'طالب يحتاج':'طلاب يحتاجون'} متابعة — ما سجّلوا إنجاز من يومين أو أكثر.</span>
+   <button class="btn sm outline" onclick="go('class');setTimeout(()=>setFilter('idle'),50)">اعرضهم</button></div>`:''}
+ ${PICKS.length<3?`<div class="bar-alert gold rv">
+   <span class="ai">★</span>
+   <span>لم تُرشّح إلا <b>${PICKS.length}</b> من ٣ للمنتخبات — وصلتك <b>${benToday}</b> فائدة اليوم.</span>
+   <button class="btn sm outline" onclick="go('ben')">رشّح الآن</button></div>`:''}
+ ${!noPlan.length&&!noLink.length&&!idle.length&&PICKS.length>=3?`<div class="bar-alert ok rv">
+   <span class="ai">✓</span><span><b>كل شيء منضبط</b> — المقررات محدّدة، والمنتخبات مكتملة، ولا يوجد منقطعون.</span></div>`:''}
+
+ <div class="card rv" style="--i:2;margin-top:16px">
+  <p class="eyebrow">متوسط إنجاز مقرر الأسبوع لكل صف</p>
+  <h2>مقارنة الصفوف</h2>
+  <div style="margin-top:16px">${GRADES.map(g=>{
+    const st=codeOfGrade(g.id),p=planOf(g.id,ws);
+    const a=st.length?Math.round(st.reduce((t,x)=>t+weekPct(x),0)/st.length):0;
+    const dn=st.filter(x=>weekPct(x)>=100).length;
+    const sv=SUPERVISORS.find(v=>v.grade===g.id);
+    return `<div class="cmp">
+     <div class="cmp-h"><b>${g.name}</b>
+      <span class="cmp-sub">${sv?esc(sv.name):'<span style="color:var(--danger)">بلا مشرف</span>'}</span>
+      <span class="cmp-cnt"><span class="num">${st.length}</span> ${st.length===1?'طالب':st.length===2?'طالبان':st.length<11?'طلاب':'طالبًا'}</span></div>
+     <div class="cmp-b"><i data-w="${a}" style="background:${g.c}"></i></div>
+     <div class="cmp-v num">${a}%</div>
+     <div class="cmp-m">${p.read||p.listen
+       ? `${p.read?`📖 ${esc(p.read.title)} <span class="num">${p.read.target}</span>ص`:''}${p.read&&p.listen?' · ':''}${p.listen?`🎧 <span class="num">${p.listen.target}</span>د`:''} · ✓ أتمّه <b class="num">${dn}</b>`
+       : '<span style="color:var(--danger);font-weight:600">بلا مقرر هذا الأسبوع</span>'}
+      <button class="lnk2" onclick="openPlan('${g.id}')">${p.read||p.listen?'تعديل':'تحديد'} ←</button></div>
+    </div>`}).join('')}
+   <div class="cmp-foot"><span><i class="lg"></i> تحقيق مقرر الأسبوع</span>
+    <span>متوسط البرنامج: <b class="num">${avg}%</b></span></div></div>
+ </div>
+
+ <div class="grid g2" style="margin-top:16px">
+  <div class="card rv" style="--i:3"><p class="eyebrow">الأعلى إنجازًا هذا الأسبوع</p><h2>المتصدرون</h2>
+   <div style="margin-top:12px">${top.map((x,i)=>{const g=gradeById(x.s.grade);
+     return `<div class="trow" onclick="viewStudent('${x.s.code}')">
+      <span class="tnum ${i<3?'top':''}">${i+1}</span>
+      <span class="avatar" style="--gc:${g.c};width:32px;height:32px;border-radius:11px;font-size:14px">${esc(x.s.name.trim()[0])}</span>
+      <span class="tname"><b>${esc(x.s.name)}</b><span>${g.name}</span></span>
+      <span class="tbar"><i data-w="${x.p}" style="background:${g.c}"></i></span>
+      <span class="num tpct">${x.p}%</span></div>`}).join('')}</div></div>
+
+  <div class="card rv" style="--i:4"><p class="eyebrow">لم يسجّلوا من يومين فأكثر</p><h2>المنقطعون</h2>
+   ${idle.length?`<div style="margin-top:12px">${idle.slice(0,6).map(x=>{const g=gradeById(x.grade),la=lastActive(x.code);
+     return `<div class="trow" onclick="viewStudent('${x.code}')">
+      <span class="avatar" style="--gc:${g.c};width:32px;height:32px;border-radius:11px;font-size:14px">${esc(x.name.trim()[0])}</span>
+      <span class="tname"><b>${esc(x.name)}</b><span>${g.name}</span></span>
+      <span class="pill ${la>=7?'off':'mid'}">${la>=14?'ما بدأ':'غاب '+la+' أيام'}</span></div>`}).join('')}
+     ${idle.length>6?`<p style="font-size:12.5px;color:var(--muted);margin:12px 0 0">و${idle.length-6} غيرهم —
+       <b style="cursor:pointer;text-decoration:underline" onclick="go('class');setTimeout(()=>setFilter('idle'),50)">اعرضهم كلهم</b></p>`:''}</div>`
+    :'<div class="empty" style="padding:26px"><b>ما فيه منقطعون</b><p>كل الطلاب سجّلوا خلال اليومين الماضيين.</p></div>'}</div>
+ </div>`}
+
+/* ════════ المشرف التنفيذي: خطة الأسبوع ════════ */
+function planView(){
+ const ws=WS(),wks=termWeeks();
+ return `<div class="hero rv"><div class="htop">
+   <div><p class="hlab">من <span class="num">${wks[0]}</span> إلى <span class="num">${addD(wks[wks.length-1],6)}</span>
+     · <span class="num">${TERM.weeks}</span> أسبوعًا</p>
+    <h2>مخطط الفصل</h2></div>
+   <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn sm" style="background:#D9B872;color:#14231E" onclick="openSeries()">+ مقرر ممتد</button>
+    <button class="btn sm outline" style="border-color:rgba(255,255,255,.3);color:#E2E9E3" onclick="openTerm()">إعداد الفصل</button>
+   </div></div></div>
+
+ ${GRADES.map((g,gi)=>{const ser=seriesOf(g.id);
+  return `<div class="card rv" style="--i:${1+gi};margin-top:14px;border-right:4px solid ${g.c}">
+   <div class="b2h"><div><p class="eyebrow">${(SUPERVISORS.find(v=>v.grade===g.id)||{}).name||'بلا مشرف'}</p>
+     <h2 style="color:${g.c}">${g.name}</h2></div>
+    <button class="btn sm outline" onclick="openSeries('${g.id}')">+ مقرر ممتد</button></div>
+
+   ${ser.length?`<div class="serlist">${ser.map(x=>{
+     const c=x.c,rd=!c.link,unit=rd?'صفحة':'دقيقة';
+     const a=weekNo(x.weeks[0]),b=weekNo(x.weeks[x.weeks.length-1]);
+     return `<div class="ser">
+      <span class="sicon" style="background:${g.c}1a;color:${g.c}">${rd?'📖':'🎧'}</span>
+      <span class="sinfo2"><b>${esc(c.title)}</b>
+       <span>${esc(c.by)} · <span class="num">${c.total}</span> ${unit} · الأسابيع
+        <span class="num">${a}</span>–<span class="num">${b}</span>
+        (<span class="num">${c.target}</span> ${unit} أسبوعيًا)</span></span>
+      <button class="qbtn del" onclick="delSeries('${c.sid}','${esc(c.title)}')" title="حذف">✕</button></div>`}).join('')}</div>`
+    :'<div class="empty" style="padding:22px"><b>لا مقررات ممتدة</b><p>أضف كتابًا ووزّعه على أسابيع الفصل بضغطة.</p></div>'}
+
+   <div class="wkgrid">${wks.map(w=>{const p=planOf(g.id,w),cur=w===ws,past=w<ws;
+     const has=p.read||p.listen;
+     return `<button class="wcell ${cur?'cur':''} ${past?'past':''} ${has?'':'empty2'}"
+       onclick="openPlan('${g.id}','${w}')" title="${w}">
+      <span class="wn">أ<span class="num">${weekNo(w)}</span></span>
+      ${has?`<span class="wt">${esc((p.read||p.listen).title).slice(0,18)}</span>
+        <span class="wv">${p.read?`<span class="num">${p.read.target}</span>ص`:''}${p.read&&p.listen?' · ':''}${p.listen?`<span class="num">${p.listen.target}</span>د`:''}</span>`
+       :'<span class="wt em">— فارغ —</span>'}
+      ${cur?'<span class="wnow">الحالي</span>':''}</button>`}).join('')}</div>
+  </div>`}).join('')}`}
+
+function peopleView(){
+ const free=SUPERVISORS.filter(v=>!v.grade||!gradeById(v.grade).name);
+ return `<div class="card rv prof" style="--i:0">
+  <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+   <span class="brand-mark" style="width:52px;height:52px;border-radius:18px;font-size:23px;margin:0">
+     ${esc(S.me.name.replace('أبو ','').trim()[0])}</span>
+   <div style="flex:1;min-width:0"><p class="eyebrow">ملفك الشخصي</p>
+    <h2 style="font-size:21px">${esc(S.me.name)}</h2>
+    <p style="margin:2px 0 0;font-size:12.5px;color:var(--muted)">مشرف تنفيذي · رمز الدخول
+     <span class="codebox2">${S.me.code}</span></p></div>
+   <button class="btn sm outline" onclick="openMe()">✎ تعديل</button></div></div>
+
+ <div class="sec rv" style="--i:1"><h2>فريق الإشراف</h2>
+   <button class="btn sm" onclick="openSup('')">+ إضافة مشرف</button></div>
+ <div class="supcards">${SUPERVISORS.map((v,i)=>{
+   const g=v.grade?gradeById(v.grade):null, st=v.grade?codeOfGrade(v.grade):[];
+   const a=st.length?Math.round(st.reduce((t,x)=>t+weekPct(x),0)/st.length):0;
+   return `<div class="supcard rv" style="--i:${2+i};--gc:${g?g.c:'var(--muted)'}">
+    <div class="sup-h">
+     <span class="avatar" style="--gc:${g?g.c:'var(--muted)'};width:40px;height:40px;border-radius:13px;font-size:18px">
+       ${esc(v.name.replace(/^(أ\. |أبو )/,'').trim()[0])}</span>
+     <span class="nmx"><b>${esc(v.name)}</b>
+      <span>${g?g.name:'<span style="color:var(--danger)">بلا صف</span>'}</span></span>
+     <button class="qbtn" onclick="openSup('${v.code}')" title="تعديل">✎</button></div>
+    <div class="sup-b">
+     <div><span class="k2">رمز الدخول</span><span class="codebox2">${v.code}</span></div>
+     ${g?`<div><span class="k2">طلابه</span><b class="num">${st.length}</b></div>
+       <div><span class="k2">متوسط صفه</span><b class="num" style="color:${g.c}">${a}%</b></div>`
+      :'<div style="flex:1;font-size:12px;color:var(--muted)">أسنِد له صفًا ليتابع طلابه.</div>'}
+    </div></div>`}).join('')}</div>
+ ${GRADES.filter(g=>!SUPERVISORS.some(v=>v.grade===g.id)).map(g=>`
+   <div class="bar-alert red rv" style="margin-top:12px">
+    <svg viewBox="0 0 24 24"><path d="M12 8v5M12 17h.01M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+    <span><b>${g.name}</b> بلا مشرف — لا أحد يتابع طلابه.</span>
+    <button class="btn sm outline" onclick="openSup('')">أسنِد مشرفًا</button></div>`).join('')}
+
+ <div class="sec rv" style="--i:6"><h2>الطلاب</h2>
+   <button class="btn sm" onclick="openAdd()">+ إضافة طالب</button></div>
+ <div class="gcards">${GRADES.map((g,i)=>{const st=STUDENTS.filter(x=>x.grade===g.id);
+  const sv=SUPERVISORS.find(x=>x.grade===g.id);
+  return `<div class="card rv" style="--i:${7+i};border-right:4px solid ${g.c}">
+   <div><p class="eyebrow">${sv?esc(sv.name)+' · '+sv.code:'<span style="color:var(--danger)">بلا مشرف</span>'}</p>
+    <h2 style="color:${g.c}">${g.name}</h2></div>
+   <div style="margin-top:12px">${st.map(x=>`<div class="tent ${x.active===false?'off':''}" style="padding:9px 2px">
+     <span class="avatar" style="--gc:${g.c};width:28px;height:28px;border-radius:9px;font-size:13px">${esc(x.name.trim()[0])}</span>
+     <span class="nm">${esc(x.name)}${x.active===false?' <span class="pill off">موقوف</span>':''}</span>
+     <span class="chip num">${x.code}</span>
+     <button class="qbtn" onclick="openStudent('${x.code}')" title="تعديل">✎</button>
+     <button class="qbtn" onclick="viewStudent('${x.code}')" title="صفحته">↩</button></div>`).join('')||'<div class="empty">لا طلاب.</div>'}</div>
+  </div>`}).join('')}</div>`}
+
+/* ════════ النوافذ ════════ */
+function openLog(){const p=planOf(S.me.grade,WS());
+ if(!p.read&&!p.listen)return toast('ما تحدد مقرر لصفك هذا الأسبوع — راجع مشرفك.');
+ S.modal={t:'log',kind:p.read?'read':'listen'};renderModal()}
+function openEdit(id){S.modal={t:'edit',id};renderModal()}
+function openPlan(g,ws){ws=ws||WS();const p=planOf(g,ws);
+ S.modal={t:'plan',g,ws,hasR:!!p.read,hasL:!!p.listen};renderModal()}
+function openAdd(){S.modal={t:'add',g:GRADES[0].id};renderModal()}
+function openSeries(g){S.modal={t:'ser',g:g||GRADES[0].id,kind:'read',
+ sw:weekStart(todayISO()),n:6};renderModal()}
+function keepSer(){const q=i=>$(i);['st','sb','sn2','stot','slink'].forEach(i=>{
+ if(q(i))S.modal[i+'_']=q(i).value});
+ if(q('ssw'))S.modal.sw=q('ssw').value; if(q('sn'))S.modal.n=+q('sn').value||6}
+async function saveSeries(){const m=S.modal;
+ const title=($('st').value||'').trim(); if(!title){$('st').focus();return toast('اكتب اسم المقرر.')}
+ const total=Math.max(1,+$('stot').value||0);
+ if(!total){$('stot').focus();return toast('أدخل الحجم الكلي.')}
+ const n=Math.max(1,Math.min(30,+$('sn').value||1));
+ const link=m.kind==='listen'?($('slink').value||'').trim():null;
+ if(m.kind==='listen'&&!/^https:\/\//i.test(link||'')){$('slink').focus();
+  return toast('رابط المقطع مطلوب ويبدأ بـ https.')}
+ setBusy(1);
+ try{const r=await rpc('add_series',{p_token:TOKEN,p_grade:m.g,p_kind:m.kind,p_title:title,
+   p_by:($('sb').value||'').trim(),p_note:($('sn2').value||'').trim(),
+   p_total:total,p_weeks:n,p_start:$('ssw').value,p_link:link});
+  S.modal=null;renderModal();await refresh();
+  toast('وُزّع «'+title+'» على '+r.weeks+' أسابيع · '+r.per+' لكل أسبوع');
+ }catch(e){toast(e.message)}finally{setBusy(0)}}
+async function delSeries(sid,title){
+ if(!confirm('حذف «'+title+'» من كل أسابيعه؟ إنجاز الطلاب المسجّل يبقى محفوظًا.'))return;
+ setBusy(1);
+ try{await rpc('delete_series',{p_token:TOKEN,p_sid:sid});await refresh();
+  toast('حُذف المقرر من أسابيعه.');
+ }catch(e){toast(e.message)}finally{setBusy(0)}}
+function seriesOf(g){const map={};
+ termWeeks().forEach(ws=>{const p=planOf(g,ws);
+  [p.read,p.listen].forEach(c=>{if(c&&c.sid)map[c.sid]=map[c.sid]||{c,weeks:[]};
+   if(c&&c.sid)map[c.sid].weeks.push(ws)})});
+ return Object.values(map)}
+function openTerm(){S.modal={t:'term',n:TERM.weeks,st:TERM.start||weekStart(todayISO())};renderModal()}
+async function saveTerm(){const w=Math.max(1,Math.min(30,+$('tw').value||12)),st=$('tsw').value;
+ setBusy(1);
+ try{await rpc('set_term',{p_token:TOKEN,p_start:st,p_weeks:w});
+  S.modal=null;renderModal();await refresh();toast('حُدّث الفصل: '+w+' أسابيع من '+st);
+ }catch(e){toast(e.message)}finally{setBusy(0)}}
+function codeTaken(c,exclude){return (STUDENTS.some(x=>x.code===c)
+ ||SUPERVISORS.some(x=>x.code===c&&x.code!==exclude)||(ADMIN.code===c&&ADMIN.code!==exclude))}
+function openSup(code){const v=code?supByCode(code):null;
+ S.modal={t:'sup',code:code||'',g:v?v.grade:'',n_:v?v.name:'',c_:v?v.code:''};renderModal()}
+async function saveSup(){const m=S.modal;
+ const n=($('vn').value||'').trim();if(!n){$('vn').focus();return toast('اكتب اسم المشرف.')}
+ const c=($('vc').value||'').trim();
+ if(!/^[0-9]{4}$/.test(c)){$('vc').focus();return toast('الرمز أربعة أرقام.')}
+ const g=$('vg').value;
+ const holder=g?SUPERVISORS.find(x=>x.grade===g&&x.code!==m.code):null;
+ if(holder&&!m.ok){S.modal.ok=1;S.modal.n_=n;S.modal.c_=c;S.modal.g=g;renderModal();
+  return toast('لـ'+gradeById(g).name+' مشرف ('+holder.name+') — سيُنقل إلى «بلا صف». اضغط حفظ للتأكيد.')}
+ setBusy(1);
+ try{await rpc('upsert_supervisor',{p_token:TOKEN,p_old_code:m.code||null,p_name:n,p_code:c,p_grade:g});
+  S.modal=null;renderModal();await refresh();
+  toast(m.code?'حُدّثت بيانات '+n:'أُضيف '+n+' — رمزه '+c);
+ }catch(e){toast(e.message)}finally{setBusy(0)}}
+async function removeSup(code){const v=supByCode(code);
+ if(!confirm('إزالة '+v.name+'؟ طلاب صفه يبقون بلا مشرف حتى تُسند غيره.'))return;
+ setBusy(1);
+ try{await rpc('delete_supervisor',{p_token:TOKEN,p_code:code});
+  S.modal=null;renderModal();await refresh();toast('أُزيل '+v.name);
+ }catch(e){toast(e.message)}finally{setBusy(0)}}
+function openMe(){S.modal={t:'me',n_:S.me.name,c_:S.me.code};renderModal()}
+async function saveMe(){const n=($('mn2').value||'').trim();
+ if(!n){$('mn2').focus();return toast('اكتب اسمك.')}
+ const c=($('mc2').value||'').trim();
+ if(!/^[0-9]{4,8}$/.test(c)){$('mc2').focus();return toast('الرمز من ٤ إلى ٨ أرقام.')}
+ setBusy(1);
+ try{await rpc('update_profile',{p_token:TOKEN,p_name:n,p_code:c});
+  S.modal=null;renderModal();await refresh();toast('حُفظ — رمز دخولك: '+c);
+ }catch(e){toast(e.message)}finally{setBusy(0)}}
+function openStudent(code){const s=studentByCode(code);
+ S.modal={t:'stu',code,g:s.grade,act:s.active!==false};renderModal()}
+async function saveStudent(){const m=S.modal,st=studentByCode(m.code);
+ const n=($('sn').value||'').trim();if(!n){$('sn').focus();return}
+ const ng=$('sg').value,moved=ng!==st.grade;
+ setBusy(1);
+ try{await rpc('update_student',{p_token:TOKEN,p_code:m.code,p_name:n,p_grade:ng,p_active:!!m.act});
+  S.modal=null;renderModal();await refresh();
+  toast(moved?n+' انتقل إلى '+gradeById(ng).name:(m.act?'حُدّثت بيانات '+n:n+' أُوقف — سجله محفوظ'));
+ }catch(e){toast(e.message)}finally{setBusy(0)}}
+function closeModal(){S.modal=null;renderModal()}
+function modalHTML(){const m=S.modal;if(!m)return '';let b='';
+ if(m.t==='log'){const p=planOf(S.me.grade,WS()),sg=suggest(S.me);
+  const c=m.kind==='read'?p.read:p.listen;
+  b=`<h3>سجّل إنجاز اليوم</h3><p class="sub">${dayName(todayISO())} · <span class="num">${todayISO()}</span></p>
+   ${p.read&&p.listen?`<label>نوع الإنجاز</label><div class="segv">
+     <button aria-pressed="${m.kind==='read'}" onclick="S.modal.kind='read';renderModal()">
+      <b>قراءة</b><span>${esc(p.read.title)}</span></button>
+     <button aria-pressed="${m.kind==='listen'}" onclick="S.modal.kind='listen';renderModal()">
+      <b>سماع</b><span>${esc(p.listen.title)}</span></button></div>`:''}
+   <label for="v">${m.kind==='read'?'كم صفحة قرأت اليوم؟':'كم دقيقة سمعت اليوم؟'}</label>
+   <div style="display:flex;align-items:center;gap:10px">
+    <input id="v" type="number" min="1" inputmode="numeric" placeholder="${m.kind==='read'?(sg.r||10):(sg.l||15)}">
+    <span class="chip" style="white-space:nowrap">${m.kind==='read'?'صفحة':'دقيقة'}</span></div>
+   <p style="font-size:12.5px;color:var(--muted);margin:9px 0 0">
+    اقتراح اليوم <span class="num">${m.kind==='read'?sg.r:sg.l}</span> ${m.kind==='read'?'صفحة':'دقيقة'}.</p>
+   ${m.kind==='listen'&&c&&safeLink(c.link)?`<a class="golink sm" href="${esc(safeLink(c.link))}" target="_blank" rel="noopener noreferrer">
+     <span class="pl"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+     افتح المقطع <span class="arw">↗</span></a>`:''}
+   <label for="nt">فائدة استفدتها اليوم <span style="color:var(--rose)">*</span></label>
+   <textarea id="nt" rows="3" maxlength="400" oninput="benCount()"
+     placeholder="اكتب فائدة واحدة بأسلوبك: ماذا تعلّمت من «${esc(c?c.title:'')}» اليوم؟"></textarea>
+   <div class="bhint"><span id="bc">٠ حرف</span><span>الفائدة شرط لحفظ الإنجاز · تُحفظ في «فوائدي»</span></div>
+   <div class="row"><button class="btn outline" onclick="closeModal()">إلغاء</button>
+   <button class="btn" onclick="saveLog()">حفظ الإنجاز والفائدة</button></div>`}
+ if(m.t==='edit'){const e=ENTRIES.find(x=>x.id===m.id);
+  if(!e)b='<h3>غير موجود</h3><div class="row"><button class="btn" onclick="closeModal()">إغلاق</button></div>';
+  else b=`<h3>تصحيح تسجيل اليوم</h3><p class="sub">${e.kind==='read'?'قراءة':'سماع'} · ${dayName(e.date)}</p>
+   <label for="ev">${e.kind==='read'?'عدد الصفحات':'عدد الدقائق'}</label>
+   <input id="ev" type="number" min="1" value="${e.v}">
+   <label for="en">فائدتك</label>
+   <textarea id="en" rows="3" maxlength="400">${esc(e.note||'')}</textarea>
+   <p style="font-size:12px;color:var(--muted);margin:9px 0 0">
+    التصحيح لتسجيلات اليوم فقط. بعد ٣:٠٠ فجرًا يُقفل اليوم.</p>
+   <div class="row"><button class="btn outline" onclick="delEntry('${e.id}')">حذف</button>
+   <button class="btn" onclick="saveEdit()">حفظ التصحيح</button></div>`}
+ if(m.t==='plan'){const g=gradeById(m.g),p=planOf(m.g,WS());
+  b=`<h3>مقرر الأسبوع — ${g.name}</h3>
+   <p class="sub">يظهر لكل طلاب الصف فورًا، ويُحسب عليه اقتراح اليوم.</p>
+   <div class="segv" style="margin-top:14px">
+    <button aria-pressed="${m.hasR}" onclick="keepPlan();S.modal.hasR=!S.modal.hasR;renderModal()">
+     <b>${m.hasR?'✓ ':''}مقرر قرائي</b><span>كتاب يُقرأ بعدد صفحات</span></button>
+    <button aria-pressed="${m.hasL}" onclick="keepPlan();S.modal.hasL=!S.modal.hasL;renderModal()">
+     <b>${m.hasL?'✓ ':''}مقرر سماعي</b><span>سلسلة تُسمع بعدد دقائق</span></button></div>
+   ${m.hasR?`<label for="rt">اسم الكتاب</label>
+    <input id="rt" type="text" value="${esc(m.rt_!==undefined?m.rt_:(p.read?p.read.title:''))}" placeholder="مثال: قصة اختراع">
+    <label for="rb">المؤلف</label>
+    <input id="rb" type="text" value="${esc(m.rb_!==undefined?m.rb_:(p.read?p.read.by:''))}">
+    <label for="rn">نبذة للطالب</label>
+    <textarea id="rn" rows="2" placeholder="لماذا هذا الكتاب؟">${esc(m.rn_!==undefined?m.rn_:(p.read?p.read.note:''))}</textarea>
+    <label for="rv2">مقدار الأسبوع</label>
+    <div style="display:flex;align-items:center;gap:10px">
+     <input id="rv2" type="number" min="1" value="${m.rv_!==undefined?m.rv_:(p.read?p.read.target:70)}">
+     <span class="chip">صفحة</span></div>`:''}
+   ${m.hasL?`<label for="lt">اسم المقرر السماعي</label>
+    <input id="lt" type="text" value="${esc(m.lt_!==undefined?m.lt_:(p.listen?p.listen.title:''))}">
+    <label for="lb">الملقي</label>
+    <input id="lb" type="text" value="${esc(m.lb_!==undefined?m.lb_:(p.listen?p.listen.by:''))}">
+    <label for="ln">نبذة للطالب</label>
+    <textarea id="ln" rows="2">${esc(m.ln_!==undefined?m.ln_:(p.listen?p.listen.note:''))}</textarea>
+    <label for="ll">رابط المقطع <span style="color:var(--rose)">*</span></label>
+    <input id="ll" type="text" dir="ltr" placeholder="https://..."
+      value="${esc(m.ll_!==undefined?m.ll_:(p.listen?(p.listen.link||''):''))}">
+    <p style="font-size:11.5px;color:var(--muted);margin:6px 0 0">
+     يظهر للطالب كزر «انتقل للمقطع» في بطاقة المقرر وعند التسجيل.</p>
+    <label for="lv">مقدار الأسبوع</label>
+    <div style="display:flex;align-items:center;gap:10px">
+     <input id="lv" type="number" min="1" value="${m.lv_!==undefined?m.lv_:(p.listen?p.listen.target:60)}">
+     <span class="chip">دقيقة</span></div>`:''}
+   ${!m.hasR&&!m.hasL?'<p style="color:var(--rose);font-size:13px;margin-top:14px">اختر مقررًا واحدًا على الأقل.</p>':''}
+   <div class="row"><button class="btn outline" onclick="closeModal()">إلغاء</button>
+   <button class="btn" onclick="savePlan()">حفظ المقرر</button></div>`}
+ if(m.t==='ser'){const rd=m.kind==='read',wks=termWeeks();
+  const n=m.n||6,total=+(m.stot_||0),per=total?Math.ceil(total/n):0;
+  b=`<h3>مقرر ممتد</h3><p class="sub">يُوزَّع تلقائيًا على أسابيع الفصل — ${gradeById(m.g).name}</p>
+   <label for="sg2">الصف</label>
+   <select id="sg2" onchange="keepSer();S.modal.g=this.value;renderModal()">
+    ${GRADES.map(g=>`<option value="${g.id}"${m.g===g.id?' selected':''}>${g.name}</option>`).join('')}</select>
+   <label>النوع</label><div class="segv">
+    <button aria-pressed="${rd}" onclick="keepSer();S.modal.kind='read';renderModal()">
+     <b>قرائي</b><span>كتاب يُقسَّم بالصفحات</span></button>
+    <button aria-pressed="${!rd}" onclick="keepSer();S.modal.kind='listen';renderModal()">
+     <b>سماعي</b><span>سلسلة تُقسَّم بالدقائق</span></button></div>
+   <label for="st">اسم المقرر</label>
+   <input id="st" type="text" value="${esc(m.st_||'')}" placeholder="${rd?'مثال: صناع التاريخ':'مثال: بودكاست لغتنا'}">
+   <label for="sb">${rd?'المؤلف':'الملقي'}</label><input id="sb" type="text" value="${esc(m.sb_||'')}">
+   <label for="sn2">نبذة للطالب</label>
+   <textarea id="sn2" rows="2">${esc(m.sn2_||'')}</textarea>
+   ${rd?'':`<label for="slink">رابط المقطع <span style="color:var(--danger)">*</span></label>
+    <input id="slink" type="text" dir="ltr" placeholder="https://..." value="${esc(m.slink_||'')}">`}
+   <label for="stot">الحجم الكلي</label>
+   <div style="display:flex;align-items:center;gap:10px">
+    <input id="stot" type="number" min="1" value="${m.stot_||''}" placeholder="${rd?'مثال: 320':'مثال: 480'}"
+      oninput="keepSer();renderModal()"><span class="chip">${rd?'صفحة':'دقيقة'}</span></div>
+   <label for="ssw">يبدأ من أسبوع</label>
+   <select id="ssw" onchange="keepSer();renderModal()">
+    ${wks.map(w=>`<option value="${w}"${m.sw===w?' selected':''}>الأسبوع ${weekNo(w)} · ${w}${w===WS()?' (الحالي)':''}</option>`).join('')}</select>
+   <label for="sn">عدد الأسابيع</label>
+   <div style="display:flex;align-items:center;gap:10px">
+    <input id="sn" type="number" min="1" max="30" value="${n}" oninput="keepSer();renderModal()">
+    <span class="chip">أسبوع</span></div>
+   ${per?`<div class="serprev"><b>${per}</b> ${rd?'صفحة':'دقيقة'} أسبوعيًا
+     · من الأسبوع <b>${weekNo(m.sw)}</b> إلى <b>${weekNo(addD(m.sw,(n-1)*7))}</b>
+     <span>سيُنشئ ${n} خطط أسبوعية، ولك تعديل أي أسبوع بعدها.</span></div>`:''}
+   <div class="row"><button class="btn outline" onclick="closeModal()">إلغاء</button>
+   <button class="btn" onclick="saveSeries()">وزّعه على الأسابيع</button></div>`}
+ if(m.t==='term'){const opts=[...Array(9)].map((_,i)=>addD(weekStart(todayISO()),(i-4)*7));
+  b=`<h3>إعداد الفصل</h3><p class="sub">يحدد نطاق المخطط ولا يمسّ أي خطة محفوظة.</p>
+   <label for="tsw">أسبوع بداية الفصل</label>
+   <select id="tsw">${opts.map(w=>`<option value="${w}"${m.st===w?' selected':''}>${w}${w===weekStart(todayISO())?' (الأسبوع الحالي)':''}</option>`).join('')}</select>
+   <label for="tw">عدد أسابيع الفصل</label>
+   <div style="display:flex;align-items:center;gap:10px">
+    <input id="tw" type="number" min="1" max="30" value="${m.n}"><span class="chip">أسبوع</span></div>
+   <div class="row"><button class="btn outline" onclick="closeModal()">إلغاء</button>
+   <button class="btn" onclick="saveTerm()">حفظ</button></div>`}
+ if(m.t==='sup'){const editing=!!m.code;
+  b=`<h3>${editing?'تعديل مشرف':'إضافة مشرف'}</h3>
+   <p class="sub">${editing?'تغيير الرمز يعني دخوله بالرمز الجديد.':'الرمز يُولَّد تلقائيًا ويمكنك تغييره.'}</p>
+   <label for="vn">الاسم</label>
+   <input id="vn" type="text" value="${esc(m.n_||'')}" placeholder="مثال: أ. عبدالله الصقر">
+   <label for="vc">رمز الدخول</label>
+   <input id="vc" type="text" inputmode="numeric" maxlength="4" dir="ltr" value="${esc(m.c_||'')}">
+   <label for="vg">الصف الذي يشرف عليه</label>
+   <select id="vg">
+    <option value=""${!m.g?' selected':''}>بلا صف</option>
+    ${GRADES.map(g=>{const h=SUPERVISORS.find(x=>x.grade===g.id&&x.code!==m.code);
+      return `<option value="${g.id}"${m.g===g.id?' selected':''}>${g.name}${h?' — حاليًا: '+esc(h.name):''}</option>`}).join('')}
+   </select>
+   <p style="font-size:11.5px;color:var(--muted);margin:6px 0 0">
+    لكل صف مشرف واحد؛ إن أسندت صفًا له مشرف يُنقل الحالي إلى «بلا صف».</p>
+   <div class="row">
+    ${editing?`<button class="btn outline" style="flex:0 0 auto;color:var(--danger);border-color:#EEDAD6"
+      onclick="removeSup('${m.code}')">إزالة</button>`:'<button class="btn outline" onclick="closeModal()">إلغاء</button>'}
+    <button class="btn" onclick="saveSup()">حفظ</button></div>`}
+ if(m.t==='me'){
+  b=`<h3>ملفك الشخصي</h3><p class="sub">صلاحيتك كاملة — احرص على رمز قوي.</p>
+   <label for="mn2">الاسم</label><input id="mn2" type="text" value="${esc(m.n_||'')}">
+   <label for="mc2">رمز الدخول</label>
+   <input id="mc2" type="text" inputmode="numeric" maxlength="8" dir="ltr" value="${esc(m.c_||'')}">
+   <p style="font-size:11.5px;color:var(--muted);margin:6px 0 0">
+    من ٤ إلى ٨ أرقام. الأطول أأمن — صلاحيتك تشمل كل البيانات.
+    <br>بعد الحفظ تدخل بالرمز الجديد، فاحفظه.</p>
+   <div class="row"><button class="btn outline" onclick="closeModal()">إلغاء</button>
+   <button class="btn" onclick="saveMe()">حفظ</button></div>`}
+ if(m.t==='stu'){const s=studentByCode(m.code);
+  b=`<h3>بيانات الطالب</h3><p class="sub">الرمز <span class="num">${s.code}</span> · لا يتغيّر</p>
+   <label for="sn">الاسم</label><input id="sn" type="text" value="${esc(s.name)}">
+   <label for="sg">الصف</label>
+   <select id="sg">${GRADES.map(g=>`<option value="${g.id}"${g.id===m.g?' selected':''}>${g.name}</option>`).join('')}</select>
+   ${m.g!==s.grade?'<p style="font-size:11.5px;color:var(--muted);margin:6px 0 0">النقل يغيّر مقرره لمقرر الصف الجديد، وسجله السابق يبقى محفوظًا.</p>':''}
+   <label>الحالة</label>
+   <div class="segv">
+    <button aria-pressed="${m.act}" onclick="S.modal.g=document.getElementById('sg').value;S.modal.act=true;renderModal()">
+     <b>نشط</b><span>يسجّل ويظهر في المتصدرين والمصفوفة</span></button>
+    <button aria-pressed="${!m.act}" onclick="S.modal.g=document.getElementById('sg').value;S.modal.act=false;renderModal()">
+     <b>موقوف</b><span>لا يظهر في اللوحات — وسجله وفوائده محفوظة</span></button></div>
+   <div class="row"><button class="btn outline" onclick="closeModal()">إلغاء</button>
+   <button class="btn" onclick="saveStudent()">حفظ</button></div>`}
+ if(m.t==='add'){
+  b=`<h3>إضافة طالب</h3><p class="sub">الرمز الرباعي يُولَّد تلقائيًا ويُسلَّم له.</p>
+   <label for="nn">الاسم</label><input id="nn" type="text" placeholder="الاسم الثلاثي">
+   <label for="ng">الصف</label><select id="ng">${GRADES.map(g=>`<option value="${g.id}">${g.name}</option>`).join('')}</select>
+   <div class="row"><button class="btn outline" onclick="closeModal()">إلغاء</button>
+   <button class="btn" onclick="savePerson()">إضافة</button></div>`}
+ return `<div class="ov" onclick="if(event.target===this)closeModal()"><div class="modal" role="dialog" aria-modal="true">${b}</div></div>`}
+function renderModal(){$('mroot').innerHTML=modalHTML();
+ const f=document.querySelector('.modal input,.modal select');f&&f.focus()}
+function benCount(){const n=($('nt').value||'').trim().length,el=$('bc');
+ if(el)el.textContent=n+' حرف'+(n<15?' — أكمل قليلًا':' ✓')}
+async function saveLog(){const v=parseInt($('v').value,10);if(!v||v<1){$('v').focus();return}
+ const note=($('nt').value||'').trim();
+ if(note.length<15){$('nt').focus();return toast('اكتب فائدتك أولًا — سطر واحد يكفي.')}
+ setBusy(1);
+ try{await rpc('log_entry',{p_token:TOKEN,p_kind:S.modal.kind,p_v:v,p_note:note});
+  S.modal=null;renderModal();await refresh();
+  toast(weekPct(S.me)>=100?'ما شاء الله — أتممت مقرر الأسبوع!':'انحفظ إنجازك.');
+ }catch(e){toast(e.message)}finally{setBusy(0)}}
+async function saveEdit(){const v=parseInt($('ev').value,10);if(!v||v<1){$('ev').focus();return}
+ const nt=(($('en')&&$('en').value)||'').trim();
+ if(nt.length<15){$('en')&&$('en').focus();return toast('الفائدة لا تقل عن سطر.')}
+ setBusy(1);
+ try{await rpc('edit_entry',{p_token:TOKEN,p_id:S.modal.id,p_v:v,p_note:nt});
+  S.modal=null;renderModal();await refresh();toast('صُحّح التسجيل.');
+ }catch(e){toast(e.message)}finally{setBusy(0)}}
+async function delEntry(id){setBusy(1);
+ try{await rpc('delete_entry',{p_token:TOKEN,p_id:id});
+  S.modal=null;renderModal();await refresh();toast('حُذف التسجيل.');
+ }catch(e){toast(e.message)}finally{setBusy(0)}}
+function keepPlan(){const g=i=>$(i);
+ ['rt','rb','rn','rv2','lt','lb','ln','lv','ll'].forEach(i=>{if(g(i)){
+  const key={rt:'rt_',rb:'rb_',rn:'rn_',rv2:'rv_',lt:'lt_',lb:'lb_',ln:'ln_',lv:'lv_',ll:'ll_'}[i];
+  S.modal[key]=g(i).value}})}
+async function savePlan(){const m=S.modal;
+ if(!m.hasR&&!m.hasL)return toast('اختر مقررًا واحدًا على الأقل.');
+ const read=m.hasR?{title:($('rt').value||'').trim(),by:($('rb').value||'').trim()||'—',
+  note:($('rn').value||'').trim(),target:Math.max(1,+$('rv2').value||70)}:null;
+ const listen=m.hasL?{title:($('lt').value||'').trim(),by:($('lb').value||'').trim()||'—',
+  note:($('ln').value||'').trim(),target:Math.max(1,+$('lv').value||60),
+  link:($('ll').value||'').trim()}:null;
+ if(read&&!read.title){$('rt').focus();return toast('اكتب اسم الكتاب.')}
+ if(listen&&!listen.title){$('lt').focus();return toast('اكتب اسم المقرر السماعي.')}
+ if(listen&&!/^https:\/\//i.test(listen.link)){$('ll').focus();
+  return toast('رابط المقطع مطلوب ويبدأ بـ https.')}
+ const W=m.ws||WS(), old=planOf(m.g,W);
+ const started=W===WS()?codeOfGrade(m.g).filter(x=>{const w=wkAt(x.code,W);return w.r+w.l>0}).length:0;
+ const changed=(old.read&&read&&old.read.target!==read.target)||(old.listen&&listen&&old.listen.target!==listen.target);
+ if(changed&&started&&!m.confirmed){S.modal.confirmed=1;renderModal();
+  return toast('انتبه: '+started+' طالبًا سجّلوا على المقدار القديم — اضغط حفظ مرة أخرى للتأكيد.')}
+ setBusy(1);
+ try{await rpc('set_week_plan',{p_token:TOKEN,p_grade:m.g,p_week:W,p_plan:{read,listen}});
+  S.modal=null;renderModal();await refresh();
+  toast('حُدّد مقرر '+gradeById(m.g).name+' — ظهر للطلاب الآن.');
+ }catch(e){toast(e.message)}finally{setBusy(0)}}
+async function savePerson(){const n=($('nn').value||'').trim();if(!n){$('nn').focus();return}
+ setBusy(1);
+ try{const d=await rpc('add_student',{p_token:TOKEN,p_name:n,p_grade:$('ng').value});
+  S.modal=null;renderModal();await refresh();toast('أُضيف '+n+' — رمزه '+d.code);
+ }catch(e){toast(e.message)}finally{setBusy(0)}}
+function cellInfo(el,box){const b=$(box);if(!b)return;
+ b.textContent=el.dataset.inf;b.classList.remove('lit');void b.offsetWidth;b.classList.add('lit')}
+function paintWithin(root,anim){
+ root.querySelectorAll('[data-w]').forEach((el,i)=>{const w=el.dataset.w+'%';
+  anim?setTimeout(()=>el.style.width=w,60+i*30):el.style.width=w});
+ root.querySelectorAll('[data-off]').forEach(el=>{const o=el.dataset.off;
+  anim?setTimeout(()=>el.style.strokeDashoffset=o,110):el.style.strokeDashoffset=o});
+ root.querySelectorAll('[data-to]').forEach(el=>anim&&!reduced?countEl(el)
+  :el.textContent=el.dataset.to+(el.dataset.suffix||''))}
+function countEl(el){if(el._c)return;el._c=1;
+ const to=+el.dataset.to,sfx=el.dataset.suffix||'',dur=to>200?1000:780,t0=performance.now();
+ const step=t=>{const k=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-k,3);
+  el.textContent=Math.round(to*e)+sfx;if(k<1)requestAnimationFrame(step)};
+ setTimeout(()=>requestAnimationFrame(step),110)}
+let IO=null;
+function observeReveals(anim){
+ if(IO){IO.disconnect();IO=null}
+ const nodes=[...document.querySelectorAll('main .rv')];
+ if(!anim||reduced){nodes.forEach(n=>n.classList.add('in'));paintWithin(document,false);return}
+ IO=new IntersectionObserver(es=>{es.forEach(x=>{if(!x.isIntersecting)return;
+  x.target.classList.add('in');paintWithin(x.target,true);IO.unobserve(x.target)})},
+  {rootMargin:'40px 0px -6% 0px',threshold:.04});
+ nodes.forEach(n=>IO.observe(n));
+ setTimeout(()=>paintWithin(document,false),2200)}
+function moveTab(){const t=$('tabs');if(!t)return;
+ const a=t.querySelector('[aria-selected="true"]'),ind=$('tind');if(!a||!ind)return;
+ ind.style.width=a.offsetWidth+'px';ind.style.right=(t.scrollWidth-a.offsetLeft-a.offsetWidth)+'px'}
+let lastKey='';
+function renderShell(){
+ if(!S.role)return drawLogin();
+drawLogin();
+ const key=[S.role,S.view,S.student].join('|'),anim=key!==lastKey;lastKey=key;
+ let main='';
+ if(S.role==='student')main=tabs([{id:'week',label:'أسبوعي'},{id:'ben',label:'فوائدي'},
+   {id:'picks',label:'المنتخبات'},{id:'log',label:'سجلي'},{id:'board',label:'المتصدرون'}])
+  +(S.view==='log'?myLogView():S.view==='ben'?myBenView():S.view==='picks'?picksView()
+   :S.view==='board'?boardView():weekView());
+ if(S.role==='supervisor')main=tabs([{id:'class',label:'صفّي'},{id:'ben',label:'فوائد طلابي'},
+   {id:'picks',label:'المنتخبات'},{id:'board',label:'المتصدرون'}])
+  +(S.student?detailView():S.view==='ben'?benView():S.view==='picks'?picksView()
+   :S.view==='board'?boardView():classView());
+ if(S.role==='admin')main=tabs([{id:'home',label:'نظرة عامة'},{id:'plan',label:'مقرر الأسبوع'},{id:'class',label:'المتابعة'},
+   {id:'ben',label:'الفوائد'},{id:'picks',label:'المنتخبات'},{id:'people',label:'الطلاب'},{id:'board',label:'المتصدرون'}])
+  +(S.student?detailView():S.view==='class'?classView():S.view==='ben'?benView()
+   :S.view==='picks'?picksView():S.view==='people'?peopleView()
+   :S.view==='board'?boardView():S.view==='plan'?planView():overview());
+ shell().innerHTML=topbar()+`<main class="wrap ${anim?'anim':''}" style="padding-bottom:70px">${main}</main>`;
+ requestAnimationFrame(()=>{moveTab();observeReveals(anim)})}
+document.addEventListener('pointerdown',e=>{
+ const b=e.target.closest('.btn,.filter,.qbtn');if(!b||reduced)return;
+ const r=b.getBoundingClientRect(),d=document.createElement('span');
+ d.className='ripple';d.style.left=(e.clientX-r.left)+'px';d.style.top=(e.clientY-r.top)+'px';
+ d.style.width=d.style.height='18px';
+ if(!b.classList.contains('btn')||b.classList.contains('outline'))d.style.background='rgba(47,75,216,.18)';
+ b.appendChild(d);setTimeout(()=>d.remove(),560)},{passive:true});
+let _rz;addEventListener('resize',()=>{clearTimeout(_rz);_rz=setTimeout(moveTab,120)},{passive:true});
+/* زر العودة للأعلى */
+(function fab(){const b=document.createElement('button');
+ b.className='fab';b.setAttribute('aria-label','العودة للأعلى');b.innerHTML='︿';
+ b.onclick=()=>scrollTo({top:0,behavior:reduced?'auto':'smooth'});
+ document.body.appendChild(b);let tick=false;
+ addEventListener('scroll',()=>{if(tick)return;tick=true;
+  requestAnimationFrame(()=>{b.classList.toggle('on',scrollY>420);tick=false})},{passive:true})})();
+document.addEventListener('keydown',e=>{
+ if(!S.role){if(/^[0-9]$/.test(e.key))tap(null,e.key);
+  else if(e.key==='Backspace')tap(null,'back');else if(e.key==='Enter')login();return}
+ if(e.key==='Escape')closeModal()});
+
+/* ── الإقلاع: استعادة بيانات هذا الجهاز ثم عرض الدخول ── */
+(async function start(){
+ drawLogin();
+ if(TOKEN){overlayMsg('جارٍ فتح حسابك…');
+  try{await boot()}catch(e){forceLogout()}}
+})();
+
+</script>
+</body>
+</html>
