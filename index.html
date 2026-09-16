@@ -1035,6 +1035,13 @@ body{color:var(--ink)}
 .range{margin:7px 0 0;font-size:12.5px;color:#5F736C;font-weight:500;
  background:var(--bg-soft);border:1px solid var(--line);border-radius:10px;padding:6px 11px;display:inline-block}
 .range b{color:var(--ink);font-size:14px}
+/* قائمة عناصر المقرر */
+.its{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.it{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line,#e5e2d8);border-radius:10px;background:rgba(0,0,0,.015)}
+.itb{min-width:0;flex:1}.itb b{display:block;font-size:13.5px;font-weight:600;line-height:1.45}
+.itb small{font-size:11.5px;color:var(--muted)}
+.itgo{flex:none;font-size:12.5px;font-weight:600;text-decoration:none;color:var(--teal,#164F42);padding:4px 10px;border-radius:8px;background:var(--teal-soft,#e8efe9)}
+.itno{flex:none;font-size:11.5px;color:var(--rose,#b5543f)}
 </style>
 </head>
 <body><div id="app"><div id="shell"></div><div id="mroot"></div><div id="troot"></div></div>
@@ -1042,13 +1049,16 @@ body{color:var(--ink)}
 /* ════════ الاتصال بـ Supabase ════════ */
 const CFG={url:'https://benqmepnybminxeyubqn.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJlbnFtZXBueWJtaW54ZXl1YnFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0MzY2MTgsImV4cCI6MjEwNDAxMjYxOH0.QEr3NgrRJwKVbO8heYznSPmK5BpVmi2GgAyGoHleAzE'};
 let TOKEN=localStorage.getItem('kh_tok')||'', BUSY=0;
+const RPC_TIMEOUT=20000, SAFE_RPC=new Set(['bootstrap']);
 function persist(){}                       /* البيانات في الخادم لا في الجهاز */
 async function rpc(fn,args,retry){
  retry=retry||0;
  try{
-  const r=await fetch(CFG.url+'/rest/v1/rpc/'+fn,{method:'POST',
+  const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),RPC_TIMEOUT);
+  let r;
+  try{r=await fetch(CFG.url+'/rest/v1/rpc/'+fn,{method:'POST',signal:ac.signal,
    headers:{apikey:CFG.key,Authorization:'Bearer '+CFG.key,'Content-Type':'application/json'},
-   body:JSON.stringify(args||{})});
+   body:JSON.stringify(args||{})})}finally{clearTimeout(tm)}
   const txt=await r.text(); let d=null;
   try{d=txt?JSON.parse(txt):null}catch(_){}
   if(!r.ok){
@@ -1057,8 +1067,11 @@ async function rpc(fn,args,retry){
    throw new Error(msg)}
   return d;
  }catch(e){
-  if(e.name==='TypeError'&&retry<2){await new Promise(r=>setTimeout(r,500*(retry+1)));
+  const net=e.name==='TypeError'||e.name==='AbortError';
+  /* إعادة المحاولة للقراءة فقط: إعادة إرسال عملية كتابة قد تكرر التسجيل */
+  if(net&&SAFE_RPC.has(fn)&&retry<2){await new Promise(r=>setTimeout(r,600*(retry+1)));
    return rpc(fn,args,retry+1)}
+  if(e.name==='AbortError')throw new Error('الخادم تأخر في الرد — حدّث الصفحة وتأكد قبل إعادة الحفظ.');
   if(e.name==='TypeError')throw new Error('تعذّر الوصول للخادم — تحقق من اتصالك.');
   throw e}}
 function setBusy(b){BUSY=b;document.body.style.cursor=b?'progress':'';
@@ -1169,17 +1182,18 @@ function dayQuota(s){
  const t=targetOf(s),d=doneOf(s.code),td=dayOf(s.code,todayISO()),dl=daysLeft();
  const mk=(tot,done,doneToday)=>{
   if(!tot)return{q:0,left:0,done:doneToday,base:0,catch:0};
-  const base=Math.ceil(tot/7);
+  const base=Math.ceil(tot/WORK_DAYS);            /* ٥ أيام عمل + يومان راحة/تعويض */
   const before=done-doneToday;                     /* إنجاز الأيام السابقة */
   const rest=Math.max(0,tot-before);               /* ما تبقّى من مقرر الأسبوع */
   const need=Math.ceil(rest/dl);                   /* حصة اليوم لو وُزّع بالتساوي */
-  const q=Math.max(0,Math.min(need,base*2));       /* سقف: ضعف الأساس */
+  const q=Math.max(0,Math.min(rest,Math.max(base,need),base*2)); /* لا أقل من المعتمد، ولا أكثر من المتبقي أو ضعف الأساس */
   return{q,left:Math.max(0,q-doneToday),done:doneToday,base,catch:Math.max(0,q-base)}};
  const r=mk(t.r,d.r,td.r), l=mk(t.l,d.l,td.l);
  return{r,l,dl,doneAll:r.left===0&&l.left===0,
    weekDone:d.r>=t.r&&d.l>=t.l}}
 function suggest(s){const q=dayQuota(s);return{r:q.r.left,l:q.l.left,dl:q.dl}}
-function paceState(s){const p=weekPct(s),exp=Math.round(dayIndex()/7*100);
+const WORK_DAYS=5;
+function paceState(s){const p=weekPct(s),exp=Math.min(100,Math.round(dayIndex()/WORK_DAYS*100));
  if(p>=100)return{k:'done',t:'أتممت مقرر الأسبوع'};
  if(p>=exp)return{k:'ok',t:'في المسار'};
  if(p>=exp-20)return{k:'mid',t:'قريب من المسار'};
@@ -1249,7 +1263,11 @@ async function boot(){
  const me=d.me, view=me.role==='student'?'week':me.role==='supervisor'?'class':'home';
  S={...S,role:me.role,me:{code:me.code,name:me.name,grade:me.grade},view,buf:'',student:null,modal:null};
  lastKey=''; renderShell()}
-async function refresh(){const d=await rpc('bootstrap',{p_token:TOKEN});absorb(d);lastKey='';renderShell()}
+let REFRESHING=null;
+function refresh(){if(REFRESHING)return REFRESHING;
+ REFRESHING=(async()=>{try{const d=await rpc('bootstrap',{p_token:TOKEN});absorb(d);lastKey='';renderShell()}
+  finally{REFRESHING=null}})();
+ return REFRESHING}
 async function logout(){try{await rpc('logout',{p_token:TOKEN})}catch(_){}
  forceLogout()}
 function topbar(){const rn={student:'طالب',supervisor:'مشرف',admin:'مشرف تنفيذي'}[S.role];
@@ -1383,6 +1401,19 @@ function weekView(){
 
   ${weeksStrip(me)}`}
 function safeLink(u){return /^https?:\/\//i.test(String(u||''))?u:''}
+/* عناصر المقرر: قائمة المقاطع/الكتب، أو عنصر واحد للخطط القديمة */
+function itemsOf(c){if(!c)return[];
+ if(Array.isArray(c.items)&&c.items.length)return c.items.filter(x=>x&&x.t);
+ return[{t:c.title,by:c.by,q:c.target,link:c.link,from:c.from,to:c.to}]}
+function itemRange(x,kind){if(x.from==null||x.to==null)return 'كامل';
+ return kind==='read'?`ص <span class="num">${x.from}</span>–<span class="num">${x.to}</span>`
+  :`د <span class="num">${x.from}</span>–<span class="num">${x.to}</span>`}
+function itemsHTML(c,kind){const its=itemsOf(c),unit=kind==='read'?'ص':'د';
+ return `<ul class="its">${its.map(x=>{const lk=kind==='listen'?safeLink(x.link):'';
+  return `<li class="it"><div class="itb"><b>${esc(x.t)}</b>
+   <small>${x.by?esc(x.by)+' · ':''}${itemRange(x,kind)} · <span class="num">${x.q}</span> ${unit}</small></div>
+   ${kind==='listen'?(lk?`<a class="itgo" href="${esc(lk)}" target="_blank" rel="noopener noreferrer">افتح ↗</a>`
+     :'<span class="itno">بلا رابط</span>'):''}</li>`}).join('')}</ul>`}
 function weeksStrip(me){
  const ws=pastWeeks(8).filter(w=>pctAt(me,w)!==null);
  if(ws.length<2)return '';
@@ -1406,11 +1437,12 @@ function courseCard(c,kind,done,target,color,i){
   <div class="cov">${cover(kind,color,p)}</div>
   <div class="wcb">
    <span class="kick"><span class="dot" style="background:${color}"></span>${kind==='read'?'مقرر قرائي':'مقرر سماعي'}</span>
-   <h3>${esc(c.title)}</h3><p class="by">${esc(c.by)}${c.part?` · الجزء <span class="num">${c.part}</span> من <span class="num">${c.parts}</span>`:''}</p>
+   ${itemsOf(c).length>1?`<h3>مقرر الأسبوع</h3>${itemsHTML(c,kind)}`:`<h3>${esc(c.title)}</h3><p class="by">${esc(c.by)}${c.part?` · الجزء <span class="num">${c.part}</span> من <span class="num">${c.parts}</span>`:''}</p>
    ${c.from?`<p class="range">${kind==='read'?'صفحات هذا الأسبوع':'دقائق هذا الأسبوع'}:
      <b class="num">${c.from}</b> — <b class="num">${c.to}</b> من <span class="num">${c.total}</span></p>`:''}
+   ${Array.isArray(c.items)&&c.items.length===1&&c.items[0].from!=null?`<p class="range">${kind==='read'?'صفحات هذا الأسبوع':'دقائق هذا الأسبوع'}: ${itemRange(c.items[0],kind)}</p>`:''}`}
    ${c.note?`<p class="note" onclick="this.classList.toggle('open')">${esc(c.note)}</p>`:''}
-   ${kind==='listen'?(lk?`<a class="golink" href="${esc(lk)}" target="_blank" rel="noopener noreferrer">
+   ${kind==='listen'&&itemsOf(c).length<=1?(lk?`<a class="golink" href="${esc(lk)}" target="_blank" rel="noopener noreferrer">
      <span class="pl"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
      انتقل للمقطع <span class="arw">↗</span></a>`
     :'<p class="nolink">لم يُضف رابط المقطع بعد — راجع مشرفك.</p>'):''}
@@ -1762,7 +1794,7 @@ function overview(){
  const act=all.filter(s=>{const d=dayOf(s.code,todayISO());return d.r+d.l>0});
  const idle=all.filter(s=>lastActive(s.code)>=2);
  const noPlan=GRADES.filter(g=>{const p=planOf(g.id,ws);return !p.read&&!p.listen});
- const noLink=GRADES.filter(g=>{const p=planOf(g.id,ws);return p.listen&&!/^https?:\/\//i.test(p.listen.link||'')});
+ const noLink=GRADES.filter(g=>{const p=planOf(g.id,ws);return p.listen&&itemsOf(p.listen).some(x=>!safeLink(x.link))});
  const benToday=BEN.filter(e=>e.date===todayISO()).length;
  const wk=all.reduce((t,s)=>{const w=weekOf(s.code);return{r:t.r+w.r,l:t.l+w.l}},{r:0,l:0});
  const hour=new Date().getHours(),greet=hour<12?'صباح الخير':'مساء الخير';
@@ -1949,7 +1981,7 @@ function openSeries(g){S.modal={t:'ser',g:g||GRADES[0].id,kind:'read',
 function keepSer(){const q=i=>$(i);['st','sb','sn2','stot','slink'].forEach(i=>{
  if(q(i))S.modal[i+'_']=q(i).value});
  if(q('ssw'))S.modal.sw=q('ssw').value; if(q('sn'))S.modal.n=+q('sn').value||6}
-async function saveSeries(){const m=S.modal;
+async function saveSeries(){if(BUSY)return;const m=S.modal;
  const title=($('st').value||'').trim(); if(!title){$('st').focus();return toast('اكتب اسم المقرر.')}
  const total=Math.max(1,+$('stot').value||0);
  if(!total){$('stot').focus();return toast('أدخل الحجم الكلي.')}
@@ -2024,27 +2056,33 @@ async function saveStudent(){const m=S.modal,st=studentByCode(m.code);
   toast(moved?n+' انتقل إلى '+gradeById(ng).name:(m.act?'حُدّثت بيانات '+n:n+' أُوقف — سجله محفوظ'));
  }catch(e){toast(e.message)}finally{setBusy(0)}}
 function closeModal(){S.modal=null;renderModal()}
+function keepLog(){if(!S.modal)return;if($('v'))S.modal.v_=$('v').value;if($('nt'))S.modal.nt_=$('nt').value}
 function modalHTML(){const m=S.modal;if(!m)return '';let b='';
  if(m.t==='log'){const p=planOf(S.me.grade,WS()),sg=suggest(S.me);
-  const c=m.kind==='read'?p.read:p.listen;
+  const c=m.kind==='read'?p.read:p.listen, its=itemsOf(c);
+  if(!(m.ci>=0&&m.ci<its.length))m.ci=0;
+  const ci=its[m.ci]||null, clink=m.kind==='listen'&&ci?safeLink(ci.link):'';
   b=`<h3>سجّل إنجاز اليوم</h3><p class="sub">${dayName(todayISO())} · <span class="num">${todayISO()}</span></p>
    ${p.read&&p.listen?`<label>نوع الإنجاز</label><div class="segv">
-     <button aria-pressed="${m.kind==='read'}" onclick="S.modal.kind='read';renderModal()">
+     <button aria-pressed="${m.kind==='read'}" onclick="keepLog();S.modal.kind='read';S.modal.ci=0;renderModal()">
       <b>قراءة</b><span>${esc(p.read.title)}</span></button>
-     <button aria-pressed="${m.kind==='listen'}" onclick="S.modal.kind='listen';renderModal()">
+     <button aria-pressed="${m.kind==='listen'}" onclick="keepLog();S.modal.kind='listen';S.modal.ci=0;renderModal()">
       <b>سماع</b><span>${esc(p.listen.title)}</span></button></div>`:''}
+   ${its.length>1?`<label for="ci">${m.kind==='read'?'وش قرأت؟':'وش سمعت؟'}</label>
+    <select id="ci" onchange="keepLog();S.modal.ci=+this.value;renderModal()">
+     ${its.map((x,i)=>`<option value="${i}"${i===m.ci?' selected':''}>${esc(x.t)}</option>`).join('')}</select>`:''}
    <label for="v">${m.kind==='read'?'كم صفحة قرأت اليوم؟':'كم دقيقة سمعت اليوم؟'}</label>
    <div style="display:flex;align-items:center;gap:10px">
-    <input id="v" type="number" min="1" inputmode="numeric" placeholder="${m.kind==='read'?(sg.r||10):(sg.l||15)}">
+    <input id="v" type="number" min="1" max="600" inputmode="numeric" value="${esc(m.v_||'')}" placeholder="${m.kind==='read'?(sg.r||10):(sg.l||15)}">
     <span class="chip" style="white-space:nowrap">${m.kind==='read'?'صفحة':'دقيقة'}</span></div>
    <p style="font-size:12.5px;color:var(--muted);margin:9px 0 0">
     اقتراح اليوم <span class="num">${m.kind==='read'?sg.r:sg.l}</span> ${m.kind==='read'?'صفحة':'دقيقة'}.</p>
-   ${m.kind==='listen'&&c&&safeLink(c.link)?`<a class="golink sm" href="${esc(safeLink(c.link))}" target="_blank" rel="noopener noreferrer">
+   ${clink?`<a class="golink sm" href="${esc(clink)}" target="_blank" rel="noopener noreferrer">
      <span class="pl"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
      افتح المقطع <span class="arw">↗</span></a>`:''}
    <label for="nt">فائدة استفدتها اليوم <span style="color:var(--rose)">*</span></label>
    <textarea id="nt" rows="3" maxlength="400" oninput="benCount()"
-     placeholder="اكتب فائدة واحدة بأسلوبك: ماذا تعلّمت من «${esc(c?c.title:'')}» اليوم؟"></textarea>
+     placeholder="اكتب فائدة واحدة بأسلوبك: ماذا تعلّمت من «${esc(ci?ci.t:'')}» اليوم؟">${esc(m.nt_||'')}</textarea>
    <div class="bhint"><span id="bc">٠ حرف</span><span>الفائدة شرط لحفظ الإنجاز · تُحفظ في «فوائدي»</span></div>
    <div class="row"><button class="btn outline" onclick="closeModal()">إلغاء</button>
    <button class="btn" onclick="saveLog()">حفظ الإنجاز والفائدة</button></div>`}
@@ -2192,22 +2230,23 @@ function renderModal(){$('mroot').innerHTML=modalHTML();
  const f=document.querySelector('.modal input,.modal select');f&&f.focus()}
 function benCount(){const n=($('nt').value||'').trim().length,el=$('bc');
  if(el)el.textContent=n+' حرف'+(n<15?' — أكمل قليلًا':' ✓')}
-async function saveLog(){const v=parseInt($('v').value,10);if(!v||v<1){$('v').focus();return}
+async function saveLog(){if(BUSY)return;const v=parseInt($('v').value,10);if(!v||v<1||v>600){$('v').focus();return toast('أدخل رقمًا بين 1 و600.')}
+ const lp=planOf(S.me.grade,WS()),its=itemsOf(S.modal.kind==='read'?lp.read:lp.listen),course=(its[S.modal.ci||0]||{}).t||null;
  const note=($('nt').value||'').trim();
  if(note.length<15){$('nt').focus();return toast('اكتب فائدتك أولًا — سطر واحد يكفي.')}
  setBusy(1);
- try{await rpc('log_entry',{p_token:TOKEN,p_kind:S.modal.kind,p_v:v,p_note:note});
+ try{await rpc('log_entry',{p_token:TOKEN,p_kind:S.modal.kind,p_v:v,p_note:note,p_course:course});
   S.modal=null;renderModal();await refresh();
   toast(weekPct(S.me)>=100?'ما شاء الله — أتممت مقرر الأسبوع!':'انحفظ إنجازك.');
  }catch(e){toast(e.message)}finally{setBusy(0)}}
-async function saveEdit(){const v=parseInt($('ev').value,10);if(!v||v<1){$('ev').focus();return}
+async function saveEdit(){if(BUSY)return;const v=parseInt($('ev').value,10);if(!v||v<1){$('ev').focus();return}
  const nt=(($('en')&&$('en').value)||'').trim();
  if(nt.length<15){$('en')&&$('en').focus();return toast('الفائدة لا تقل عن سطر.')}
  setBusy(1);
  try{await rpc('edit_entry',{p_token:TOKEN,p_id:S.modal.id,p_v:v,p_note:nt});
   S.modal=null;renderModal();await refresh();toast('صُحّح التسجيل.');
  }catch(e){toast(e.message)}finally{setBusy(0)}}
-async function delEntry(id){setBusy(1);
+async function delEntry(id){if(BUSY)return;setBusy(1);
  try{await rpc('delete_entry',{p_token:TOKEN,p_id:id});
   S.modal=null;renderModal();await refresh();toast('حُذف التسجيل.');
  }catch(e){toast(e.message)}finally{setBusy(0)}}
@@ -2215,7 +2254,7 @@ function keepPlan(){const g=i=>$(i);
  ['rt','rb','rn','rv2','lt','lb','ln','lv','ll'].forEach(i=>{if(g(i)){
   const key={rt:'rt_',rb:'rb_',rn:'rn_',rv2:'rv_',lt:'lt_',lb:'lb_',ln:'ln_',lv:'lv_',ll:'ll_'}[i];
   S.modal[key]=g(i).value}})}
-async function savePlan(){const m=S.modal;
+async function savePlan(){if(BUSY)return;const m=S.modal;
  if(!m.hasR&&!m.hasL)return toast('اختر مقررًا واحدًا على الأقل.');
  const read=m.hasR?{title:($('rt').value||'').trim(),by:($('rb').value||'').trim()||'—',
   note:($('rn').value||'').trim(),target:Math.max(1,+$('rv2').value||70)}:null;
@@ -2224,9 +2263,12 @@ async function savePlan(){const m=S.modal;
   link:($('ll').value||'').trim()}:null;
  if(read&&!read.title){$('rt').focus();return toast('اكتب اسم الكتاب.')}
  if(listen&&!listen.title){$('lt').focus();return toast('اكتب اسم المقرر السماعي.')}
- if(listen&&!/^https:\/\//i.test(listen.link)){$('ll').focus();
+ if(listen&&listen.link&&!/^https:\/\//i.test(listen.link)){$('ll').focus();
   return toast('رابط المقطع مطلوب ويبدأ بـ https.')}
  const W=m.ws||WS(), old=planOf(m.g,W);
+ if(read&&old.read&&Array.isArray(old.read.items)&&old.read.items.length&&read.title===old.read.title)read.items=old.read.items;
+ if(listen&&old.listen&&Array.isArray(old.listen.items)&&old.listen.items.length&&listen.title===old.listen.title
+    &&listen.link===(old.listen.link||''))listen.items=old.listen.items;
  const started=W===WS()?codeOfGrade(m.g).filter(x=>{const w=wkAt(x.code,W);return w.r+w.l>0}).length:0;
  const changed=(old.read&&read&&old.read.target!==read.target)||(old.listen&&listen&&old.listen.target!==listen.target);
  if(changed&&started&&!m.confirmed){S.modal.confirmed=1;renderModal();
