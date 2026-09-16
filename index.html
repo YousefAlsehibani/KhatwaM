@@ -1042,6 +1042,8 @@ body{color:var(--ink)}
 .itb small{font-size:11.5px;color:var(--muted)}
 .itgo{flex:none;font-size:12.5px;font-weight:600;text-decoration:none;color:var(--teal,#164F42);padding:4px 10px;border-radius:8px;background:var(--teal-soft,#e8efe9)}
 .itno{flex:none;font-size:11.5px;color:var(--rose,#b5543f)}
+.benok{margin:8px 0 0;font-size:12px;color:var(--teal,#164F42);font-weight:600}
+.benno{margin:8px 0 0;font-size:12px;color:var(--rose,#b5543f);font-weight:600;line-height:1.6}
 </style>
 </head>
 <body><div id="app"><div id="shell"></div><div id="mroot"></div><div id="troot"></div></div>
@@ -1113,7 +1115,7 @@ const weekNo=ws=>{const st=TERM.start||weekStart(todayISO());
 
 /* ════════ فهارس تُبنى من حزمة واحدة ════════ */
 const EMPTY={r:0,l:0,list:[]};
-let DAY={},WK={},WKH={},BENC={},BENG={},BEN=[],PICKS=[],ENTRIES=[];
+let WKB={},DAY={},WK={},WKH={},BENC={},BENG={},BEN=[],PICKS=[],ENTRIES=[];
 const meCode=()=>(S&&S.me&&S.me.code)||'';
 function absorb(d){
  GRADES=d.grades||[]; SUPERVISORS=d.supervisors||[]; STUDENTS=d.students||[];
@@ -1121,8 +1123,9 @@ function absorb(d){
  TERM={start:(d.term&&d.term.start)||weekStart(d.today),weeks:(d.term&&d.term.weeks)||12};
  PLAN={}; (d.plans||[]).forEach(p=>PLAN[p.grade+'|'+p.week]={read:p.read,listen:p.listen});
  DAY={}; (d.day_totals||[]).forEach(x=>DAY[x.code+'|'+x.d]={r:x.r,l:x.l,list:[]});
- WKH={}; WK={};
+ WKH={}; WK={}; WKB={};
  (d.week_totals||[]).forEach(x=>{WKH[x.code+'|'+x.week]={r:x.r,l:x.l};
+  WKB[x.code+'|'+x.week]={r:+x.br||0,l:+x.bl||0};
   if(x.week===d.week_start)WK[x.code]={r:x.r,l:x.l}});
  MYENT=d.my_entries||[]; ENTRIES=MYENT;
  BENALL=d.benefits||[]; PICKED=d.picks||[]; PICKS=PICKED.map(e=>e.id);
@@ -1156,7 +1159,10 @@ function buildWKH(){WKH={};
   if(e.kind==='read')w.r+=e.v;else w.l+=e.v}}
 function targetAt(s,ws){const p=planOf(s.grade,ws);
  return{r:p.read?p.read.target:0,l:p.listen?p.listen.target:0}}
-function pctAt(s,ws){const t=targetAt(s,ws),d=wkAt(s.code,ws),tot=t.r+t.l;
+const BEN_REQ={r:1,l:1};                    /* فائدة للمقروء وأخرى للمسموع كل أسبوع */
+function benAt(code,ws){const b=WKB[code+'|'+ws]||{r:0,l:0};return{r:b.r>=BEN_REQ.r,l:b.l>=BEN_REQ.l}}
+function approved(code,ws,d){const b=benAt(code,ws);return{r:b.r?d.r:0,l:b.l?d.l:0}}
+function pctAt(s,ws){const t=targetAt(s,ws),d=approved(s.code,ws,wkAt(s.code,ws)),tot=t.r+t.l;
  if(!tot)return null;                        /* لا خطة لهذا الأسبوع */
  return Math.min(100,Math.round(((Math.min(d.r,t.r)+Math.min(d.l,t.l))/tot)*100))}
 function pastWeeks(n){const out=[];let w=WS();
@@ -1169,7 +1175,7 @@ function targetOf(s){const p=planOf(s.grade,WS());
  return{r:p.read?p.read.target:0,l:p.listen?p.listen.target:0}}
 function doneOf(code){const w=weekOf(code);return{r:w.r,l:w.l}}
 const pct=(a,b)=>b>0?Math.min(100,Math.round(a/b*100)):(a>0?100:0);
-function weekPct(s){const t=targetOf(s),d=doneOf(s.code);
+function weekPct(s){const t=targetOf(s),d=approved(s.code,WS(),doneOf(s.code));
  const tot=t.r+t.l;if(!tot)return 0;
  return Math.min(100,Math.round(((Math.min(d.r,t.r)+Math.min(d.l,t.l))/tot)*100))}
 function dayIndex(){return eachDay(WS(),todayISO()).length}      /* اليوم كم في الأسبوع (1..7) */
@@ -1394,8 +1400,8 @@ function weekView(){
  <div class="sec rv" style="--i:2"><h2>مقرر هذا الأسبوع</h2>
   <span class="chip">${g.name} · <span class="num">${WS()}</span></span></div>
  <div class="grid ${p.read&&p.listen?'g2':''}">
-  ${p.read?courseCard(p.read,'read',d.r,t.r,g.c,3):''}
-  ${p.listen?courseCard(p.listen,'listen',d.l,t.l,g.c,4):''}
+  ${p.read?courseCard(p.read,'read',d.r,t.r,g.c,3,benAt(me.code,WS()).r):''}
+  ${p.listen?courseCard(p.listen,'listen',d.l,t.l,g.c,4,benAt(me.code,WS()).l):''}
   ${!p.read&&!p.listen?'<div class="card empty rv">ما تحدد مقرر لهذا الأسبوع بعد — راجع مشرفك.</div>':''}
  </div>
 
@@ -1431,7 +1437,7 @@ function weeksStrip(me){
       stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}" data-off="${C*(1-p/100)}"
       transform="rotate(-90 22 22)"></circle></svg>
     <b class="num">${p>=100?'✓':p+'%'}</b><span>${lab}</span></div>`}).join('')}</div></div>`}
-function courseCard(c,kind,done,target,color,i){
+function courseCard(c,kind,done,target,color,i,ben){
  const p=pct(done,target),unit=kind==='read'?'صفحة':'دقيقة',lk=kind==='listen'?safeLink(c.link):'';
  return `<article class="wc rv" style="--c:${color};--i:${i}">
   <div class="cov">${cover(kind,color,p)}</div>
@@ -1452,6 +1458,8 @@ function courseCard(c,kind,done,target,color,i){
     <div class="bar"><i data-w="${p}" style="background:${color}"></i></div>
     <p style="font-size:11.5px;color:var(--muted);margin:8px 0 0">
      ${done>=target?'أتممته — بارك الله فيك.':`باقي <span class="num">${target-done}</span> ${unit} على إتمام مقرر الأسبوع.`}</p>
+    ${ben===undefined?'':ben?`<p class="benok">✓ كتبت فائدة ${kind==='read'?'المقروء':'المسموع'} لهذا الأسبوع</p>`
+      :`<p class="benno">إنجازك ما يُعتمد إلا بفائدة ${kind==='read'?'للمقروء':'للمسموع'} — اكتبها مع أي تسجيل هذا الأسبوع</p>`}
    </div></div></article>`}
 function myLogView(){
  const me=S.me,rows=entriesOf(me.code).slice().sort((a,b)=>b.date.localeCompare(a.date));
@@ -1520,7 +1528,7 @@ function emptyArt(kind,title,sub){
 function myBenView(){
  const list=benOf(S.me.code);
  if(!list.length)return emptyArt('pen','ما كتبت فائدة بعد',
-   'مع كل تسجيل إنجاز تكتب فائدة، وتُحفظ هنا تلقائيًا.');
+   'الفائدة مطلوبة مرة كل أسبوع للمقروء وأخرى للمسموع، وتُحفظ هنا تلقائيًا.');
  const mine=list.filter(e=>isPicked(e.id)).length;
  return `${statStrip([
    {lab:'فوائدك',val:list.length,sub:'فائدة'},
@@ -2080,18 +2088,22 @@ function modalHTML(){const m=S.modal;if(!m)return '';let b='';
    ${clink?`<a class="golink sm" href="${esc(clink)}" target="_blank" rel="noopener noreferrer">
      <span class="pl"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
      افتح المقطع <span class="arw">↗</span></a>`:''}
-   <label for="nt">فائدة استفدتها اليوم <span style="color:var(--rose)">*</span></label>
+   ${(()=>{const hb=benAt(S.me.code,WS())[m.kind==='read'?'r':'l'];
+     return `<label for="nt">فائدة ${hb?'(اختيارية)':''}</label>
+     <p class="${hb?'benok':'benno'}" style="margin:2px 0 6px">${hb
+      ?'✓ فائدة '+(m.kind==='read'?'المقروء':'المسموع')+' لهذا الأسبوع مكتوبة — تقدر تضيف غيرها'
+      :'ما كتبت فائدة '+(m.kind==='read'?'المقروء':'المسموع')+' هذا الأسبوع — إنجازك ما يُعتمد بدونها'}</p>`})()}
    <textarea id="nt" rows="3" maxlength="400" oninput="benCount()"
      placeholder="اكتب فائدة واحدة بأسلوبك: ماذا تعلّمت من «${esc(ci?ci.t:'')}» اليوم؟">${esc(m.nt_||'')}</textarea>
-   <div class="bhint"><span id="bc">٠ حرف</span><span>الفائدة شرط لحفظ الإنجاز · تُحفظ في «فوائدي»</span></div>
+   <div class="bhint"><span id="bc">٠ حرف</span><span>اختيارية يوميًا · مطلوبة مرة في الأسبوع لاعتماد الإنجاز</span></div>
    <div class="row"><button class="btn outline" onclick="closeModal()">إلغاء</button>
-   <button class="btn" onclick="saveLog()">حفظ الإنجاز والفائدة</button></div>`}
+   <button class="btn" onclick="saveLog()">حفظ الإنجاز</button></div>`}
  if(m.t==='edit'){const e=ENTRIES.find(x=>x.id===m.id);
   if(!e)b='<h3>غير موجود</h3><div class="row"><button class="btn" onclick="closeModal()">إغلاق</button></div>';
   else b=`<h3>تصحيح تسجيل اليوم</h3><p class="sub">${e.kind==='read'?'قراءة':'سماع'} · ${dayName(e.date)}</p>
    <label for="ev">${e.kind==='read'?'عدد الصفحات':'عدد الدقائق'}</label>
    <input id="ev" type="number" min="1" value="${e.v}">
-   <label for="en">فائدتك</label>
+   <label for="en">فائدتك (اختيارية)</label>
    <textarea id="en" rows="3" maxlength="400">${esc(e.note||'')}</textarea>
    <p style="font-size:12px;color:var(--muted);margin:9px 0 0">
     التصحيح لتسجيلات اليوم فقط. بعد ٣:٠٠ فجرًا يُقفل اليوم.</p>
@@ -2229,21 +2241,23 @@ function modalHTML(){const m=S.modal;if(!m)return '';let b='';
 function renderModal(){$('mroot').innerHTML=modalHTML();
  const f=document.querySelector('.modal input,.modal select');f&&f.focus()}
 function benCount(){const n=($('nt').value||'').trim().length,el=$('bc');
- if(el)el.textContent=n+' حرف'+(n<15?' — أكمل قليلًا':' ✓')}
+ if(el)el.textContent=n?n+' حرف'+(n<15?' — أكمل قليلًا (15 على الأقل)':' ✓'):'بدون فائدة'}
 async function saveLog(){if(BUSY)return;const v=parseInt($('v').value,10);if(!v||v<1||v>600){$('v').focus();return toast('أدخل رقمًا بين 1 و600.')}
  const lp=planOf(S.me.grade,WS()),its=itemsOf(S.modal.kind==='read'?lp.read:lp.listen),course=(its[S.modal.ci||0]||{}).t||null;
  const note=($('nt').value||'').trim();
- if(note.length<15){$('nt').focus();return toast('اكتب فائدتك أولًا — سطر واحد يكفي.')}
+ if(note&&note.length<15){$('nt').focus();return toast('الفائدة لا تقل عن 15 حرفًا — أو اتركها فارغة.')}
  setBusy(1);
- try{await rpc('log_entry',{p_token:TOKEN,p_kind:S.modal.kind,p_v:v,p_note:note,p_course:course});
+ try{await rpc('log_entry',{p_token:TOKEN,p_kind:S.modal.kind,p_v:v,p_note:note||null,p_course:course});
   S.modal=null;renderModal();await refresh();
-  toast(weekPct(S.me)>=100?'ما شاء الله — أتممت مقرر الأسبوع!':'انحفظ إنجازك.');
+  const bb=benAt(S.me.code,WS());
+  toast(weekPct(S.me)>=100?'ما شاء الله — أتممت مقرر الأسبوع!'
+   :(!bb.r||!bb.l)&&!note?'انحفظ إنجازك — لا تنسَ فائدة الأسبوع لاعتماده.':'انحفظ إنجازك.');
  }catch(e){toast(e.message)}finally{setBusy(0)}}
 async function saveEdit(){if(BUSY)return;const v=parseInt($('ev').value,10);if(!v||v<1){$('ev').focus();return}
  const nt=(($('en')&&$('en').value)||'').trim();
- if(nt.length<15){$('en')&&$('en').focus();return toast('الفائدة لا تقل عن سطر.')}
+ if(nt&&nt.length<15){$('en')&&$('en').focus();return toast('الفائدة لا تقل عن 15 حرفًا — أو اتركها فارغة.')}
  setBusy(1);
- try{await rpc('edit_entry',{p_token:TOKEN,p_id:S.modal.id,p_v:v,p_note:nt});
+ try{await rpc('edit_entry',{p_token:TOKEN,p_id:S.modal.id,p_v:v,p_note:nt||null});
   S.modal=null;renderModal();await refresh();toast('صُحّح التسجيل.');
  }catch(e){toast(e.message)}finally{setBusy(0)}}
 async function delEntry(id){if(BUSY)return;setBusy(1);
