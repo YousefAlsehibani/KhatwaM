@@ -1148,7 +1148,12 @@ const entriesOf=(c,d)=>{if(d)return (dayOf(c,d).list)||[];
  return c===meCode()?MYENT:(BENC[c]||[])};
 const benOf=code=>BENC[code]||[];
 const benGrade=g=>BENG[g]||[];
-const pickedEntries=()=>PICKED;
+const PICK_MAX=3;                              /* ثلاث منتخبات لكل صف */
+const gradeOfEntry=e=>{const st=studentByCode(e.code);return st?st.grade:null};
+const pickedEntries=g=>g?PICKED.filter(e=>gradeOfEntry(e)===g):PICKED;
+/* الصف الذي يدير منتخباته صاحب الجلسة: مشرف = صفه، تنفيذي = الكل (null) */
+function myPickGrade(){if(S.role!=='supervisor')return null;const sv=supByCode(S.me.code);return sv?sv.grade:'__none__'}
+const canPick=e=>S.role==='admin'||(S.role==='supervisor'&&gradeOfEntry(e)===myPickGrade());
 const isPicked=id=>PICKS.indexOf(id)>-1;
 function memo(k,fn){return fn()}
 
@@ -1540,38 +1545,40 @@ function myBenView(){
 let BENF='all';
 function setBenf(f){BENF=f;BPAGE=STEP;lastKey='';renderShell()}
 function benView(){
- const isAdmin=S.role==='admin';
+ const isAdmin=S.role==='admin', pg=myPickGrade(), myPicks=pickedEntries(pg);
+ const pickCap=isAdmin?PICK_MAX*GRADES.length:PICK_MAX;
  const _s2=supByCode(S.me.code);
  const src=isAdmin||!_s2?BEN:benGrade(_s2.grade);
  let list=src, today=0;
  for(let i=0;i<src.length;i++){if(src[i].date===todayISO())today++;else break}
  if(BENF==='today')list=src.slice(0,today);
- else if(BENF==='picked')list=pickedEntries();
+ else if(BENF==='picked')list=myPicks;
  const total=src.length;
  return `${statStrip([
    {lab:'فوائد اليوم',val:today,sub:'فائدة'},
    {lab:'إجمالي الفوائد',val:total,sub:'فائدة',c:'var(--amber)'},
-   {lab:'المنتخبات',val:PICKS.length,sub:'من ٣',c:'var(--green)'}])}
- ${isAdmin?`<div class="pickbar rv" style="--i:3">
+   {lab:'المنتخبات',val:myPicks.length,sub:'من '+pickCap,c:'var(--green)'}])}
+ ${S.role==='admin'||S.role==='supervisor'?`<div class="pickbar rv" style="--i:3">
    <span class="si">★</span>
-   <div style="flex:1"><b>ترشيح المنتخبات (${PICKS.length} من ٣)</b>
-    <p>اضغط النجمة على أي فائدة لترشيحها — تظهر لكل الطلاب في تبويب «المنتخبات».</p></div></div>`:''}
+   <div style="flex:1"><b>ترشيح المنتخبات (${myPicks.length} من ${pickCap})</b>
+    <p>${isAdmin?'ثلاث فوائد لكل صف — تقدر تختار من أي صف.':'اختر ثلاث فوائد من صفك'} — تظهر لكل الطلاب في تبويب «المنتخبات».</p></div></div>`:''}
  <div class="filters rv" style="--i:4">
   <button class="filter" aria-pressed="${BENF==='all'}" onclick="setBenf('all')">الكل</button>
   <button class="filter" aria-pressed="${BENF==='today'}" onclick="setBenf('today')">اليوم <span class="num">${today}</span></button>
-  <button class="filter" aria-pressed="${BENF==='picked'}" onclick="setBenf('picked')">المنتخبة <span class="num">${PICKS.length}</span></button>
+  <button class="filter" aria-pressed="${BENF==='picked'}" onclick="setBenf('picked')">المنتخبة <span class="num">${myPicks.length}</span></button>
  </div>
- ${list.length?`<div class="bens">${list.slice(0,BPAGE).map((e,i)=>benCard(e,5+i,{who:1,pick:isAdmin})).join('')}</div>
+ ${list.length?`<div class="bens">${list.slice(0,BPAGE).map((e,i)=>benCard(e,5+i,{who:1,pick:canPick(e)})).join('')}</div>
    ${list.length>BPAGE?moreBtn('b',list.length-BPAGE):''}`
   :'<div class="card empty rv">ما فيه فوائد في هذا العرض.</div>'}`}
 function picksView(){
- const ps=pickedEntries();
+ const ord={};GRADES.forEach((g,i)=>ord[g.id]=i);
+ const ps=pickedEntries().slice().sort((a,b)=>(ord[gradeOfEntry(a)]??99)-(ord[gradeOfEntry(b)]??99));
  return `<div class="hero rv"><div class="htop">
-   <div><p class="hlab">اختيار المشرف التنفيذي من كل الصفوف</p><h2>منتخبات الأسبوع</h2></div>
+   <div><p class="hlab">اختيار المشرفين — ثلاث فوائد من كل صف</p><h2>منتخبات الأسبوع</h2></div>
    <div class="hst"><div><div class="hk">فوائد مختارة</div>
-    <div class="hv am"><span class="num" data-to="${ps.length}">0</span> <small>من ٣</small></div></div></div></div></div>
+    <div class="hv am"><span class="num" data-to="${ps.length}">0</span> <small>من ${PICK_MAX*GRADES.length}</small></div></div></div></div></div>
  ${ps.length?`<div class="bens" style="margin-top:16px">${ps.map((e,i)=>{
-   const s=studentByCode(e.code),g=gradeById(s.grade);
+   const s=studentByCode(e.code);if(!s)return '';const g=gradeById(s.grade);
    return `<article class="ben big rv" style="--i:${i};--gc:${g.c}">
     <span class="ribbon">★ منتخبة</span><span class="quote">”</span>
     <p class="btxt">${esc(e.note)}</p>
@@ -1579,11 +1586,17 @@ function picksView(){
       <span class="avatar" style="--gc:${g.c};width:34px;height:34px;border-radius:11px;font-size:15px">${esc(s.name.trim()[0])}</span>
       <span class="bn"><b>${esc(s.name)}</b><span>${g.name} · ${esc(e.course||'')}</span></span></div>
      <span class="chip">${e.kind==='read'?'قراءة':'سماع'}</span></div></article>`}).join('')}</div>`
-  :emptyArt('star','ما اختير شيء بعد','يختار المشرف التنفيذي ثلاث فوائد من كل الصفوف لتظهر هنا.')}`}
-async function togglePick(id){const was=isPicked(id);setBusy(1);
- try{await rpc('toggle_pick',{p_token:TOKEN,p_entry:id});await refresh();
-  toast(was?'أُزيلت من المنتخبات.':'رُشّحت الفائدة — ظهرت للجميع.');
- }catch(e){toast(e.message)}finally{setBusy(0)}}
+  :emptyArt('star','ما اختير شيء بعد','يختار كل مشرف ثلاث فوائد من صفه لتظهر هنا.')}`}
+async function togglePick(id){if(BUSY)return;setBusy(1);
+ try{const r=await rpc('toggle_pick',{p_token:TOKEN,p_entry:id});
+  const on=!!(r&&r.picked);
+  const e=on?BENALL.find(x=>x.id===id):null;
+  if(on&&!e){await refresh()}                      /* الفائدة خارج القائمة المحمّلة */
+  else if(on&&!isPicked(id))PICKED=PICKED.concat([e])
+  else PICKED=PICKED.filter(x=>x.id!==id);
+  PICKS=PICKED.map(e=>e.id);lastKey='';renderShell();
+  toast(on?'رُشّحت الفائدة — ظهرت للجميع.':'أُزيلت من المنتخبات.');
+ }catch(e){toast(e.message);refresh().catch(()=>{})}finally{setBusy(0)}}
 function setBoard(b){BOARD=b;lastKey='';renderShell()}
 function setBmode(m){BMODE=m;lastKey='';renderShell()}
 let BOARD='mine',BMODE='week';
@@ -1833,11 +1846,11 @@ function overview(){
    <svg viewBox="0 0 24 24"><path d="M12 8v5M12 17h.01M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
    <span><b>${idle.length}</b> ${idle.length===1?'طالب يحتاج':'طلاب يحتاجون'} متابعة — ما سجّلوا إنجاز من يومين أو أكثر.</span>
    <button class="btn sm outline" onclick="go('class');setTimeout(()=>setFilter('idle'),50)">اعرضهم</button></div>`:''}
- ${PICKS.length<3?`<div class="bar-alert gold rv">
+ ${PICKS.length<PICK_MAX*GRADES.length?`<div class="bar-alert gold rv">
    <span class="ai">★</span>
-   <span>لم تُرشّح إلا <b>${PICKS.length}</b> من ٣ للمنتخبات — وصلتك <b>${benToday}</b> فائدة اليوم.</span>
+   <span>المنتخبات <b>${PICKS.length}</b> من ${PICK_MAX*GRADES.length} — وصلتك <b>${benToday}</b> فائدة اليوم.</span>
    <button class="btn sm outline" onclick="go('ben')">رشّح الآن</button></div>`:''}
- ${!noPlan.length&&!noLink.length&&!idle.length&&PICKS.length>=3?`<div class="bar-alert ok rv">
+ ${!noPlan.length&&!noLink.length&&!idle.length&&PICKS.length>=PICK_MAX*GRADES.length?`<div class="bar-alert ok rv">
    <span class="ai">✓</span><span><b>كل شيء منضبط</b> — المقررات محدّدة، والمنتخبات مكتملة، ولا يوجد منقطعون.</span></div>`:''}
 
  <div class="card rv" style="--i:2;margin-top:16px">
