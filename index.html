@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://benqmepnybminxeyubqn.supabase.co" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&family=Zain:wght@400;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@600&family=Zain:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#F4F3ED; --bg-soft:#FAF9F5; --surface:#FFFEFC; --card:#FFFEFC;
@@ -1107,6 +1107,9 @@ const gradeById=i=>GRADES.find(g=>g.id===i)||{id:i,name:'',c:'var(--teal)'};
 const studentByCode=c=>STUDENTS.find(s=>s.code===c);
 const activeStudents=()=>STUDENTS.filter(s=>s.active!==false);
 const supByCode=c=>SUPERVISORS.find(s=>s.code===c);
+const SUP_MAX=3;                                   /* حتى ثلاثة مشرفين لكل صف */
+const supsOf=(g,except)=>SUPERVISORS.filter(v=>v.grade===g&&v.code!==except);
+const supNames=g=>supsOf(g).map(v=>v.name).join('، ');
 const planOf=(g,ws)=>PLAN[g+'|'+ws]||{read:null,listen:null};
 const termWeeks=()=>{const st=TERM.start||weekStart(todayISO());
  return [...Array(TERM.weeks)].map((_,i)=>addD(st,i*7))};
@@ -1521,6 +1524,8 @@ function benCard(e,i,opts){
    </div>
    <div class="bact">
     ${o.who?`<span class="chip">${esc(e.course||'')}</span>`:''}
+    ${S.role==='admin'?`<button class="qbtn" onclick="openBen('${e.id}')" title="تعديل الفائدة">✎</button>
+     <button class="qbtn del" onclick="delBen('${e.id}')" title="حذف الفائدة">✕</button>`:''}
     ${o.pick?`<button class="star ${pk?'on':''}" onclick="togglePick('${e.id}')"
       title="${pk?'إزالة من المنتخبات':'ترشيح للمنتخبات'}">${pk?'★':'☆'}</button>`:''}
    </div></div></article>`}
@@ -1860,10 +1865,10 @@ function overview(){
     const st=codeOfGrade(g.id),p=planOf(g.id,ws);
     const a=st.length?Math.round(st.reduce((t,x)=>t+weekPct(x),0)/st.length):0;
     const dn=st.filter(x=>weekPct(x)>=100).length;
-    const sv=SUPERVISORS.find(v=>v.grade===g.id);
+    const sv=supNames(g.id);
     return `<div class="cmp">
      <div class="cmp-h"><b>${g.name}</b>
-      <span class="cmp-sub">${sv?esc(sv.name):'<span style="color:var(--danger)">بلا مشرف</span>'}</span>
+      <span class="cmp-sub">${sv?esc(sv):'<span style="color:var(--danger)">بلا مشرف</span>'}</span>
       <span class="cmp-cnt"><span class="num">${st.length}</span> ${st.length===1?'طالب':st.length===2?'طالبان':st.length<11?'طلاب':'طالبًا'}</span></div>
      <div class="cmp-b"><i data-w="${a}" style="background:${g.c}"></i></div>
      <div class="cmp-v num">${a}%</div>
@@ -1911,7 +1916,7 @@ function planView(){
 
  ${GRADES.map((g,gi)=>{const ser=seriesOf(g.id);
   return `<div class="card rv" style="--i:${1+gi};margin-top:14px;border-right:4px solid ${g.c}">
-   <div class="b2h"><div><p class="eyebrow">${(SUPERVISORS.find(v=>v.grade===g.id)||{}).name||'بلا مشرف'}</p>
+   <div class="b2h"><div><p class="eyebrow">${esc(supNames(g.id))||'بلا مشرف'}</p>
      <h2 style="color:${g.c}">${g.name}</h2></div>
     <button class="btn sm outline" onclick="openSeries('${g.id}')">+ مقرر ممتد</button></div>
 
@@ -1977,9 +1982,9 @@ function peopleView(){
  <div class="sec rv" style="--i:6"><h2>الطلاب</h2>
    <button class="btn sm" onclick="openAdd()">+ إضافة طالب</button></div>
  <div class="gcards">${GRADES.map((g,i)=>{const st=STUDENTS.filter(x=>x.grade===g.id);
-  const sv=SUPERVISORS.find(x=>x.grade===g.id);
+  const sv=supsOf(g.id);
   return `<div class="card rv" style="--i:${7+i};border-right:4px solid ${g.c}">
-   <div><p class="eyebrow">${sv?esc(sv.name)+' · '+sv.code:'<span style="color:var(--danger)">بلا مشرف</span>'}</p>
+   <div><p class="eyebrow">${sv.length?sv.map(v=>esc(v.name)+' · '+v.code).join('، '):'<span style="color:var(--danger)">بلا مشرف</span>'}</p>
     <h2 style="color:${g.c}">${g.name}</h2></div>
    <div style="margin-top:12px">${st.map(x=>`<div class="tent ${x.active===false?'off':''}" style="padding:9px 2px">
      <span class="avatar" style="--gc:${g.c};width:28px;height:28px;border-radius:9px;font-size:13px">${esc(x.name.trim()[0])}</span>
@@ -1994,6 +1999,22 @@ function openLog(){const p=planOf(S.me.grade,WS());
  if(!p.read&&!p.listen)return toast('ما تحدد مقرر لصفك هذا الأسبوع — راجع مشرفك.');
  S.modal={t:'log',kind:p.read?'read':'listen'};renderModal()}
 function openEdit(id){S.modal={t:'edit',id};renderModal()}
+/* إشراف المشرف التنفيذي على الفوائد */
+const benById=id=>BENALL.find(x=>x.id===id)||PICKED.find(x=>x.id===id);
+function openBen(id){if(S.role!=='admin')return;S.modal={t:'ben',id};renderModal()}
+async function saveBen(){if(BUSY)return;const nt=(($('bn2')&&$('bn2').value)||'').trim();
+ if(nt.length<15){$('bn2').focus();return toast('الفائدة لا تقل عن 15 حرفًا — أو احذفها.')}
+ setBusy(1);
+ try{await rpc('moderate_benefit',{p_token:TOKEN,p_entry:S.modal.id,p_note:nt});
+  S.modal=null;renderModal();await refresh();toast('عُدّلت الفائدة.');
+ }catch(e){toast(e.message)}finally{setBusy(0)}}
+async function delBen(id){if(BUSY||S.role!=='admin')return;
+ if(!confirm('حذف هذه الفائدة؟ يبقى إنجاز الطالب، لكن لو ما عنده فائدة غيرها هذا الأسبوع ما يُعتمد إنجازه.'))return;
+ setBusy(1);
+ try{await rpc('moderate_benefit',{p_token:TOKEN,p_entry:id,p_note:null});
+  if(S.modal&&S.modal.t==='ben'){S.modal=null;renderModal()}
+  await refresh();toast('حُذفت الفائدة.');
+ }catch(e){toast(e.message)}finally{setBusy(0)}}
 function openPlan(g,ws){ws=ws||WS();const p=planOf(g,ws);
  S.modal={t:'plan',g,ws,hasR:!!p.read,hasL:!!p.listen};renderModal()}
 function openAdd(){S.modal={t:'add',g:GRADES[0].id};renderModal()}
@@ -2043,16 +2064,15 @@ async function saveSup(){const m=S.modal;
  const c=($('vc').value||'').trim();
  if(!/^[0-9]{4}$/.test(c)){$('vc').focus();return toast('الرمز أربعة أرقام.')}
  const g=$('vg').value;
- const holder=g?SUPERVISORS.find(x=>x.grade===g&&x.code!==m.code):null;
- if(holder&&!m.ok){S.modal.ok=1;S.modal.n_=n;S.modal.c_=c;S.modal.g=g;renderModal();
-  return toast('لـ'+gradeById(g).name+' مشرف ('+holder.name+') — سيُنقل إلى «بلا صف». اضغط حفظ للتأكيد.')}
- setBusy(1);
+ if(g&&supsOf(g,m.code).length>=SUP_MAX){$('vg').focus();
+  return toast('لـ'+gradeById(g).name+' ثلاثة مشرفين — أزل واحدًا أو اختر صفًا آخر.')}
+ if(BUSY)return;setBusy(1);
  try{await rpc('upsert_supervisor',{p_token:TOKEN,p_old_code:m.code||null,p_name:n,p_code:c,p_grade:g});
   S.modal=null;renderModal();await refresh();
   toast(m.code?'حُدّثت بيانات '+n:'أُضيف '+n+' — رمزه '+c);
  }catch(e){toast(e.message)}finally{setBusy(0)}}
 async function removeSup(code){const v=supByCode(code);
- if(!confirm('إزالة '+v.name+'؟ طلاب صفه يبقون بلا مشرف حتى تُسند غيره.'))return;
+ if(!confirm('إزالة '+v.name+'؟'+(v.grade&&supsOf(v.grade,code).length?'':' طلاب صفه يبقون بلا مشرف حتى تُسند غيره.')))return;
  setBusy(1);
  try{await rpc('delete_supervisor',{p_token:TOKEN,p_code:code});
   S.modal=null;renderModal();await refresh();toast('أُزيل '+v.name);
@@ -2111,6 +2131,14 @@ function modalHTML(){const m=S.modal;if(!m)return '';let b='';
    <div class="bhint"><span id="bc">٠ حرف</span><span>اختيارية يوميًا · مطلوبة مرة في الأسبوع لاعتماد الإنجاز</span></div>
    <div class="row"><button class="btn outline" onclick="closeModal()">إلغاء</button>
    <button class="btn" onclick="saveLog()">حفظ الإنجاز</button></div>`}
+ if(m.t==='ben'){const e=benById(m.id),st=e&&studentByCode(e.code);
+  if(!e)b='<h3>غير موجودة</h3><div class="row"><button class="btn" onclick="closeModal()">إغلاق</button></div>';
+  else b=`<h3>تعديل فائدة</h3><p class="sub">${esc(st?st.name:'')} · ${esc(e.course||'')} · <span class="num">${e.date}</span></p>
+   <label for="bn2">نص الفائدة</label>
+   <textarea id="bn2" rows="4" maxlength="1000">${esc(e.note||'')}</textarea>
+   <p style="font-size:12px;color:var(--muted);margin:9px 0 0">التعديل يغيّر النص فقط، ويبقى الإنجاز كما هو.</p>
+   <div class="row"><button class="btn outline" onclick="delBen('${e.id}')">حذف الفائدة</button>
+   <button class="btn" onclick="saveBen()">حفظ التعديل</button></div>`}
  if(m.t==='edit'){const e=ENTRIES.find(x=>x.id===m.id);
   if(!e)b='<h3>غير موجود</h3><div class="row"><button class="btn" onclick="closeModal()">إغلاق</button></div>';
   else b=`<h3>تصحيح تسجيل اليوم</h3><p class="sub">${e.kind==='read'?'قراءة':'سماع'} · ${dayName(e.date)}</p>
@@ -2211,11 +2239,11 @@ function modalHTML(){const m=S.modal;if(!m)return '';let b='';
    <label for="vg">الصف الذي يشرف عليه</label>
    <select id="vg">
     <option value=""${!m.g?' selected':''}>بلا صف</option>
-    ${GRADES.map(g=>{const h=SUPERVISORS.find(x=>x.grade===g.id&&x.code!==m.code);
-      return `<option value="${g.id}"${m.g===g.id?' selected':''}>${g.name}${h?' — حاليًا: '+esc(h.name):''}</option>`}).join('')}
+    ${GRADES.map(g=>{const n=supsOf(g.id,m.code).length,full=n>=SUP_MAX&&m.g!==g.id;
+      return `<option value="${g.id}"${m.g===g.id?' selected':''}${full?' disabled':''}>${g.name} — ${n} من ${SUP_MAX}${full?' (مكتمل)':''}</option>`}).join('')}
    </select>
    <p style="font-size:11.5px;color:var(--muted);margin:6px 0 0">
-    لكل صف مشرف واحد؛ إن أسندت صفًا له مشرف يُنقل الحالي إلى «بلا صف».</p>
+    لكل صف حتى ثلاثة مشرفين، يتابعون نفس الطلاب ويختارون منتخبات الصف معًا.</p>
    <div class="row">
     ${editing?`<button class="btn outline" style="flex:0 0 auto;color:var(--danger);border-color:#EEDAD6"
       onclick="removeSup('${m.code}')">إزالة</button>`:'<button class="btn outline" onclick="closeModal()">إلغاء</button>'}
